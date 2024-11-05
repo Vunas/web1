@@ -255,6 +255,7 @@ function setIMG2() {
 //Lưu thông tin sau khi sửa
 function saveChangeProduct(sanPham) {
     sanPham.image1 = document.querySelector("#imgPreview1__changeP").src;
+    sanPham.image2= document.querySelector("#imgPreview2__changeP").src;
     sanPham.name = document.querySelector(".input__changeP--name input").value;
     sanPham.introduce = document.querySelector(".input__changeP--introduce input").value;
     sanPham.price = document.querySelector(".input__changeP--price input").value;
