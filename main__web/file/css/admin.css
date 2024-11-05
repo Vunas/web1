@@ -1,0 +1,387 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary--color2: #E3F1B6;
+    --primary--color3: #FFFFFF;
+    --primary--color4: rgb(250, 173, 31);
+    --primary--color5: #D2B48C;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: var(--primary--color3);
+    font-size: 14px;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container__left {
+    width: 20%;
+    height: 100vh;
+    border-right: 1px solid gray;
+}
+
+.logo img {
+    width: 100%;
+    height: 300px;
+    padding: 20px;
+}
+
+.contain {
+    height: 60%;
+}
+
+.nav li {
+    margin: 20px;
+    list-style: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.container__right--main {
+    width: 80%;
+}
+
+.container__top {
+    width: 100%;
+    background-color: var(--primary--color5);
+    height: 50px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 25px;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.container__bottom {
+    display: flex;
+}
+
+.text__user,
+.text__product {
+    width: 30%;
+    text-align: center;
+    margin: 5px auto;
+    border: 0.5px solid gray;
+    border-radius: 10px;
+    background-color: var(--primary--color5);
+}
+
+.text__user h3,
+.text__product h3 {
+    font-size: 20px;
+    padding: 5px;
+}
+
+.text__user--top img,
+.text__product--top img {
+    width: 100%;
+    height: 300px;
+}
+
+@media (min-width:755px) and (max-width:1024px) {
+    .container__left .contain .nav li {
+        font-size: 15px;
+    }
+}
+
+@media (max-width:755px) {
+    .container__top {
+        font-size: 20px;
+        padding-top: 12px;
+    }
+
+    .container__left .contain .nav li {
+        font-size: 15px;
+    }
+
+    .logo img {
+        height: 200px;
+    }
+}
+
+@media (min-width:320px) and (max-width:600px) {
+    .container__top {
+        font-size: 15px;
+        padding-top: 15px;
+    }
+
+    .text__user--bottom,
+    .text__product--bottom {
+        font-size: 13px;
+    }
+
+    .text__user--top img,
+    .text__product--top img {
+        height: 180px;
+    }
+
+    .container__left .contain .nav li {
+        font-size: 16px;
+    }
+
+    .logo img {
+        height: 130px;
+    }
+
+    /* .container__right--card button{
+        margin-left:20px;
+    } */
+}
+
+
+
+
+.container__right--card {
+    width: 80%;
+    height: 100vh;
+    display: none;
+    overflow-y: scroll;
+}
+
+.container__right--card button {
+    width: 150px;
+    cursor: pointer;
+    height: 30px;
+    margin-top: 7px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.container__right--card button:hover,
+.container__right--card button:active {
+    background-color: var(--primary--color5);
+}
+
+#choose {
+    width: 130px;
+    margin: 10px;
+}
+
+.addP {
+    height: 40px;
+    display: flex;
+}
+
+.card__item {
+    display: flex;
+    border: 1px solid gray;
+    margin: 5px;
+    box-shadow: 0.5px 0.5px;
+}
+
+.card__item--left img {
+    width: 110px;
+    height: 100px;
+}
+
+.card__item--middle {
+    width: 60%;
+}
+
+.card__name--middle {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.card__introduce--middle {
+    margin: 10px;
+    font-size: 14px;
+}
+
+.card__item--right {
+    width: 30%;
+    text-align: right;
+}
+
+.card__price--right {
+    font-size: 15px;
+    margin: 10px 5px;
+}
+
+.card__edit__delete--right button {
+    width: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container__addP--products {
+    background: rgba(0, 0, 0, .8);
+    position: fixed;
+    inset: unset;
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+
+.activeContainerAddProducts {
+    display: block;
+}
+
+.contain__addP--products {
+    border: 1.5px solid gray;
+    width: 70%;
+    margin: 30px auto;
+    background-color: var(--primary--color3);
+    position: relative;
+    display: flex;
+    height:90vh;
+    padding:10px;
+}
+
+.fa-window-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.input__addP--img,.info__products{
+    width:50%;
+}
+.background__addP--img1,
+.background__addP--img2
+{
+    width:80%;
+    height:50%;
+}
+#imgPreview1__addP,#imgPreview2__addP{
+    width:100%;
+    height:80%;
+}
+.input__addP--img,
+.input__addP--name,
+.input__addP--introduce,
+.input__addP--price,
+.input__addP--detail {
+    margin: 20px 0px;
+}
+.input__addP--img input,
+.input__addP--name input,
+.input__addP--introduce input ,
+.input__addP--price input,
+.input__addP--detail input,
+.button__addP{
+    width:80%;
+    height:30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container__changeP--products {
+    background: rgba(0, 0, 0, .8);
+    position: fixed;
+    inset: unset;
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+.contain__changeP--products{
+    display: flex;
+    width:70%;
+    height:90vh;
+    margin: 30px auto;
+    background-color: var(--primary--color3);
+    padding:15px;
+    position: relative;
+}
+.fa-window-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.input__changeP--img,.contain__products{
+    width: 50%;
+}
+.background__changeP--img1,.background__changeP--img2{
+    width:80%;
+    height: 45%;
+    margin:15px 0px;
+}
+#imgPreview1__changeP,#imgPreview2__changeP{
+    width: 100%;
+    height:80%;
+}
+.input__changeP--name,.input__changeP--introduce,.input__changeP--price,.input__changeP--detail
+{
+    margin:20px 0px;
+}
+.input__changeP--name input,
+.input__changeP--introduce input,
+.input__changeP--price input,
+.input__changeP--detail input,
+.button__changeP
+{
+    width:80%;
+    height:30px;
+}
+.button__changeIMG1,.button__changeIMG2{
+    width:100%;
+    cursor: pointer;
+    height:30px;
+    font-size: 15px;
+}
+
+
+.customAlert{
+    background: rgba(0, 0, 0, .3);
+    position: fixed;
+    width: 100%;
+    height:100%;
+    display: none;
+}
+.containAlert{
+    width:40%;
+    height:150px;
+    background-color: var(--primary--color3);
+    margin: auto;
+    padding:10px;
+    margin-top:10rem;
+    text-align: center;
+    font-size: 25px;
+    padding-top:40px;
+}
+.button__Alert{
+    position: absolute;
+    padding:8px 25px;
+    right: 31%;
+    top:45%;
+    cursor: pointer;
+}

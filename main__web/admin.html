@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./file/css/admin.css">
+    <link rel="stylesheet" href="./file/css/fontawesome-free-6.6.0-web/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Quản Lý Cửa Hàng</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__left">
+            <div class="logo">
+                <img src="./file/image/img_admin/logo.jpg" alt="">
+            </div>
+            <div class="contain">
+                <ul class="nav">
+                    <li onclick="showpageMain()"><i class="fa fa-house"></i>Trang chủ</li>
+                    <li onclick="showPageProduct()"><i class="fa fa-link" aria-hidden="true"></i>Sản phẩm</li>
+                    <li><i class="fas fa-user"></i>Khách hàng</li>
+                    <li onclick="showPageBill()"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Đơn hàng</li>
+                    <li><i class="fa fa-bar-chart" aria-hidden="true"></i>Thống kê</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container__right--main">
+            <div class="container__top">
+                TRANG TỔNG QUÁT CỦA CỬA HÀNG GUNDAM SHOP
+            </div>
+            <div class="container__bottom">
+                <div class="text__user">
+                    <div class="text__user--top">
+                        <img src="./file/image/img_admin/img1.png" alt="">
+                    </div>
+                    <div class="text__user--bottom">
+                        <h3>Khách hàng</h3>
+                        <p>Khách hàng là cá nhân, tổ chức hoặc doanh nghiệp mua hoặc sử dụng sản phẩm và dịch vụ mà một công ty cung cấp.
+                         Khách hàng là một yếu tố quan trọng đối với bất kỳ doanh nghiệp nào,
+                        vì họ chính là nguồn doanh thu và quyết định sự thành công của một tổ chức trên thị trường.</p>
+                    </div>
+                </div>
+                <div class="text__product">
+                    <div class="text__product--top">
+                         <img src="./file/image/img_admin/img2.png" alt="">
+                    </div>
+                    <div class="text__poduct--bottom">
+                        <h3>Sản phẩm</h3>
+                        <p>Sản phẩm là bất kỳ thứ gì được tạo ra hoặc cung cấp để đáp ứng nhu cầu hoặc mong muốn của con người.
+                         Sản phẩm có thể ở dạng hữu hình (vật chất) hoặc vô hình (dịch vụ, ý tưởng).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container__right--card">
+            <!-- <div class="card__items">
+                <div class="card__item">
+                    <div class="card__item--left">
+                        <img src="./img_gundam/img1.jpg" alt="">
+                    </div>
+                    <div class="card__item--middle">
+                        <div class="card__name--middle">
+                            GUNDAM
+                        </div>
+                        <div class="card__introduce--middle">
+                            MNP-XH04 1/72 Metal Frame Nezha Na Tra
+                        </div>
+                    </div>
+                    <div class="card__item--right">
+                        <div class="card__price--right">
+                            <span>190.000 <sup>VNĐ</sup></span>
+                        </div>
+                        <div class="card__edit__delete--right">
+                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+
+
+
+
+        <div class="container__addP--products">
+            <div class="contain__addP--products">
+                <i class="far fa-window-close"></i>
+                <div class="input__addP--img">
+                    <div class="background__addP--img1">
+                        <img id="imgPreview1__addP" src="" alt="">
+                        <input type="file" name="" id="myFileInput__addP" onchange="chooseFileimg1(this)">
+                    </div>
+                    <div class="background__addP--img2">
+                        <img id="imgPreview2__addP" src="" alt="">
+                        <input type="file" name="" id="myFileInput__addP" onchange="chooseFileimg2(this)">
+                    </div>
+                </div>
+                <div class="info__products">
+                    <div class="input__addP--name">
+                        <p>Tên sản phẩm</p>
+                        <input type="text" name="" id="name__addP" placeholder="Nhập tên sản phẩm">
+                    </div>
+                    <div class="input__addP--introduce">
+                        <p>Giới thiệu sản phẩm</p>
+                        <input type="text" name="" id="introduce__addP" placeholder="Nhập giới thiệu sản phẩm">
+                    </div>
+                    <div class="input__addP--price">
+                        <p>Giá sản phẩm</p>
+                        <input type="text" name="" id="price__addP" placeholder="Nhập giá sản phẩm">
+                    </div>
+                    <div class="input__addP--detail">
+                        <p>Thông tin sản phẩm</p>
+                        <input type="text" name="" id="detail1__addP" placeholder="Nhập vào thông tin 1 của sản phẩm">
+                        <input type="text" name="" id="detail2__addP" placeholder="Nhập vào thông tin 2 của sản phẩm">
+                        <input type="text" name="" id="detail3__addP" placeholder="Nhập vào thông tin 3 của sản phẩm">
+                        <input type="text" name="" id="detail4__addP" placeholder="Nhập vào thông tin 4 của sản phẩm">
+                    </div>
+                    <button onclick="addProduct()" class="button__addP">
+                        Tạo sản phẩm
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+
+
+        <div class="container__changeP--products">
+            <div class="contain__changeP--products">
+                <i onclick="closeshowInputChangeProduct()" class="far fa-window-close"></i>
+                <div class="input__changeP--img">
+                    <div class="background__changeP--img1">
+                        <button class="button__changeIMG1">Bỏ ảnh</button>
+                        <img id="imgPreview1__changeP" src="" alt="">
+                        <input type="file" name="" id="myFileInput__changeP" onchange="chooseFile1(this)">
+                    </div>
+                    <div class="background__changeP--img2">
+                        <button class="button__changeIMG2">Bỏ ảnh</button>
+                        <img id="imgPreview2__changeP" src="" alt="">
+                        <input type="file" name="" id="myFileInput__changeP" onchange="chooseFile2(this)">
+                    </div>
+                </div>
+                <div class="contain__products">
+                    <div class="input__changeP--name">
+                        <p>Tên sản phẩm</p>
+                        <input type="text" name="" id="name__changeP" placeholder="Nhập tên sản phẩm">
+                    </div>
+                    <div class="input__changeP--introduce">
+                        <p>Giới thiệu sản phẩm</p>
+                        <input type="text" name="" id="introduce__changeP" placeholder="Nhập giới thiệu sản phẩm">
+                    </div>
+                    <div class="input__changeP--price">
+                        <p>Giá sản phẩm</p>
+                        <input type="text" name="" id="price__changeP" placeholder="Nhập giá sản phẩm">
+                    </div>
+                    <div class="input__changeP--detail">
+                        <p>Thông tin sản phẩm</p>
+                        <input type="text" name="" id="detail1__changeP" placeholder="Nhập vào thông tin 1 của sản phẩm">
+                        <input type="text" name="" id="detail2__changeP" placeholder="Nhập vào thông tin 2 của sản phẩm">
+                        <input type="text" name="" id="detail3__changeP" placeholder="Nhập vào thông tin 3 của sản phẩm">
+                        <input type="text" name="" id="detail4__changeP" placeholder="Nhập vào thông tin 4 của sản phẩm">
+                    </div>
+                    <button class="button__changeP">
+                        LƯU 
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="customAlert">
+            <button onclick="closeContainAlert()" class="button__Alert">OK</button>
+            <div class="containAlert">
+            </div>
+        </div>
+
+
+        <!-- Xem tất cả đơn hàng -->
+        <form id="formBill" action="">
+            <p style="display: inline-block;padding:0px 20px;">Filter Status Bill</p>
+            <select style="height:40px;" id="filter__status--bill"  name="" onchange="filterStatus()">
+                <option value="ĐÃ XÁC NHẬN">ĐÃ XÁC NHẬN</option>
+                <option value="CHƯA XỬ LÍ">CHƯA XỬ LÍ</option>
+                <option selected value="ALL">TẤT CẢ</option>
+                <option value="ĐÃ HỦY">ĐÃ HỦY</option>
+                <option value="ĐÃ GIAO THÀNH CÔNG">ĐÃ GIAO THÀNH CÔNG</option>
+            </select>
+            <p style="display: inline-block;padding:0px 20px;margin-left:100px;">Filer Day Bill</p>
+            <select style="height:40px;" name="" id="filter__time--bill" onchange="filterDay()">
+                <option value="1">HÔM NAY</option>
+                <option value="7">MỘT TUẦN</option>
+                <option selected value="ALL">TẤT CẢ</option>
+                <option value="15">NỬA THÁNG</option>
+                <option value="30">MỘT THÁNG</option>
+            </select>
+            <table id="tableBill">
+
+            </table>
+        </form>
+
+
+
+
+
+        <!-- Xem chi tiết đơn hàng -->
+        <div class="modal__viewDonHang">
+            <table  id="table__viewDonHang" >
+                <thead id="thead">
+                    <th>Products</th>
+                    <th>Introduce</th>
+                    <th>Number</th>
+                    <th>Price</th>
+                </thead>
+                <tbody id="tbody__viewDonHang">
+
+                </tbody>
+                <tfoot id="tfoot__viewDonHang">
+                    <tr><td colspan="4">
+                        <select name="" id="changeStt" onchange="changeStatus()">
+                            <option selected value="CHƯA XỬ LÍ">CHƯA XỬ LÍ</option>
+                            <option value="ĐÃ XÁC NHẬN">ĐÃ XÁC NHẬN</option>
+                            <option value="ĐÃ GIAO THÀNH CÔNG">GIAO HÀNG THÀNH CÔNG</option>
+                            <option value="ĐÃ HỦY">ĐÃ HỦY</option>
+                    </select>
+                    </td></tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <script src="./file/js/admin.js"></script>
+</body>
+</html>

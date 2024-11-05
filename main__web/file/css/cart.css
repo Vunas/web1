@@ -1,0 +1,151 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+body{
+    font-family: "Roboto", sans-serif;
+    background-color: var(--primary--color3);
+    font-size: 14px;
+    height:100vh;
+}
+:root{
+    --primary--color2:#E3F1B6;
+    --primary--color3:#FFFFFF;
+    --primary--color4:rgb(250, 173, 31);
+    --main--color: #ffba66;
+    --hover--collor:rgba(200, 200, 200, 0.5);
+}
+#MenuCart{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#MenuCart li{
+    list-style-type: none;
+    padding: 10px;
+}
+#MenuCart li a{
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    color: black;
+}
+#MenuCart .activem a{
+    background-color: var(--main--color);
+}
+.contain{
+    overflow-x: auto;
+}
+.nav h1{
+    margin: 20px 30px;
+    display: inline-block;
+    position: relative;
+}
+.nav h1::before{
+    content: "";
+    position: absolute;
+    height: 2px;
+    width:50%;
+    background: var(--primary--color4);
+    left:0px;
+    bottom: 0;
+}
+table{
+    width:90%;
+    min-width: 600px;
+    margin: 0 auto;
+}
+thead th{
+    font-size: 18px;
+}
+tbody tr td img{
+    width:100px;
+    height:100px;
+}
+tbody tr{
+    text-align: center;
+}
+tbody tr td button{
+    all: unset;
+    cursor: pointer;
+    height: 30px;
+    width: 20px;
+    border: 0.1px solid;
+}
+
+tbody tr td:nth-child(4){
+    text-wrap: nowrap;
+}
+
+tbody tr td:nth-child(6) span{
+    border: 0.1px solid;
+    padding: 5px;
+    cursor: pointer;
+}
+
+tbody tr td span:hover{
+    background-color: var(--hover--collor);
+}
+
+tbody tr td button:hover{
+    background-color: var(--hover--collor);
+}
+
+tbody tr td input{
+    text-align: center;
+    border-style: none;
+    height: 30px;
+    width: 30px;
+}
+table th{
+    background-color: var(--main--color);
+    height:46px;
+}
+.number__quantity,.number__total{
+    width:100px;
+}
+.change__quantity{
+    display: flex;
+    margin-left: 20px;
+}
+.change__quantity input{
+    text-align: center;
+}
+.change__quantity button{
+    cursor: pointer;
+}
+.gioHang{
+    text-align: right;
+    width:100%;
+}
+.gioHang a{
+    color: #353432;
+}
+.gioHang a i{
+    padding:20px;
+}
+.agree__order{
+    /* padding: 0 50px; */
+    width: 100%;
+    text-align: right;
+    margin-bottom: 5px;
+}
+.agree__order button{
+    all: unset ;
+    margin-right: 50px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: var(--main--color);
+}
+.agree__order button:hover,
+.agree__order button:active{
+    background-color: var(--hover--collor);
+}
+
+#detailBill{
+    position: relative;
+    background-color: white;
+    min-width: 600px;
+}
+

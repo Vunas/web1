@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh toán</title>
+    <link rel="stylesheet" href="./file/css/cart.css" />
+    <link rel="stylesheet" href="./file/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="./file/css/fontawesome-free-6.6.0-web/css/all.css"
+    />
+  </head>
+  <body onload="loadDataCart()">
+    <nav>
+      <span class="">Hinh</span>
+      <ul class="nav__mid">
+        <li><a class="nav__item home" href="#slider">Trang Chủ </a></li>
+        <li class="nav__product">
+          <a class="nav__item" href="main.html">Sản Phẩm </a>
+          <div class="div__product">
+            <ul id="product"></ul>
+          </div>
+        </li>
+        <!-- <li><a class="nav__item" href="">Thông Báo</a></li> -->
+        <li><a class="nav__item" href="#footer">Liên Hệ</a></li>
+        <li><a class="nav__item" href="#footer">Trợ Giúp</a></li>
+      </ul>
+      <ul class="nav__right">
+        <li>
+          <button onclick="open_search()" class="nav__item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </li>
+        <li>
+          <a href="./cart.html" class="nav__item">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </a>
+        </li>
+        <li id="checkLogin">
+          <button onclick="openlogin()" id="user-icon" class="nav__item">
+            <i class="fa-regular fa-user"></i>
+          </button>
+        </li>
+        <li class="nav__item-bars">
+          <button onclick="open_sideNav();showListMobile()" class="nav__item">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="slider"></div>
+
+    <!-- modal__overlay -->
+    <div
+      onclick="close_search(); close_sideNav(); close_productSide()"
+      class="modal__overlay"
+      id="modal__overlay"
+    ></div>
+
+    <!-- search-->
+
+    <div id="search_div" class="search_div">
+      <div class="seach__section">
+        <div class="search">
+          <span><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input
+            id="search__input"
+            oninput="searchProduct()"
+            type="search"
+            placeholder="Search.."
+            name="search"
+          />
+          <span>
+            <button
+              onclick="advanced_search()"
+              id="chevron-down"
+              class="chevron chevron-down"
+            >
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <button
+              onclick="close__advanced_search()"
+              id="chevron-up"
+              class="chevrop chevron-up"
+            >
+              <i class="fa-solid fa-chevron-up"></i>
+            </button>
+          </span>
+          <button onclick="close_search()">Hủy</button>
+        </div>
+        <section id="advanced_search"></section>
+        <div class="list__search"></div>
+        <div class="list__Page2">
+          <ul id="number__pages--two"></ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- login/logout -->
+    
+    <div class="overlay">
+      <div class="form-container">
+        <button id="close__login" onclick="closeLogin()">x</button>
+        <!--login-->
+        <form action="" id="login-form" class="form login-form">
+          <h2>Login</h2>
+          <div class="input-box">
+            <input id="username" type="text" placeholder="Enter your username" required />
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <br>
+          <div class="input-box">
+            <input id="password" type="password" placeholder="Enter password" required />
+            <i class="fa-solid fa-lock"></i>
+            <i class="fa-regular fa-eye-slash pw-hide"></i>
+          </div>
+          <br>
+  
+          <div class="option-field">
+            <div class="checkbox">
+              <input type="checkbox" id="check" />
+              <label for="check">Remember me</label>
+            </div>
+          </div>
+  
+          <button type="submit" class="login-button">Login</button>
+  
+          <div class="login-signup">
+            Don't have an account? <button type="button" id="signup" onclick="opensignup()">Signup</button>
+          </div>
+        </form>
+  
+        <!--signup form-->
+        <form action="" id="signup-form" class="form signup-form">
+          <h2>Sign up</h2>
+          <div class="input-box">
+            <input id="sigus" type="text" placeholder="Enter your username" required/>
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <p id="psigus"><br></p> 
+          <div class="input-box">
+            <input id="sigpas" type="password" placeholder="Create password" required />
+            <i class="fa-solid fa-lock"></i>
+            <i class="fa-regular fa-eye-slash pw-hide"></i>
+          </div>
+          <p id="psigpas"><br></p>
+          <div class="input-box">
+            <input id="resigpas" type="password" placeholder="Confirm password" required/>
+            <i class="fa-solid fa-lock"></i>
+            <i class="fa-regular fa-eye-slash pw-hide"></i>
+          </div>
+          <p id="presigpas"><br></p>
+          <div class="input-box">
+            <input id="email" type="email" placeholder="Enter your email"/>
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <p id="pemail"><br></p>
+          <div class="input-box">
+            <input id="sdt" type="number" placeholder="Enter your number"/>
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <p id="pphone"><br></p>
+          <div class="input-box">
+            <input id="address" type="text" placeholder="Enter your address" />
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <p id="paddress"><br></p>
+          <button type="submit" class="login-button">Signup</button>
+  
+          <div class="login-signup">
+            Already have an account? <button type="button" onclick="closeSignup()" id="login">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- smenu-->
+    <div class="sideNav" id="sideNav">
+      <div class="sideNav__first">
+        <button onclick="close_sideNav()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <ul>
+        <li>
+          <a href=""><i class="fa-solid fa-house"></i>Trang chu</a>
+        </li>
+        <li onclick="open_productSide()" class="sideNav__product">
+          <a href="main.html"><i class="fa-solid fa-seedling"></i>san Pham</a>
+          <button><i class="fa-solid fa-greater-than"></i></button>
+        </li>
+        <!-- <li>
+          <a href=""><i class="fa-solid fa-bell"></i>Thong Bao</a>
+        </li> -->
+        <li>
+          <a href=""><i class="fa-solid fa-address-book"></i>Lien He</a>
+        </li>
+        <li>
+          <a href=""><i class="fa-solid fa-question"></i>Tro Giup</a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="sideNav__productSide" class="sideNav__productSide">
+      <div class="productSide__first">
+        <button onclick="close_productSide()">
+          <i style="padding: 0 10px" class="fa-solid fa-less-than"></i>SanPham
+        </button>
+        <button onclick="close_sideNav(); close_productSide()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <ul id="mobile__product"></ul>
+    </div>
+
+    <div class="container">
+      <ul id="MenuCart"></ul>
+      <div class="contain">
+        <div class="nav">
+          <h1 id="nav__table">XEM LẠI GIỎ HÀNG</h1>
+        </div>
+        <table>
+          <thead id="myhead">
+            <tr>
+              <th>Product</th>
+              <th>Introduce</th>
+              <th>Price</th>
+              <th class="number__quantity">Number</th>
+              <th class="number__total">Total</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="myCart">
+            <tr>
+              <td colspan="6">Trống</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="modal__detail" class="modal__overlay">
+        <div id="detailBill"></div>
+      </div>
+    </div>
+    <div id="pay"></div>
+    <div id="infor__Product" class="modal__product"></div>
+
+    <footer id="footer">
+      <div>
+        <h1>Địa Chỉ</h1>
+        <ul>
+          <li><a href="">Naitin - Mô hình anime chính hãng</a></li>
+          <li>
+            <a href=""
+              ><i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3,
+              Quận 5, TPHCM</a
+            >
+          </li>
+          <li>
+            <a href=""
+              ><i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến
+              Nghé, Quận 1, TPHCM</a
+            >
+          </li>
+          <li>
+            <a href=""
+              ><i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan,
+              P. Võ Thị Sáu, Quân3, TPHCM</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h1>Liên Hệ</h1>
+        <ul>
+          <li>email: naitin19@email.com</li>
+          <li>Gọi mua hàng: 0909258xxx</li>
+          <li>Gọi bảo hành: 0909782xxx</li>
+          <li>Gọi hợp tác kinh doanh, mua sỉ: 0982256xxx</li>
+        </ul>
+      </div>
+      <div>
+        <h1>Trợ Giúp</h1>
+      </div>
+      <div class="brand-footer">
+        <a href=""> G U N D A M</a>
+      </div>
+      <div class="footer__bot">
+        <ul>
+          <li>© Copyright 2024 By NaiTin. Powered by Naitin</li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+  <script src="./file/js/cart.js"></script>
+  <script src="./file/js/js.js"></script>
+</html>
