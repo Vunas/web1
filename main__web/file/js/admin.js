@@ -1,55 +1,49 @@
 let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
-chuyenHTMLthanhDanhSachProduct();
-function chuyenHTMLthanhDanhSachProduct() {
-    let HTML = '<div class="card__items">'
-    HTML += '<div class="addP">'
-    HTML += '<button onclick="showInputAddProduct()">Thêm sản phẩm</button>'
-    HTML += '</div>';
+function showArrayProduct() {
+    let HTML = `<div class="card__items">
+                <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`;
     let nodeContainerRightCard = document.querySelector(".container__right--card");
     for (let i = 0; i < DanhSachSanPham.length; i++) {
-        let htmlSanPham = chuyenHTMLthanhProduct(DanhSachSanPham[i]);
+        let htmlSanPham = showProduct(DanhSachSanPham[i]);
         HTML = HTML + htmlSanPham;
     }
     HTML = HTML + '</div>'
     nodeContainerRightCard.innerHTML = HTML;
 }
-function chuyenHTMLthanhProduct(sanPham) {
+function showProduct(sanPham) {
     let id = sanPham.id;
     html = ''
-    html += `<div class="card__item">`
-    html += `<div class="card__item--left">`
-    html += `<img src="` + sanPham.image1 + `" alt="">`
-    html += `</div>`
-    html += `<div class="card__item--middle">`
-    html += `<div class="card__name--middle">`
-    html += `` + sanPham.name + ``
-    html += `</div>`
-    html += `<div class="card__introduce--middle">`
-    html += `` + sanPham.introduce + ``
-    html += `</div>`
-    html += `</div>`
-    html += `<div class="card__item--right">`
-    html += ` <div class="card__price--right">`
-    html += `<span>` + (sanPham.price * 1000).toLocaleString() + ` <sup>VNĐ</sup></span>`
-    html += `</div>`
-    html += `<div class="card__edit__delete--right">`
-    html += `<button onclick="showInputChangeProduct(` + id + `)"><i class="fa fa-pencil-square" aria-hidden="true"></i></button>`
-    html += ` <button onclick="deleteP(` + id + `)"><i class="fa fa-trash" aria-hidden="true"></i></button>`
-    html += ` </div>`
-    html += `</div>`
-    html += ` </div>`
+    html += `<div class="card__item">
+     <div class="card__item--left">
+     <img src="` + sanPham.image1 + `" alt="">
+     </div>
+     <div class="card__item--middle">
+     <p class="card__name">` + sanPham.name + `</p>
+     <p class="card__introduce">`+ sanPham.introduce + `</p>
+     </div>
+     <div class="card__item--right">
+     <p><span>` + (sanPham.price * 1000).toLocaleString() + ` <sup>VNĐ</sup></span></p>
+     <button onclick="showInputChangeProduct(` + id + `)"><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
+     <button onclick="deleteP(` + id + `)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+     </div>
+     </div>`
     return html;
 }
+
+
 //show trang chủ
 function showpageMain() {
     document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formBill").style.display = "none";
     document.querySelector(".container__right--main").style.display = "block";
 }
 
 //show trang sản phẩm
-function showlistProduct() {
+function showPageProduct() {
     document.querySelector(".container__right--card").style.display = "block";
     document.querySelector(".container__right--main").style.display = "none";
+    document.querySelector("#formBill").style.display = "none";
+    showArrayProduct();
 }
 
 
@@ -100,7 +94,8 @@ function showInputAddProduct() {
 
 //đẩy sản phẩm vào localStorage và thêm vào trang bán hàng, trang admin
 function addProduct() {
-    console.log(document.querySelector("#imgPreview1__addP").src);
+    alert(recentImg1);
+    alert(recentImg2);
     let idtemp = DanhSachSanPham[0].id + 1;
     let textDetail1 = document.querySelector("#detail1__addP");
     let textDetail2 = document.querySelector("#detail2__addP");
@@ -109,8 +104,7 @@ function addProduct() {
     let textName = document.querySelector("#name__addP");
     let textIntroduce = document.querySelector("#introduce__addP");
     let textPrice = document.querySelector("#price__addP");
-    if ((document.querySelector("#imgPreview1__addP").src).includes("html")||(document.querySelector("#imgPreview2__addP").src).includes("html"))
-    {
+    if ((document.querySelector("#imgPreview1__addP").src).includes("html") || (document.querySelector("#imgPreview2__addP").src).includes("html")) {
         customAlert("Không có hình ảnh", "warning");
         return false;
     }
@@ -136,7 +130,7 @@ function addProduct() {
     }
     DanhSachSanPham.unshift(productTemp);
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
-    chuyenHTMLthanhDanhSachProduct();
+    showArrayProduct();
     customAlert("Thêm sản phẩm thành công ", "success")
 }
 
@@ -175,7 +169,7 @@ function deleteP(id) {
         }
     }
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
-    chuyenHTMLthanhDanhSachProduct();
+    showArrayProduct();
 }
 
 
@@ -209,7 +203,6 @@ function chooseFile2(fileInput) {
 function closeshowInputChangeProduct() {
     document.querySelector(".container__changeP--products").style.display = "none";
 }
-
 
 //Mở khung input sửa sản phẩm có chứa thông tin cũ sản phẩm
 function showInputChangeProduct(id) {
@@ -259,8 +252,6 @@ function setIMG2() {
 }
 
 
-
-
 //Lưu thông tin sau khi sửa
 function saveChangeProduct(sanPham) {
     sanPham.image1 = document.querySelector("#imgPreview1__changeP").src;
@@ -272,6 +263,140 @@ function saveChangeProduct(sanPham) {
     sanPham.detail3 = document.querySelector("#detail3__changeP").value;
     sanPham.detail4 = document.querySelector("#detail4__changeP").value;
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
-    chuyenHTMLthanhDanhSachProduct();
-    document.querySelector(".container__changeP--products").style.display="none";
+    showArrayProduct();
+    document.querySelector(".container__changeP--products").style.display = "none";
+}
+
+//click vào đơn hàng mở ra trang đơn hàng
+function showPageBill() {
+    document.querySelector(".container__right--main").style.display = "none";
+    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formBill").style.display = "block";
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    showArrayBill(DanhSachBill);
+}
+
+//Đóng phần xem chi tiết giỏ hàng
+function closeViewDonHang() {
+    document.querySelector(".modal__viewDonHang").style.display = "none";
+}
+
+function showArrayBill(arr) {
+    let html = `<thead id="theadBill">
+                <th>STT</th>
+                <th>Tên khách hàng</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết giỏ hàng</th>
+            </thead>
+            <tbody id="tbodyBill">`;
+    for (let i = 0; i < arr.length; i++) {
+        let HTMLbill = showBill(arr[i], i);
+        html = html + HTMLbill;
+    }
+    html = html + `</tbody>`;
+    document.querySelector("#tableBill").innerHTML = html;
+}
+
+//Show ra tất cả đơn hàng
+function showBill(bill, soThuTu) {
+    let html = '';
+    html += `<tr>
+        <td>`+ soThuTu + `</td>
+        <td>`+ bill.username + `</td>
+        <td>`+ bill.date + `</td>   
+        <td>`+ bill.status + `</td>
+        <td style="text-align:center;"><button type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
+            </tr>`
+    return html;
+}
+
+
+
+
+
+//Show lại chi tiết đơn hàng mà khách đã đặt
+function showDonHang(vitri) {
+    document.querySelector(".modal__viewDonHang").style.display = "block";
+    let html = '';
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    for (let i = 0; i < DanhSachBill.length; i++) {
+        if (vitri == i) {
+            let j = 0, sum = 0;
+            while (j < DanhSachBill[i].cart.length) {
+                sum += (parseInt(DanhSachBill[i].cart[j][3])) * (parseInt(DanhSachBill[i].cart[j][4])) * 1000;
+                html += `<tr>
+                <td id="info" style="display: flex;align-items: center;"><img style="width:80px;height:80px;" src="`+ DanhSachBill[i].cart[j][0] + `" alt="">` + DanhSachBill[i].cart[j][1] + `</td>
+                <td id="info">`+ DanhSachBill[i].cart[j][2] + `</td>
+                <td id="info">`+ DanhSachBill[i].cart[j][4] + `</td>
+                <td id="info">`+ ((DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4]) * 1000).toLocaleString() + `</td>
+                </tr>`; j++;
+                if (j == DanhSachBill[i].cart.length)
+                    html += `<tr id="twoChoose">
+                           <input type="hidden" value="`+ i + `">
+                            <td id="close" onclick="closeViewDonHang()" colspan="1">CLOSE</td>
+                            <td id="savestt" onclick="saveStatus(this)" colspan="2">LƯU TRẠNG THÁI</td>
+                            <td id="sumbill" colspan="1">TỔNG TIỀN : <span>` + sum.toLocaleString() + `</span><sup>VNĐ</sup></td>
+                        </tr>`
+            }
+        }
+    }
+    document.querySelector("#tbody__viewDonHang").innerHTML = html;
+}
+
+
+//Lấy giá trị thay đổi trạng thái
+function changeStatus() {
+    let changestt = document.querySelector("#changeStt").value;
+    return changestt;
+}
+
+
+
+//Thay đổi trạng thái đơn hàng
+function saveStatus(x) {
+    let vitriItem = x.parentNode.children[0].value;
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    for (let i = 0; i < DanhSachBill.length; i++) {
+        if (parseInt(vitriItem) == i) {
+            DanhSachBill[i].status = changeStatus();
+            alert("Lưu trạng thái thành công ! ");
+            break;
+        }
+    }
+    localStorage.setItem("ArrayBill", JSON.stringify(DanhSachBill));
+    showArrayBill(DanhSachBill);
+}
+
+//lọc đơn hàng theo trạng thái bill
+function filterStatus() {
+    let filterStt = document.querySelector("#filter__status--bill").value;
+    let arrayBillOfSTT = [];
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    for (let i = 0; i < DanhSachBill.length; i++) {
+        if (filterStt === DanhSachBill[i].status)
+            arrayBillOfSTT.push(DanhSachBill[i]);
+    }
+    showArrayBill(arrayBillOfSTT);
+    if (filterStt == "ALL")
+        showArrayBill(DanhSachBill);
+}
+
+//Lọc đơn hàng trong một khoảng thời gian nhất định
+function filterDay() {
+    let filterD = document.querySelector("#filter__time--bill").value;
+    let arayBillTime = [];
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    let past = new Date();
+    past.setDate(past.getDate() - parseInt(filterD));
+    let now = new Date();
+    for (let i = 0; i < DanhSachBill.length; i++) {
+        let dayOfBill = new Date(DanhSachBill[i].date);
+        if (dayOfBill >= past && dayOfBill <= now) {
+            arayBillTime.push(DanhSachBill[i]);
+        }
+    }
+    showArrayBill(arayBillTime);
+    if (filterD == "ALL")
+        showArrayBill(DanhSachBill);
 }
