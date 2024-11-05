@@ -146,29 +146,21 @@ body {
     display: none;
     overflow-y: scroll;
 }
+.container__right--card::-webkit-scrollbar {
+    display: none;
+}
 
-.container__right--card button {
-    width: 150px;
+#addP {
+    all: unset;
+    border: 0.1px solid;
+    font-size: 20px;
     cursor: pointer;
-    height: 30px;
-    margin-top: 7px;
-    font-size: 15px;
-    border-radius: 5px;
-}
-
-.container__right--card button:hover,
-.container__right--card button:active {
-    background-color: var(--primary--color5);
-}
-
-#choose {
-    width: 130px;
     margin: 10px;
+    padding:3px;
 }
 
-.addP {
-    height: 40px;
-    display: flex;
+#addP:hover{
+    background-color: var(--primary--color5);
 }
 
 .card__item {
@@ -187,28 +179,28 @@ body {
     width: 60%;
 }
 
-.card__name--middle {
-    margin: 10px;
-    font-size: 18px;
+.card__name,.card__introduce{
+   padding:10px;
+   font-size: 15px;
+   font-weight: 500;
 }
-
-.card__introduce--middle {
-    margin: 10px;
-    font-size: 14px;
-}
-
 .card__item--right {
     width: 30%;
     text-align: right;
 }
-
-.card__price--right {
+.card__item--right p {
     font-size: 15px;
-    margin: 10px 5px;
+    margin: 5px;
+    padding:5px;
 }
-
-.card__edit__delete--right button {
-    width: 50px;
+.card__item--right button {
+    all: unset;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 20px;
+}
+.card__item--right button:hover{
+    background-color: #D2B48C;
 }
 
 
@@ -226,10 +218,17 @@ body {
 
 .container__addP--products {
     background: rgba(0, 0, 0, .8);
-    position: fixed;
+    position: fixed ;
     inset: unset;
     width: 100%;
     height: 100vh;
+    display: none;
+    align-content: center;
+    justify-items: center;
+    overflow-x: scroll;
+}
+
+.container__addP--products::-webkit-scrollbar{
     display: none;
 }
 
@@ -240,7 +239,8 @@ body {
 .contain__addP--products {
     border: 1.5px solid gray;
     width: 70%;
-    margin: 30px auto;
+    min-height: 500px;
+    /* margin: auto auto; */
     background-color: var(--primary--color3);
     position: relative;
     display: flex;
@@ -385,3 +385,75 @@ body {
     top:45%;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+#formBill{
+    width:80%;
+    display: none;
+    height: 100vh;
+    overflow-y: scroll;
+}
+#tableBill{
+    width:100%;
+}
+#theadBill{
+    font-size: 20px;
+    text-align: center;
+    height:30px;
+    background-color: var(--primary--color5);
+}
+#tableBill tr td{
+    height:50px;
+}
+.modal__viewDonHang{
+    background: rgba(0, 0, 0, .8);
+    position: fixed ;
+    inset: unset;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    align-content: center;
+    justify-items: center;
+    overflow-y: scroll;
+} 
+.modal__viewDonHang::-webkit-scrollbar{
+    display: none;
+}
+ #table__viewDonHang{
+    width: 70%;
+    margin: 50px auto;
+    color: black;
+    background-color: white;
+}
+#thead__viewDonHang{
+    font-size: 20px;
+    height:35px;
+}
+#info{
+    text-align: center;
+    height:85px;
+}
+#sumbill{
+    height: 40px;
+    text-align: center;
+}
+#close,#savestt{
+    text-align: center;
+    height:40px;
+    cursor: pointer;
+    background-color: #D2B48C;
+}
+#changeStt{
+    width:100%;
+    height:30px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
