@@ -42,7 +42,7 @@ function pay() {
   if (localStorage.getItem("un")) {
     if (!cart || cart.length === 0) {
       // Kiểm tra giỏ hàng có sản phẩm hay không
-      alert("Không có sản phẩm trong giỏ hàng");
+      noti("Không có sản phẩm trong giỏ hàng",1);
       return;
     }
     let Bill = {
@@ -54,10 +54,10 @@ function pay() {
     ArrayBill.push(Bill);
     localStorage.setItem("ArrayBill", JSON.stringify(ArrayBill));
     localStorage.removeItem("gioHang");
-    alert("dat hang thanh cong");
+    noti("dat hang thanh cong",0);
     showCart();
   } else {
-    alert("ban phai dang nhap moi mua dc hang");
+    noti("ban phai dang nhap moi mua duoc hang",1);
   }
 }
 
