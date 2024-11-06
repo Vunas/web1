@@ -333,7 +333,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
 
   userArray.push(newUser);
   localStorage.setItem("users", JSON.stringify(userArray));
-  alert("dang ky thanh cong");
+  noti("Dăng ký thành công",0)
   closeSignup();
 };
 
@@ -350,11 +350,11 @@ document.getElementById("login-form").onsubmit = function (e) {
       localStorage.setItem("un", username);
       checkLogin();
       closeLogin();
-      alert("Đăng Nhập thành công");
+      noti("Đăng Nhập thành công",0)
       return false;
     }
   }
-  alert("Đăng nhập thất bại");
+  noti("Đăng nhập thất bại",1);
 };
 
 /*sideNavbar*/
@@ -439,3 +439,21 @@ function closeInfor() {
   document.getElementById("infor__Product").style.display = "none";
 }
 
+//ham thong bao success, warning ,0 la success, 1 la warning 
+
+function noti(s, n) {
+  let check= document.getElementById("noti");
+  if(check) check.outerHTML=""
+  let noti = ["success", "warning"];
+  let footer = document.getElementById("footer");
+  footer.innerHTML += `<div id="noti"><strong>` + noti[n] + `! </strong>` + s + ` <span onclick="closeNoti()">+</span></div>`;
+  document.getElementById("noti").classList.add(noti[n]);
+  setTimeout(closeNoti, 3000); 
+}
+
+function closeNoti() {
+  let notiElement = document.getElementById("noti");
+  if (notiElement) {
+      notiElement.outerHTML = "";
+  }
+}
