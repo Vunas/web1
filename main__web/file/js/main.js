@@ -797,7 +797,7 @@ function addcart(id) {
         gioHang.push(sp);
       }
       localStorage.setItem("gioHang", JSON.stringify(gioHang));
-      // ringAdd();
+      noti("thêm sản phầm thành công",0)
       document.getElementById("infor__Product").style.display = "none";
       break;
     }
