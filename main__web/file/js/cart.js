@@ -61,9 +61,6 @@ function pay() {
   }
 }
 
-//cập nhật số lượng trên giỏ hàng
-let gioHang = JSON.parse(localStorage.getItem("gioHang"));
-
 //Tăng số lượng và tính lại cột Total
 function quantityUp(x) {
   let vitriItem = x.parentNode.children[0].value;
