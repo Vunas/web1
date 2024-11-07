@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thanh toán</title>
-    <link rel="stylesheet" href="./file/css/cart.css" />
+    <link rel="stylesheet" href="./file/css/home.css" />
     <link rel="stylesheet" href="./file/css/main.css" />
     <link
       rel="stylesheet"
@@ -13,9 +13,11 @@
   </head>
   <body onload="loadDataCart()">
     <nav>
-      <span class="">Hinh</span>
+      <span class="logo"
+        ><img src="./file/image/img_brand/logo1.png" alt=""
+      /></span>
       <ul class="nav__mid">
-        <li><a class="nav__item home" href="#slider">Trang Chủ </a></li>
+        <li><a class="nav__item home" href="./main.html">Trang Chủ </a></li>
         <li class="nav__product">
           <a class="nav__item" href="main.html">Sản Phẩm </a>
           <div class="div__product">
@@ -49,7 +51,6 @@
         </li>
       </ul>
     </nav>
-
 
     <div class="slider"></div>
 
@@ -98,9 +99,9 @@
         </div>
       </div>
     </div>
-    
+
     <!-- login/logout -->
-    
+
     <div class="overlay">
       <div class="form-container">
         <button id="close__login" onclick="closeLogin()">x</button>
@@ -108,70 +109,93 @@
         <form action="" id="login-form" class="form login-form">
           <h2>Login</h2>
           <div class="input-box">
-            <input id="username" type="text" placeholder="Enter your username" required />
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              required
+            />
             <i class="fa-solid fa-user"></i>
           </div>
-          <br>
+          <br />
           <div class="input-box">
-            <input id="password" type="password" placeholder="Enter password" required />
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              required
+            />
             <i class="fa-solid fa-lock"></i>
             <i class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
-          <br>
-  
-          <div class="option-field">
-            <div class="checkbox">
-              <input type="checkbox" id="check" />
-              <label for="check">Remember me</label>
-            </div>
-          </div>
-  
+          <br />
           <button type="submit" class="login-button">Login</button>
-  
+
           <div class="login-signup">
-            Don't have an account? <button type="button" id="signup" onclick="opensignup()">Signup</button>
+            Don't have an account?
+            <button type="button" id="signup" onclick="opensignup()">
+              Signup
+            </button>
           </div>
         </form>
-  
+
         <!--signup form-->
         <form action="" id="signup-form" class="form signup-form">
           <h2>Sign up</h2>
           <div class="input-box">
-            <input id="sigus" type="text" placeholder="Enter your username" required/>
+            <input
+              id="sigus"
+              type="text"
+              placeholder="Enter your username"
+              required
+            />
             <i class="fa-solid fa-user"></i>
           </div>
-          <p id="psigus"><br></p> 
+          <p id="psigus"><br /></p>
           <div class="input-box">
-            <input id="sigpas" type="password" placeholder="Create password" required />
+            <input
+              id="sigpas"
+              type="password"
+              placeholder="Create password"
+              required
+            />
             <i class="fa-solid fa-lock"></i>
             <i class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
-          <p id="psigpas"><br></p>
+          <p id="psigpas"><br /></p>
           <div class="input-box">
-            <input id="resigpas" type="password" placeholder="Confirm password" required/>
+            <input
+              id="resigpas"
+              type="password"
+              placeholder="Confirm password"
+              required
+            />
             <i class="fa-solid fa-lock"></i>
             <i class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
-          <p id="presigpas"><br></p>
+          <p id="presigpas"><br /></p>
           <div class="input-box">
-            <input id="email" type="email" placeholder="Enter your email"/>
+            <input id="email" type="email" placeholder="Enter your email" />
             <i class="fa-solid fa-envelope"></i>
           </div>
-          <p id="pemail"><br></p>
+          <p id="pemail"><br /></p>
           <div class="input-box">
-            <input id="sdt" type="number" placeholder="Enter your number"/>
+            <input id="sdt" type="number" placeholder="Enter your number" />
             <i class="fa-solid fa-phone"></i>
           </div>
-          <p id="pphone"><br></p>
+          <p id="pphone"><br /></p>
           <div class="input-box">
             <input id="address" type="text" placeholder="Enter your address" />
             <i class="fa-solid fa-location-dot"></i>
           </div>
-          <p id="paddress"><br></p>
+          <p id="paddress"><br /></p>
           <button type="submit" class="login-button">Signup</button>
-  
+
           <div class="login-signup">
-            Already have an account? <button type="button" onclick="closeSignup()" id="login">Login</button>
+            Already have an account?
+            <button type="button" onclick="closeSignup()" id="login">
+              Login
+            </button>
           </div>
         </form>
       </div>
@@ -186,15 +210,12 @@
       </div>
       <ul>
         <li>
-          <a href=""><i class="fa-solid fa-house"></i>Trang chu</a>
+          <a href="./main.html"><i class="fa-solid fa-house"></i>Trang chu</a>
         </li>
         <li onclick="open_productSide()" class="sideNav__product">
           <a href="main.html"><i class="fa-solid fa-seedling"></i>san Pham</a>
           <button><i class="fa-solid fa-greater-than"></i></button>
         </li>
-        <!-- <li>
-          <a href=""><i class="fa-solid fa-bell"></i>Thong Bao</a>
-        </li> -->
         <li>
           <a href=""><i class="fa-solid fa-address-book"></i>Lien He</a>
         </li>
@@ -202,6 +223,9 @@
           <a href=""><i class="fa-solid fa-question"></i>Tro Giup</a>
         </li>
       </ul>
+      <div class="sideNav__brand">
+        <img src="./file/image/img_brand/logo2.png" alt="" />
+      </div>
     </div>
 
     <div id="sideNav__productSide" class="sideNav__productSide">
@@ -214,61 +238,53 @@
         </button>
       </div>
       <ul id="mobile__product"></ul>
+      <div class="sideNav__brand">
+        <img src="./file/image/img_brand/logo2.png" alt="" />
+      </div>
     </div>
 
     <div class="container">
-      <ul id="MenuCart"></ul>
-      <div class="contain">
-        <div class="nav">
-          <h1 id="nav__table">XEM LẠI GIỎ HÀNG</h1>
+      <div class="list__product">
+        <h1>Chăm sóc khác hàng</h1>
+        <div class="container__section">
+          <details>
+            <summary>Bạn Quên mật khẩu</summary>
+            <h3>Đưng lo lắng</h3>
+            <p>
+              Bạn chỉ cần gửi email cho chúng tôi thông qua: mecha19@gmail.com
+              hoặc none.hoangvu@gmail.com
+            </p>
+            <p>
+              Chúng tôi sẽ giải đáp mọi thắc mắc của bạn trong 24 giờ. Cảm ơn
+              bạn
+            </p>
+          </details>
         </div>
-        <table>
-          <thead id="myhead">
-            <tr>
-              <th>Product</th>
-              <th>Introduce</th>
-              <th>Price</th>
-              <th class="number__quantity">Number</th>
-              <th class="number__total">Total</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody id="myCart">
-            <tr>
-              <td colspan="6">Trống</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div id="modal__detail" class="modal__overlay">
-        <div id="detailBill"></div>
+        <div class="container__section">
+          <details>
+            <summary>Bạn không thể đăng ký?</summary>
+            <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
+          </details>
+        </div>
       </div>
     </div>
-    <div id="pay"></div>
-    <div id="infor__Product" class="modal__product"></div>
 
     <footer id="footer">
       <div>
         <h1>Địa Chỉ</h1>
         <ul>
-          <li><a href="">Naitin - Mô hình anime chính hãng</a></li>
+          <li>Naitin - Mô hình anime chính hãng</li>
           <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3,
-              Quận 5, TPHCM</a
-            >
+            <i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3,
+            Quận 5, TPHCM
           </li>
           <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến
-              Nghé, Quận 1, TPHCM</a
-            >
+            <i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến
+            Nghé, Quận 1, TPHCM
           </li>
           <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan,
-              P. Võ Thị Sáu, Quân3, TPHCM</a
-            >
+            <i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan, P.
+            Võ Thị Sáu, Quân3, TPHCM
           </li>
         </ul>
       </div>
@@ -285,7 +301,9 @@
         <h1>Trợ Giúp</h1>
       </div>
       <div class="brand-footer">
-        <a href=""> G U N D A M</a>
+        <a class="footer__brand" href=""
+          ><img src="./file/image/img_brand/logo1.png" alt=""
+        /></a>
       </div>
       <div class="footer__bot">
         <ul>
@@ -294,6 +312,5 @@
       </div>
     </footer>
   </body>
-  <script src="./file/js/cart.js"></script>
   <script src="./file/js/js.js"></script>
 </html>
