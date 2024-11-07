@@ -240,19 +240,19 @@ function checkLogin() {
   if (username) {
     if (username == "admin") {
       document.getElementById("checkLogin").innerHTML =
-        `<span id="admin">
-          `+username+`
+        `<span id="userlogin">
+          <span>`+username+`</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>
         <a href="./admin.html" class="nav__item">
             <i class="fa-solid fa-gear"></i>
           </a>`;
     } else {
-      document.getElementById(
-        "checkLogin"
-      ).innerHTML = `<button onclick="logout()" id="user-icon" class="nav__item">
-      <i class="fa-regular fa-user"></i>`+username+`
-    </button>`;
+      document.getElementById("checkLogin").innerHTML = 
+      `<span id="userlogin">
+          <span><i class="fa-regular fa-user"></i>`+username+`</span>
+          <button id="logout" onclick="logout()">Đăng Xuất</button>
+        </span>`;
     }
   } 
 }
@@ -300,6 +300,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   let signupFlag = true;
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
+  const addressRegex = /[0-9]+.*(đường|phố|phường|xã|quận|huyện|thị xã|thành phố|tỉnh|việt nam)/i;
 
   for (let i = 0; i < userArray.length; i++) {
     if (username == userArray[i].username) {
@@ -313,7 +314,13 @@ document.getElementById("signup-form").onsubmit = function (e) {
       "Mật khẩu khoong chính xác";
     signupFlag = false;
   } else document.getElementById("presigpas").innerHTML = "";
-
+  
+  if(!addressRegex.test(address)){
+    document.getElementById("paddress").innerHTML =
+    "Địa chỉ không hợp lệ";
+  signupFlag = false;
+} else document.getElementById("paddress").innerHTML = "";
+  
   if (sdt.length != 10) {
     document.getElementById("pphone").innerHTML = "Sdt không hợp lệ";
     signupFlag = false;
@@ -402,8 +409,8 @@ function showProductInfor(id) {
         DanhSachSanPham[i].introduce +
         `</h4>
       <h4>` +
-        DanhSachSanPham[i].price +
-        `</h4>
+        (DanhSachSanPham[i].price*1000).toLocaleString() +
+        `VND</h4>
       <h4>` +
         "Mô Tả:" +
         `</h4>
