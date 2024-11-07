@@ -14,7 +14,6 @@ body{
     --primary--color3:#FFFFFF;
     --primary--color4:rgb(250, 173, 31);
     --main--color: #ffba66;
-    --hover--collor:rgba(200, 200, 200, 0.5);
 }
 #MenuCart{
     width: 100%;
@@ -85,11 +84,11 @@ tbody tr td:nth-child(6) span{
 }
 
 tbody tr td span:hover{
-    background-color: var(--hover--collor);
+    background-color: var(--main--color);
 }
 
 tbody tr td button:hover{
-    background-color: var(--hover--collor);
+    background-color: var(--main--color);
 }
 
 tbody tr td input{
@@ -140,7 +139,7 @@ table th{
 }
 .agree__order button:hover,
 .agree__order button:active{
-    background-color: var(--hover--collor);
+    background-color: var(--main--color);
 }
 
 #detailBill{
