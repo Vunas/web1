@@ -13,9 +13,9 @@
   </head>
   <body onload="loadDataCart()">
     <nav>
-      <span class="">Hinh</span>
+      <span class="logo"><img src="./file/image/img_brand/logo1.png" alt=""></span>
       <ul class="nav__mid">
-        <li><a class="nav__item home" href="#slider">Trang Chủ </a></li>
+        <li><a class="nav__item home" href="./main.html">Trang Chủ </a></li>
         <li class="nav__product">
           <a class="nav__item" href="main.html">Sản Phẩm </a>
           <div class="div__product">
@@ -24,7 +24,7 @@
         </li>
         <!-- <li><a class="nav__item" href="">Thông Báo</a></li> -->
         <li><a class="nav__item" href="#footer">Liên Hệ</a></li>
-        <li><a class="nav__item" href="#footer">Trợ Giúp</a></li>
+        <li><a class="nav__item" href="./home.html">Trợ Giúp</a></li>
       </ul>
       <ul class="nav__right">
         <li>
@@ -118,14 +118,6 @@
             <i class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
           <br>
-  
-          <div class="option-field">
-            <div class="checkbox">
-              <input type="checkbox" id="check" />
-              <label for="check">Remember me</label>
-            </div>
-          </div>
-  
           <button type="submit" class="login-button">Login</button>
   
           <div class="login-signup">
@@ -186,22 +178,20 @@
       </div>
       <ul>
         <li>
-          <a href=""><i class="fa-solid fa-house"></i>Trang chu</a>
+          <a href="./main.html"><i class="fa-solid fa-house"></i>Trang chu</a>
         </li>
         <li onclick="open_productSide()" class="sideNav__product">
           <a href="main.html"><i class="fa-solid fa-seedling"></i>san Pham</a>
           <button><i class="fa-solid fa-greater-than"></i></button>
         </li>
-        <!-- <li>
-          <a href=""><i class="fa-solid fa-bell"></i>Thong Bao</a>
-        </li> -->
         <li>
-          <a href=""><i class="fa-solid fa-address-book"></i>Lien He</a>
+          <a href="#footer"><i class="fa-solid fa-address-book"></i>Lien He</a>
         </li>
         <li>
-          <a href=""><i class="fa-solid fa-question"></i>Tro Giup</a>
+          <a href="./home.html"><i class="fa-solid fa-question"></i>Tro Giup</a>
         </li>
       </ul>
+      <div class="sideNav__brand"><img src="./file/image/img_brand/logo2.png" alt=""></div>
     </div>
 
     <div id="sideNav__productSide" class="sideNav__productSide">
@@ -214,6 +204,7 @@
         </button>
       </div>
       <ul id="mobile__product"></ul>
+      <div class="sideNav__brand"><img src="./file/image/img_brand/logo2.png" alt=""></div>
     </div>
 
     <div class="container">
@@ -251,25 +242,10 @@
       <div>
         <h1>Địa Chỉ</h1>
         <ul>
-          <li><a href="">Naitin - Mô hình anime chính hãng</a></li>
-          <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3,
-              Quận 5, TPHCM</a
-            >
-          </li>
-          <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến
-              Nghé, Quận 1, TPHCM</a
-            >
-          </li>
-          <li>
-            <a href=""
-              ><i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan,
-              P. Võ Thị Sáu, Quân3, TPHCM</a
-            >
-          </li>
+          <li>Naitin - Mô hình anime chính hãng</li>
+          <li><i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3, Quận 5, TPHCM</li>
+          <li><i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến Nghé, Quận 1, TPHCM</li>
+          <li><i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan, P. Võ Thị Sáu, Quân3, TPHCM</li>
         </ul>
       </div>
       <div>
@@ -285,13 +261,9 @@
         <h1>Trợ Giúp</h1>
       </div>
       <div class="brand-footer">
-        <a href=""> G U N D A M</a>
+        <a class="footer__brand" href=""><img src="./file/image/img_brand/logo1.png" alt=""></a>
       </div>
-      <div class="footer__bot">
-        <ul>
-          <li>© Copyright 2024 By NaiTin. Powered by Naitin</li>
-        </ul>
-      </div>
+      <div class="footer__bot"><ul><li>© Copyright 2024 By NaiTin. Powered by Naitin</li></ul></div>
     </footer>
   </body>
   <script src="./file/js/cart.js"></script>
