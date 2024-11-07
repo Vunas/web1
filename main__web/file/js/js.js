@@ -429,9 +429,9 @@ function showProductInfor(id) {
         `</li>
       </ul>
       <div class="view__input">
-        <button onclick="quantityDown()" class="view__sub">-</button>
+        <button onclick="quantityDownn()" class="view__sub">-</button>
         <input type="text" name="" id="input__number" value="1" min="1" />
-        <button onclick="quantityUp()" class="view__add">+</button>
+        <button onclick="quantityUpp()" class="view__add">+</button>
       </div>
       <button onclick="addcart(` +
         id +
@@ -462,5 +462,68 @@ function closeNoti() {
   let notiElement = document.getElementById("noti");
   if (notiElement) {
       notiElement.outerHTML = "";
+  }
+}
+
+function quantityDownn() {
+  if (document.getElementById("input__number").value > 1) {
+    document.getElementById("input__number").value--;
+  }
+}
+
+function quantityUpp() {
+  document.getElementById("input__number").value++;
+}
+
+
+function capNhatSLGioHang(vitri) {
+  for (let i = 0; i < gioHang.length; i++) {
+    if (i == vitri) {
+      gioHang[i][4] += parseInt(document.getElementById("input__number").value);
+      break;
+    }
+  }
+  localStorage.setItem("gioHang", JSON.stringify(gioHang));
+}
+
+//check sản phẩm đã có trong giỏ hàng chưa
+function checkGioHang(cardNAME, cardINTRODUCE) {
+  let vitri = -1;
+  for (let i = 0; i < gioHang.length; i++) {
+    if (gioHang[i][1] == cardNAME && gioHang[i][2] == cardINTRODUCE) vitri = i;
+  }
+  return vitri;
+}
+
+let gioHang = [];
+if (localStorage.getItem("gioHang"))
+  gioHang = JSON.parse(localStorage.getItem("gioHang"));
+function addcart(id) {
+  let quantity = document.getElementById("input__number").value;
+  let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
+  for (let i = 0; i < DanhSachSanPham.length; i++) {
+    if (DanhSachSanPham[i].id == id) {
+      let sp = new Array(
+        DanhSachSanPham[i].image1,
+        DanhSachSanPham[i].name,
+        DanhSachSanPham[i].introduce,
+        DanhSachSanPham[i].price,
+        parseInt(quantity)
+      );
+      if (
+        checkGioHang(DanhSachSanPham[i].name, DanhSachSanPham[i].introduce) !=
+        -1
+      ) {
+        capNhatSLGioHang(
+          checkGioHang(DanhSachSanPham[i].name, DanhSachSanPham[i].introduce)
+        );
+      } else {
+        gioHang.push(sp);
+      }
+      localStorage.setItem("gioHang", JSON.stringify(gioHang));
+      noti("thêm sản phầm thành công",0)
+      document.getElementById("infor__Product").style.display = "none";
+      break;
+    }
   }
 }
