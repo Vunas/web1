@@ -1021,7 +1021,7 @@ tbody tr {
   cursor: pointer;
   border: 1px solid;
   width: 170px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .view__input button:hover,
@@ -1071,9 +1071,13 @@ tbody tr {
   width: 800px;
   max-width: 100%;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: scroll;
   display: flex;
   background-color: white;
+}
+
+.Infor__Child::-webkit-scrollbar{
+  display: none;
 }
 
 .close__infor {
