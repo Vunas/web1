@@ -94,8 +94,6 @@ function showInputAddProduct() {
 
 //đẩy sản phẩm vào localStorage và thêm vào trang bán hàng, trang admin
 function addProduct() {
-    alert(recentImg1);
-    alert(recentImg2);
     let idtemp = DanhSachSanPham[0].id + 1;
     let textDetail1 = document.querySelector("#detail1__addP");
     let textDetail2 = document.querySelector("#detail2__addP");
@@ -140,7 +138,7 @@ function customAlert(message, type) {
         document.querySelector(".containAlert").style.backgroundColor = '#D2B48C';
     if (type == "warning")
         document.querySelector(".containAlert").style.backgroundColor = '#D2B48C';
-    document.querySelector(".containAlert").innerHTML = message;
+    document.querySelector(".containAlert").innerHTML = message + `<button id="button__Alert" onclick="closeAlert()">OK</button>`;
     document.querySelector(".customAlert").style.display = "block";
     setTimeout(function () {
         document.querySelector(".customAlert").style.display = "none";
@@ -148,7 +146,7 @@ function customAlert(message, type) {
 }
 
 //khi click vào button sẽ đóng khung thông báo Alert 
-function closeContainAlert() {
+function closeAlert() {
     document.querySelector(".customAlert").style.display = "none";
 }
 
@@ -255,7 +253,7 @@ function setIMG2() {
 //Lưu thông tin sau khi sửa
 function saveChangeProduct(sanPham) {
     sanPham.image1 = document.querySelector("#imgPreview1__changeP").src;
-    sanPham.image2= document.querySelector("#imgPreview2__changeP").src;
+    sanPham.image2 = document.querySelector("#imgPreview2__changeP").src;
     sanPham.name = document.querySelector(".input__changeP--name input").value;
     sanPham.introduce = document.querySelector(".input__changeP--introduce input").value;
     sanPham.price = document.querySelector(".input__changeP--price input").value;
@@ -283,9 +281,14 @@ function closeViewDonHang() {
 }
 
 function showArrayBill(arr) {
-    let html = `<thead id="theadBill">
+    if(!localStorage.getItem("ArrayBill")){
+        html=`<tr><td>Không có đơn hàng nào ! </td></tr>`;
+    }
+    else{
+        let html = `<thead id="theadBill">
                 <th>STT</th>
                 <th>Tên khách hàng</th>
+                <th>Địa chỉ</th>
                 <th>Thời gian</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết giỏ hàng</th>
@@ -297,6 +300,7 @@ function showArrayBill(arr) {
     }
     html = html + `</tbody>`;
     document.querySelector("#tableBill").innerHTML = html;
+    }
 }
 
 //Show ra tất cả đơn hàng
@@ -305,9 +309,10 @@ function showBill(bill, soThuTu) {
     html += `<tr>
         <td>`+ soThuTu + `</td>
         <td>`+ bill.username + `</td>
+        <td>`+bill.address+`</td>
         <td>`+ bill.date + `</td>   
         <td>`+ bill.status + `</td>
-        <td style="text-align:center;"><button type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
+        <td style="text-align:center;"><button id="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
             </tr>`
     return html;
 }
@@ -336,8 +341,8 @@ function showDonHang(vitri) {
                     html += `<tr id="twoChoose">
                            <input type="hidden" value="`+ i + `">
                             <td id="close" onclick="closeViewDonHang()" colspan="1">CLOSE</td>
-                            <td id="savestt" onclick="saveStatus(this)" colspan="2">LƯU TRẠNG THÁI</td>
-                            <td id="sumbill" colspan="1">TỔNG TIỀN : <span>` + sum.toLocaleString() + `</span><sup>VNĐ</sup></td>
+                            <td id="savestt" onclick="saveStatus(this)" colspan="1">LƯU TRẠNG THÁI</td>
+                            <td id="sumbill" colspan="2">TỔNG TIỀN : <span>` + sum.toLocaleString() + `</span><sup>VNĐ</sup></td>
                         </tr>`
             }
         }
@@ -369,35 +374,78 @@ function saveStatus(x) {
     showArrayBill(DanhSachBill);
 }
 
-//lọc đơn hàng theo trạng thái bill
-function filterStatus() {
-    let filterStt = document.querySelector("#filter__status--bill").value;
-    let arrayBillOfSTT = [];
-    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
-    for (let i = 0; i < DanhSachBill.length; i++) {
-        if (filterStt === DanhSachBill[i].status)
-            arrayBillOfSTT.push(DanhSachBill[i]);
+
+//tạo ra filter lọc đơn hàng
+let statuss = ["chưa xử lý", "đã xác nhận","all", "giao hàng thành công", "đã hủy"];
+let day=["một ngày","một tuần","all","nửa tháng","một tháng"];
+let valueDay=["1","7","15","30"];
+createFilterBill();
+function createFilterBill(){
+    let html=`<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
+    <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusAndTime()">`
+    for(let i=0;i<statuss.length;i++)
+    {
+        html+=`<option value="`+statuss[i]+`">`+statuss[i]+`</option>`
     }
-    showArrayBill(arrayBillOfSTT);
-    if (filterStt == "ALL")
-        showArrayBill(DanhSachBill);
+    html+=`</select></div>`
+    html+=`<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Filter Day</p>
+            <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusAndTime()">`
+    for(let i=0;i<day.length;i++){
+        html+=`<option value="`+valueDay[i]+`">`+day[i]+`</option>`
+    }
+    html+=`</select></div>`
+    document.querySelector("#filterBill").innerHTML=html;
 }
 
-//Lọc đơn hàng trong một khoảng thời gian nhất định
-function filterDay() {
-    let filterD = document.querySelector("#filter__time--bill").value;
-    let arayBillTime = [];
+
+//lọc đơn hàng theo trạng thái bill và theo thời gian
+function filterStatusAndTime() {
+    let filterStt = document.querySelector("#filter__status--bill").value;
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
-    let past = new Date();
-    past.setDate(past.getDate() - parseInt(filterD));
-    let now = new Date();
-    for (let i = 0; i < DanhSachBill.length; i++) {
-        let dayOfBill = new Date(DanhSachBill[i].date);
-        if (dayOfBill >= past && dayOfBill <= now) {
-            arayBillTime.push(DanhSachBill[i]);
+    let arrayBillOfSTT = [];
+    if (filterStt == "all")
+        arrayBillOfSTT = DanhSachBill;
+    else {
+        for (let i = 0; i < DanhSachBill.length; i++) {
+            if (filterStt === DanhSachBill[i].status)
+                arrayBillOfSTT.push(DanhSachBill[i]);
         }
     }
-    showArrayBill(arayBillTime);
-    if (filterD == "ALL")
-        showArrayBill(DanhSachBill);
+    let filterD = document.querySelector("#filter__time--bill").value;
+    let now = new Date();
+    let past = new Date();
+    past.setDate(past.getDate() - parseInt(filterD));
+    for (let i = 0; i < arrayBillOfSTT.length; i++) {
+        let timeB = new Date(arrayBillOfSTT[i].date);
+        if (timeB <= past && timeB >= now)
+            arrayBillOfSTT.splice(i, 1);
+    }
+    if(arrayBillOfSTT.length==0){
+        document.querySelector("#tableBill").innerHTML=`
+        <thead id="theadBill">
+                <th>STT</th>
+                <th>Tên khách hàng</th>
+                <th>Địa chỉ</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết giỏ hàng</th>
+        </thead>
+        <tbody><tr><td style="text-align:center" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
+    }
+    else{
+        showArrayBill(arrayBillOfSTT);
+    }
 }
+
+
+function logOutAdmin(){
+    localStorage.removeItem("un");
+    let users=JSON.parse(localStorage.getItem("users"));
+    for(let i=0;i<users.length;i++){
+        if(users[i].username=="admin"){
+            users.splice(i,1);
+        }
+    }
+    localStorage.setItem("users",stringify(users));
+}
+
