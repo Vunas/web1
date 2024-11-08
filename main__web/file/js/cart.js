@@ -193,7 +193,7 @@ function showCart() {
             </td>
             <td class="totalTr">` +
         (gioHang[i][3] * gioHang[i][4] *1000).toLocaleString() +
-        `</td>
+        ` VNĐ</td>
             <td><span onclick="deleteItemCart(this)">Xóa</span></td>
             </tr>`;
       if (i == gioHang.length - 1)
@@ -267,11 +267,11 @@ function detail(id) {
           <table>
           <thead id="myhead">
             <tr>
-              <th>Product</th>
-              <th>Introduce</th>
-              <th>Price</th>
-              <th class="number__quantity">Number</th>
-              <th class="number__total">Total</th>
+              <th>Sản phẩm</th>
+              <th>Tên</th>
+              <th>Giá</th>
+              <th class="number__quantity">Số lượng</th>
+              <th class="number__total">Tổng giá</th>
             </tr>
             </thead>
             <tbody id="myCart">`
@@ -294,7 +294,7 @@ function detail(id) {
       <td>`+ArrayBill[id].cart[i][4]+`</td>
       <td class="totalTr">` +
     (ArrayBill[id].cart[i][3] * ArrayBill[id].cart[i][4]*1000).toLocaleString() +
-    `</td>
+    ` VNĐ</td>
             </tr>`;
   }
   kq+= `</tbody>
@@ -316,8 +316,8 @@ function showHistoryCart() {
           <th>ngay</th>
           <th>Sản phẩm</th>
           <th>Tên</th>
-          <th>so luong</th>
           <th>gia</th>
+          <th>so luong</th>
           <th>Tong gia</th>
           <th>trang thai</th>
          
@@ -333,21 +333,21 @@ function showHistoryCart() {
           `</td>
           <td style="display: flex;align-items: center;"><img src="` +
     ArrayBill[i].cart[j][0] +
-    `" alt="">` +
+    `" alt="">` + 
     ArrayBill[i].cart[j][1] +
     `</td>
           <td>` +
           ArrayBill[i].cart[j][2] +
           `</td>
           <td>` +
-          ArrayBill[i].cart[j][4] +
-          `</td>
-          <td>` +
           (parseInt(ArrayBill[i].cart[j][3])*1000).toLocaleString() +
           ` VND</td>
           <td>` +
-          (ArrayBill[i].cart[j][3]*ArrayBill[i].cart[j][4]*1000).toLocaleString() +
+          ArrayBill[i].cart[j][4] +
           `</td>
+          <td>` +
+          (ArrayBill[i].cart[j][3]*ArrayBill[i].cart[j][4]*1000).toLocaleString() +
+          ` VNĐ</td>
           <td>` +
           ArrayBill[i].status +
           `</td>
