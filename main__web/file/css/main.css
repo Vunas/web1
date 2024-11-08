@@ -582,7 +582,7 @@ nav ul li .nav__item {
   z-index: -1;
   position: relative;
   top: 0;
-  left: 2%;
+  left: 1.5%;
   height: 28vw;
   min-height: 200px;
   width: 96%;
@@ -1035,6 +1035,9 @@ tbody tr {
 }
 
 @media (max-width: 739px) {
+  .slider{
+    left: 0;
+  }
   .view__item {
     top: 0;
     height: 100%;
@@ -1071,7 +1074,7 @@ tbody tr {
   width: 800px;
   max-width: 100%;
   border-radius: 10px;
-  overflow: scroll;
+  overflow-y: scroll;
   display: flex;
   background-color: white;
 }
@@ -1126,7 +1129,7 @@ footer div {
 
 footer div h1,
 footer div ul {
-  padding: 20px;
+  padding: 10px 20px;
   color: black;
 }
 
@@ -1139,6 +1142,7 @@ footer div ul li {
 footer div ul li a {
   list-style-type: none;
   text-decoration: none;
+  color: black;
 }
 
 .brand-footer {
@@ -1172,6 +1176,10 @@ footer .footer__bot{
   }
 }
 @media (max-width: 900px) {
+  .Infor__Child{
+    height: 100%;
+    margin: 0;
+  }
   .list__product{
     width: 650px;
   }
@@ -1180,10 +1188,6 @@ footer .footer__bot{
   }
 }
 @media (max-width: 600px) {
-  .Infor__Child{
-    height: 100%;
-    margin: 0;
-  }
   .list__product{
     width: 350px;
   }
@@ -1198,6 +1202,7 @@ footer .footer__bot{
 #noti{
   position: fixed;
   top: 50px;
+  left: -600px;
   height: 60px;
   width: auto;
   min-width: 300px;
@@ -1205,7 +1210,7 @@ footer .footer__bot{
   padding-right: 30px;
   overflow: hidden;
   z-index: 102;
-  animation: noti 0.5s;
+  animation: noti 3s;
 }
 
 #noti span{
@@ -1233,12 +1238,24 @@ footer .footer__bot{
   color: rgb(30, 30, 29);
 }
 
+.error{
+  background-color: rgb(235, 143, 143);
+  border-left: 5px solid #ed0d0d;
+  color: rgb(73, 8, 8);
+}
+
 @keyframes noti{
   from{
     left: -200px;
   }
-  to{
+  15%{
     left: 0;
+  }
+  85%{
+    left: 0;
+  }
+  to{
+    left: -600px;
   }
 }
 
