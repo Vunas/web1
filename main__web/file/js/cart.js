@@ -45,8 +45,11 @@ function pay() {
       noti("Không có sản phẩm trong giỏ hàng",1);
       return;
     }
+    userLogin= JSON.parse(localStorage.getItem("userLogin"));
     let Bill = {
-      username: JSON.parse(localStorage.getItem("userLogin")).username,
+      username: userLogin.username,
+      address: userLogin.address,
+      phone: userLogin.sdt,
       status: statuss[0],
       date: new Date().toDateString(),
       cart: cart,
@@ -216,10 +219,12 @@ function showHoaDon() {
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
   document.getElementById("myhead").innerHTML = `<tr>
           <th>Stt</th>
-          <th>ngay</th>
-          <th>nguoi mua</th>
-          <th>trang thai</th>
-          <th>xem chi tiet</th>
+          <th>ngày</th>
+          <th>người mua</th>
+          <th>trạng thái</th>
+          <th>Địa chỉ</th>
+          <th>Số điện thoại</th>
+          <th>xem chi tiết</th>
         </tr>`;
 
   for (let i = ArrayBill.length-1; i >=0; i--) {
@@ -237,6 +242,12 @@ function showHoaDon() {
         `</td>
             <td>` +
         ArrayBill[i].status +
+        `</td>
+        <td>` +
+        ArrayBill[i].address +
+        `</td>
+        <td>` +
+        ArrayBill[i].phone +
         `</td>
             <td><button onclick="detail(`+i+`)">...</button></td>
           </tr>`;
