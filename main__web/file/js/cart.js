@@ -1,4 +1,3 @@
-let statuss = ["chưa xử lý", "đã xác nhận", "đã giao thành công", "đã hủy"];
 let MenuCart = ["Giỏ Hàng", "Hóa Đơn", "Lịch sử"];
 
 function loadDataCart(){
@@ -50,7 +49,7 @@ function pay() {
       username: userLogin.username,
       address: userLogin.address,
       phone: userLogin.sdt,
-      status: statuss[0],
+      status: "chưa xử lý",
       date: new Date().toDateString(),
       cart: cart,
     };
