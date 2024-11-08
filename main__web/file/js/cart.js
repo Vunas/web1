@@ -39,14 +39,14 @@ function loadMenuCart(){
 function pay() {
   let cart = JSON.parse(localStorage.getItem("gioHang")) || [];
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
-  if (localStorage.getItem("un")) {
+  if (localStorage.getItem("userLogin")) {
     if (!cart || cart.length === 0) {
       // Kiểm tra giỏ hàng có sản phẩm hay không
       noti("Không có sản phẩm trong giỏ hàng",1);
       return;
     }
     let Bill = {
-      username: localStorage.getItem("un"),
+      username: JSON.parse(localStorage.getItem("userLogin")).username,
       status: statuss[0],
       date: new Date().toDateString(),
       cart: cart,
@@ -209,7 +209,7 @@ function showCart() {
 }
 
 function showHoaDon() {
-  let un= localStorage.getItem("un") || '';
+  let userLogin=  JSON.parse(localStorage.getItem("userLogin")) || '';
   document.getElementById("nav__table").innerHTML="Xem Lại Hóa Đơn";
   document.getElementById("MenuCart").children[1].classList.add("activem");
   let kq = "";
@@ -223,7 +223,7 @@ function showHoaDon() {
         </tr>`;
 
   for (let i = ArrayBill.length-1; i >=0; i--) {
-    if(ArrayBill[i].username == un){
+    if(ArrayBill[i].username == userLogin.username){
       kq +=
         `<tr>
             <td>` +
@@ -296,7 +296,7 @@ function closeDatail() {
 }
 
 function showHistoryCart() {
-  let un= localStorage.getItem("un") || '';
+  let userLogin= JSON.parse(localStorage.getItem("userLogin")) || '';
   document.getElementById("nav__table").innerHTML="Lịch Sử Mua Hàng";
   document.getElementById("MenuCart").children[2].classList.add("activem");
   let kq = "";
@@ -313,7 +313,7 @@ function showHistoryCart() {
         </tr>`;
 
   for (let i = ArrayBill.length-1; i >=0; i--) {
-    if(ArrayBill[i].username == un){
+    if(ArrayBill[i].username == userLogin.username){
       for (let j = 0; j < ArrayBill[i].cart.length; j++) {
         kq +=
         `<tr>
