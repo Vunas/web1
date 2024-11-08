@@ -236,12 +236,12 @@ function ShowHidePassword() {
 ShowHidePassword();
 
 function checkLogin() {
-  let username = localStorage.getItem("un");
-  if (username) {
-    if (username == "admin") {
+  let userLogin = JSON.parse(localStorage.getItem("userLogin")) ;
+  if (userLogin) {
+    if (userLogin.username == "admin") {
       document.getElementById("checkLogin").innerHTML =
         `<span id="userlogin">
-          <span>`+username+`</span>
+          <span>`+userLogin.username+`</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>
         <a href="./admin.html" class="nav__item">
@@ -250,7 +250,7 @@ function checkLogin() {
     } else {
       document.getElementById("checkLogin").innerHTML = 
       `<span id="userlogin">
-          <span><i class="fa-regular fa-user"></i>`+username+`</span>
+          <span><i class="fa-regular fa-user"></i>`+userLogin.username+`</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>`;
     }
@@ -258,7 +258,7 @@ function checkLogin() {
 }
 
 function logout() {
-  localStorage.removeItem("un");
+  localStorage.removeItem("userLogin");
   checkLogin();
   document.getElementById("checkLogin").innerHTML = 
     `<button onclick="openlogin()" id="user-icon" class="nav__item">
@@ -354,7 +354,8 @@ document.getElementById("login-form").onsubmit = function (e) {
 
   for (let i = 0; i < users.length; i++) {
     if (username == users[i].username && password == users[i].password) {
-      localStorage.setItem("un", username);
+      var userLogin = users[i];
+      localStorage.setItem("userLogin", JSON.stringify(userLogin));
       checkLogin();
       closeLogin();
       noti("Đăng Nhập thành công",0)
