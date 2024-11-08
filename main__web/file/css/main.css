@@ -30,6 +30,10 @@ nav {
   background-color: var(--main--color);
 }
 
+.logo {
+  padding: 0 0 0 30px;
+}
+
 .logo img{
   padding: 0;
   box-sizing: border-box;
