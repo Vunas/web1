@@ -68,6 +68,7 @@ nav ul li .nav__item {
 }
 
 .nav__item-bars {
+  margin-top: 5px;
   display: none;
 }
 
