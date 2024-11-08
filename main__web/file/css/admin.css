@@ -31,21 +31,31 @@ body {
 
 .logo img {
     width: 100%;
-    height: 300px;
-    padding: 20px;
+    height: 170px;
 }
 
 .contain {
-    height: 60%;
+    margin-top: 20px;
 }
-
-.nav li {
+.nav1 li {
     margin: 20px;
     list-style: none;
-    font-size: 20px;
+    font-size: 17px;
     cursor: pointer;
 }
-
+.nav2 li a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-size: 17px;
+}
+.nav2 li{
+    margin: 20px;
+    list-style: none;
+}
+.nav2{
+    margin-top:40px;
+}
 .container__right--main {
     width: 80%;
 }
@@ -63,11 +73,12 @@ body {
 
 .container__bottom {
     display: flex;
+    padding:40px;
 }
 
 .text__user,
 .text__product {
-    width: 30%;
+    width: 40%;
     text-align: center;
     margin: 5px auto;
     border: 0.5px solid gray;
@@ -88,7 +99,7 @@ body {
 }
 
 @media (min-width:755px) and (max-width:1024px) {
-    .container__left .contain .nav li {
+    .container__left .contain .nav1 li {
         font-size: 15px;
     }
 }
@@ -99,7 +110,7 @@ body {
         padding-top: 12px;
     }
 
-    .container__left .contain .nav li {
+    .container__left .contain .nav1 li {
         font-size: 15px;
     }
 
@@ -113,36 +124,43 @@ body {
         font-size: 15px;
         padding-top: 15px;
     }
-
     .text__user--bottom,
     .text__product--bottom {
         font-size: 13px;
     }
-
+    .text__user,.text__product{
+        width: 45%;
+    }
     .text__user--top img,
     .text__product--top img {
-        height: 180px;
+        height: 150px;
     }
 
-    .container__left .contain .nav li {
+    .container__left .contain .nav1 li {
         font-size: 16px;
     }
 
     .logo img {
         height: 130px;
     }
-
-    /* .container__right--card button{
-        margin-left:20px;
-    } */
+    #table__viewDonHang{
+        min-width: 100%;
+    }
+    .contain__changeP--products,.contain__addP--products{
+        min-width: 100%;
+    }
+    #button__viewBill{
+        min-height: 80px;
+    }
+    #filterBill{
+        flex-wrap: wrap;
+    }
 }
-
-
 
 
 .container__right--card {
     width: 80%;
-    height: 100vh;
+    height: 120vh;
     display: none;
     overflow-y: scroll;
 }
@@ -225,7 +243,7 @@ body {
     display: none;
     align-content: center;
     justify-items: center;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .container__addP--products::-webkit-scrollbar{
@@ -238,14 +256,13 @@ body {
 
 .contain__addP--products {
     border: 1.5px solid gray;
-    width: 70%;
-    min-height: 500px;
-    /* margin: auto auto; */
+    width: 75%;
+    height:90vh;
     background-color: var(--primary--color3);
     position: relative;
     display: flex;
-    height:90vh;
     padding:10px;
+    min-height: 450px;
 }
 
 .fa-window-close {
@@ -305,20 +322,26 @@ body {
 
 .container__changeP--products {
     background: rgba(0, 0, 0, .8);
-    position: fixed;
+    position: fixed ;
     inset: unset;
     width: 100%;
     height: 100vh;
+    display: none;
+    align-content: center;
+    justify-items: center;
+    overflow-y: scroll;
+}
+.container__changeP--products::-webkit-scrollbar{
     display: none;
 }
 .contain__changeP--products{
     display: flex;
     width:70%;
     height:90vh;
-    margin: 30px auto;
     background-color: var(--primary--color3);
-    padding:15px;
+    padding:10px;
     position: relative;
+    min-height: 450px;
 }
 .fa-window-close {
     position: absolute;
@@ -364,26 +387,34 @@ body {
     background: rgba(0, 0, 0, .3);
     position: fixed;
     width: 100%;
-    height:100%;
+    height:100vh;
     display: none;
+    justify-items: center;
+    align-content: center;
 }
 .containAlert{
     width:40%;
     height:150px;
     background-color: var(--primary--color3);
-    margin: auto;
+    margin:0 auto;
     padding:10px;
-    margin-top:10rem;
     text-align: center;
     font-size: 25px;
-    padding-top:40px;
+    align-content: center;
+    position: relative;
 }
-.button__Alert{
-    position: absolute;
-    padding:8px 25px;
-    right: 31%;
-    top:45%;
+#button__Alert{
+    all: unset;
     cursor: pointer;
+    border: 0.5px solid;
+    padding:0px 15px;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    background-color: var(--primary--color2);
+}
+#button__Alert:hover{
+    background-color: var(--primary--color2);
 }
 
 
@@ -426,7 +457,7 @@ body {
     display: none;
 }
  #table__viewDonHang{
-    width: 70%;
+    width: 75%;
     margin: 50px auto;
     color: black;
     background-color: white;
@@ -455,5 +486,9 @@ body {
     font-size: 15px;
     text-align: center;
     cursor: pointer;
+}
+#filterBill{
+    display: flex;
+    justify-content: space-between
 }
 
