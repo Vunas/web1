@@ -451,18 +451,14 @@ function closeInfor() {
 function noti(s, n) {
   let check= document.getElementById("noti");
   if(check) check.outerHTML=""
-  let noti = ["success", "warning"];
+  let noti = ["success", "warning","error"];
   let footer = document.getElementById("footer");
   footer.innerHTML += `<div id="noti"><strong>` + noti[n] + `! </strong>` + s + ` <span onclick="closeNoti()">+</span></div>`;
   document.getElementById("noti").classList.add(noti[n]);
-  setTimeout(closeNoti, 3000); 
 }
 
 function closeNoti() {
-  let notiElement = document.getElementById("noti");
-  if (notiElement) {
-      notiElement.outerHTML = "";
-  }
+  let notiElement = document.getElementById("noti").outerHTML="";
 }
 
 function quantityDownn() {
