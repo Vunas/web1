@@ -1,10 +1,10 @@
 let MenuCart = ["Giỏ Hàng", "Hóa Đơn", "Lịch sử"];
 
-function loadDataCart(){
-  showMenu(); 
+function loadDataCart() {
+  showMenu();
   showMenuCart();
   loadMenuCart();
-  checkLogin(); 
+  checkLogin();
 }
 
 function showMenuCart() {
@@ -21,45 +21,28 @@ function showMenuCart() {
   ul.innerHTML = li;
 }
 
-function loadMenuCart(){
+function loadMenuCart() {
   var url = document.location.href;
   var tmp = url.split("?");
   var type;
   if (tmp[1]) {
     type = tmp[1].split("#")[0];
   }
-  type= decodeURIComponent(type);
-  if(!tmp[1] || type == MenuCart[0].toLowerCase())  showCart();
-  else if(type == MenuCart[1].toLowerCase()) showHoaDon();
+  type = decodeURIComponent(type);
+  if (!tmp[1] || type == MenuCart[0].toLowerCase()) showCart();
+  else if (type == MenuCart[1].toLowerCase()) showHoaDon();
   else showHistoryCart();
 }
 
-
 function pay() {
-  let cart = JSON.parse(localStorage.getItem("gioHang")) || [];
-  let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
   if (localStorage.getItem("userLogin")) {
-    if (!cart || cart.length === 0) {
-      // Kiểm tra giỏ hàng có sản phẩm hay không
-      noti("Không có sản phẩm trong giỏ hàng",1);
-      return;
-    }
-    userLogin= JSON.parse(localStorage.getItem("userLogin"));
-    let Bill = {
-      username: userLogin.username,
-      address: userLogin.address,
-      phone: userLogin.sdt,
-      status: "chưa xử lý",
-      date: new Date().toDateString(),
-      cart: cart,
-    };
-    ArrayBill.push(Bill);
-    localStorage.setItem("ArrayBill", JSON.stringify(ArrayBill));
-    localStorage.removeItem("gioHang");
-    noti("dat hang thanh cong",0);
+    const case__payment = document.getElementById("case__payment");
+    case__payment.style.display = "block";
+    Transaction__payment();
+    noti("dat hang thanh cong", 0);
     showCart();
   } else {
-    noti("ban phai dang nhap moi mua duoc hang",1);
+    noti("ban phai dang nhap moi mua duoc hang", 1);
   }
 }
 
@@ -100,6 +83,7 @@ function quantityDown(x) {
       break;
     }
   }
+  localStorage.setItem("gioHang", JSON.stringify(gioHang));
   x.parentNode.children[2].value = soluongNew;
   x.parentNode.parentNode.children[4].innerText = sumP.toLocaleString();
   totalPrice();
@@ -191,28 +175,28 @@ function showCart() {
             <button onclick="quantityUp(this)" class="downQuantity"><i class="fa fa-plus"></i></button>
             </td>
             <td class="totalTr">` +
-        (gioHang[i][3] * gioHang[i][4] *1000).toLocaleString() +
+        (gioHang[i][3] * gioHang[i][4] * 1000).toLocaleString() +
         ` VNĐ</td>
             <td><span onclick="deleteItemCart(this)">Xóa</span></td>
             </tr>`;
       if (i == gioHang.length - 1)
         html +=
           `<tr style="height:40px;font-size:14px;"><td colspan="6">THÀNH TIỀN:<span class="totalPrice">` +
-          (sum*1000).toLocaleString() +
+          (sum * 1000).toLocaleString() +
           `</span></td></tr>`;
     }
-    document.getElementById("pay").innerHTML= `<div class="agree__order">
+    document.getElementById("pay").innerHTML = `<div class="agree__order">
         <button onclick="pay()">Mua Ngay ->></button>
       </div>`;
   }
-  
+
   document.getElementById("myCart").innerHTML = html;
   localStorage.setItem("gioHang", JSON.stringify(gioHang));
 }
 
 function showHoaDon() {
-  let userLogin=  JSON.parse(localStorage.getItem("userLogin")) || '';
-  document.getElementById("nav__table").innerHTML="Xem Lại Hóa Đơn";
+  let userLogin = JSON.parse(localStorage.getItem("userLogin")) || '';
+  document.getElementById("nav__table").innerHTML = "Xem Lại Hóa Đơn";
   document.getElementById("MenuCart").children[1].classList.add("activem");
   let kq = "";
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
@@ -226,15 +210,15 @@ function showHoaDon() {
           <th>xem chi tiết</th>
         </tr>`;
 
-  for (let i = ArrayBill.length-1; i >=0; i--) {
-    if(ArrayBill[i].username == userLogin.username){
+  for (let i = ArrayBill.length - 1; i >= 0; i--) {
+    if (ArrayBill[i].username == userLogin.username) {
       kq +=
         `<tr>
             <td>` +
         i +
         `</td>
             <td>` +
-         ArrayBill[i].date +
+        ArrayBill[i].date +
         `</td>
             <td>` +
         ArrayBill[i].username +
@@ -248,7 +232,7 @@ function showHoaDon() {
         <td>` +
         ArrayBill[i].phone +
         `</td>
-            <td><button onclick="detail(`+i+`)">...</button></td>
+            <td><button onclick="detail(`+ i + `)">...</button></td>
           </tr>`;
     }
   }
@@ -275,30 +259,30 @@ function detail(id) {
             </thead>
             <tbody id="myCart">`
   for (let i = 0; i < ArrayBill[id].cart.length; i++) {
-    kq+= `
+    kq += `
     
             <tr>
               <td style="display: flex;align-items: center;"><img src="` +
-    ArrayBill[id].cart[i][0] +
-    `" alt="">` +
-    ArrayBill[id].cart[i][1] +
-    `</td >
+      ArrayBill[id].cart[i][0] +
+      `" alt="">` +
+      ArrayBill[id].cart[i][1] +
+      `</td >
             <td>` +
-    ArrayBill[id].cart[i][2] +
-    `</td >
+      ArrayBill[id].cart[i][2] +
+      `</td >
             <td><p><span>` +
-    ArrayBill[id].cart[i][3] +
-    ".000" +
-    `</span><sup>VNĐ</sup></p></td>
-      <td>`+ArrayBill[id].cart[i][4]+`</td>
+      ArrayBill[id].cart[i][3] +
+      ".000" +
+      `</span><sup>VNĐ</sup></p></td>
+      <td>`+ ArrayBill[id].cart[i][4] + `</td>
       <td class="totalTr">` +
-    (ArrayBill[id].cart[i][3] * ArrayBill[id].cart[i][4]*1000).toLocaleString() +
-    ` VNĐ</td>
+      (ArrayBill[id].cart[i][3] * ArrayBill[id].cart[i][4] * 1000).toLocaleString() +
+      ` VNĐ</td>
             </tr>`;
   }
-  kq+= `</tbody>
+  kq += `</tbody>
         </table>`;
-            
+
   document.getElementById("detailBill").innerHTML = kq;
 }
 function closeDatail() {
@@ -306,8 +290,8 @@ function closeDatail() {
 }
 
 function showHistoryCart() {
-  let userLogin= JSON.parse(localStorage.getItem("userLogin")) || '';
-  document.getElementById("nav__table").innerHTML="Lịch Sử Mua Hàng";
+  let userLogin = JSON.parse(localStorage.getItem("userLogin")) || '';
+  document.getElementById("nav__table").innerHTML = "Lịch Sử Mua Hàng";
   document.getElementById("MenuCart").children[2].classList.add("activem");
   let kq = "";
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
@@ -322,30 +306,30 @@ function showHistoryCart() {
          
         </tr>`;
 
-  for (let i = ArrayBill.length-1; i >=0; i--) {
-    if(ArrayBill[i].username == userLogin.username){
+  for (let i = ArrayBill.length - 1; i >= 0; i--) {
+    if (ArrayBill[i].username == userLogin.username) {
       for (let j = 0; j < ArrayBill[i].cart.length; j++) {
         kq +=
-        `<tr>
+          `<tr>
           <td>` +
           ArrayBill[i].date +
           `</td>
           <td style="display: flex;align-items: center;"><img src="` +
-    ArrayBill[i].cart[j][0] +
-    `" alt="">` + 
-    ArrayBill[i].cart[j][1] +
-    `</td>
+          ArrayBill[i].cart[j][0] +
+          `" alt="">` +
+          ArrayBill[i].cart[j][1] +
+          `</td>
           <td>` +
           ArrayBill[i].cart[j][2] +
           `</td>
           <td>` +
-          (parseInt(ArrayBill[i].cart[j][3])*1000).toLocaleString() +
+          (parseInt(ArrayBill[i].cart[j][3]) * 1000).toLocaleString() +
           ` VND</td>
           <td>` +
           ArrayBill[i].cart[j][4] +
           `</td>
           <td>` +
-          (ArrayBill[i].cart[j][3]*ArrayBill[i].cart[j][4]*1000).toLocaleString() +
+          (ArrayBill[i].cart[j][3] * ArrayBill[i].cart[j][4] * 1000).toLocaleString() +
           ` VNĐ</td>
           <td>` +
           ArrayBill[i].status +
