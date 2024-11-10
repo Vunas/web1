@@ -69,8 +69,8 @@ function close__advanced_search() {
 }
 
 function createFil() {
-  var kq = `
-            <select name="" id="type__option-search" onchange="filtersearch()">`;
+  var kq = `<select name="" id="type__option-search" onchange="filtersearch()">`;
+      kq += '<option value=""></option>';
   for (let i = 0; i < menuList.length; i++) {
     kq += '<option value="' + menuList[i] + '">' + menuList[i] + "</option>";
   }
@@ -85,21 +85,26 @@ function createFil() {
 createFil();
 
 function filtersearch() {
-  let search = document
-    .getElementById("type__option-search")
-    .value.toLowerCase();
+  let s = document.getElementById("search__input").value.toLowerCase();
+  let array = [];
   let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
-  var array = [];
-  if (search == "all") {
-    array = DanhSachSanPham;
+  for (let i = 0; i < DanhSachSanPham.length; i++) {
+    if (DanhSachSanPham[i].introduce.toLowerCase().includes(s)) {
+      array.push(DanhSachSanPham[i]);
+    }
+  }
+  let fil = document.getElementById("type__option-search").value.toLowerCase();
+  if (fil == "all") {
+
   } else {
-    for (let i = 0; i < DanhSachSanPham.length; i++) {
-      if (DanhSachSanPham[i].name.toLowerCase().includes(search)) {
-        array.push(DanhSachSanPham[i]);
+    for (let i = 0; i <array.length; i++) {
+      if (!array[i].name.toLowerCase().includes(fil)) {
+        array.splice(i, 1);
+        i--;
       }
     }
   }
-
+``
   let min = document.getElementById("min__search").value;
   min = min === "" ? 0 : parseFloat(min);
 
@@ -112,22 +117,7 @@ function filtersearch() {
     }
   }
 
-  convertSearch(array);
-  thisPage2 = 1;
-  listItem2 = document.querySelectorAll("#card__item--two");
-  loadItem2();
-}
-
-function searchProduct() {
-  let s = document.getElementById("search__input").value.toLowerCase();
-  let array = [];
-  let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
-  for (let i = 0; i < DanhSachSanPham.length; i++) {
-    if (DanhSachSanPham[i].introduce.toLowerCase().includes(s)) {
-      array.push(DanhSachSanPham[i]);
-    }
-  }
-  if (s == "") array = [];
+  if (s == "" && fil == "") array = [];
   convertSearch(array);
   thisPage2 = 1;
   listItem2 = document.querySelectorAll("#card__item--two");
@@ -300,13 +290,15 @@ document.getElementById("signup-form").onsubmit = function (e) {
   let signupFlag = true;
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
-  const addressRegex = /[0-9]+.*(đường|phố|phường|xã|quận|huyện|thị xã|thành phố|tỉnh|việt nam)/i;
+  const addressRegex = /([0-9]+.*(đường|duong|phố|pho|phường|phuong|xã|xa).*(quận|quan|huyện|huyen|thành phố|thanh pho|tỉnh|tinh)).*(việt nam|viet nam)?/i;
+
 
   for (let i = 0; i < userArray.length; i++) {
     if (username == userArray[i].username) {
       document.getElementById("psigus").innerHTML = "Tài khoản đã tồn tại";
       signupFlag = false;
-    }
+      break;
+    }else document.getElementById("psigus").innerHTML = "";
   }
 
   if (repassword != password) {
@@ -317,7 +309,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   
   if(!addressRegex.test(address)){
     document.getElementById("paddress").innerHTML =
-    "Địa chỉ không hợp lệ";
+    '"số nhà "+ "đường", "phố", "phường" hoặc "xã" + "quận", "huyện", "thành phố" hoặc "tỉnh"';
   signupFlag = false;
 } else document.getElementById("paddress").innerHTML = "";
   
@@ -447,7 +439,7 @@ function closeInfor() {
   document.getElementById("infor__Product").style.display = "none";
 }
 
-//ham thong bao success, warning ,0 la success, 1 la warning 
+//ham thong bao success, warning ,0 la success, 1 la warning , 2 la error
 
 function noti(s, n) {
   let check= document.getElementById("noti");
