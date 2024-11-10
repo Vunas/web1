@@ -135,14 +135,14 @@ nav ul li .nav__item {
   animation: ease 1s;
 }
 
+.search_div::-webkit-scrollbar{
+  display: none;
+}
+
 .search_div .seach__section {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-}
-
-.search_div .seach__section::-webkit-scrollbar{
-  display: none;
 }
 
 .search_div .seach__section .search {
