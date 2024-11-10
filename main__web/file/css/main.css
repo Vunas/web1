@@ -1,322 +1,1263 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanh toán</title>
-    <link rel="stylesheet" href="./file/css/home.css" />
-    <link rel="stylesheet" href="./file/css/main.css" />
-    <link
-      rel="stylesheet"
-      href="./file/css/fontawesome-free-6.6.0-web/css/all.css"
-    />
-  </head>
-  <body onload="loadData()">
-    <nav>
-      <span class="logo"
-        ><img src="./file/image/img_brand/logo1.png" alt=""
-      /></span>
-      <ul class="nav__mid">
-        <li><a class="nav__item home" href="./main.html">Trang Chủ </a></li>
-        <li class="nav__product">
-          <a class="nav__item" href="main.html">Sản Phẩm </a>
-          <div class="div__product">
-            <ul id="product"></ul>
-          </div>
-        </li>
-        <!-- <li><a class="nav__item" href="">Thông Báo</a></li> -->
-        <li><a class="nav__item" href="#footer">Liên Hệ</a></li>
-        <li><a class="nav__item" href="#footer">Trợ Giúp</a></li>
-      </ul>
-      <ul class="nav__right">
-        <li>
-          <button onclick="open_search()" class="nav__item">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </li>
-        <li>
-          <a href="./cart.html" class="nav__item">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </a>
-        </li>
-        <li id="checkLogin">
-          <button onclick="openlogin()" id="user-icon" class="nav__item">
-            <i class="fa-regular fa-user"></i>
-          </button>
-        </li>
-        <li class="nav__item-bars">
-          <button onclick="open_sideNav();showListMobile()" class="nav__item">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+:root {
+  --primary--color2: #e3f1b6;
+  --primary--color3: #ffffff;
+  --primary--color4: rgb(250, 173, 31);
+  --main--color: #ffba66;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary--color3);
+  font-size: 14px;
+  height: 100vh;
+}
 
-    <div class="slider"></div>
+nav {
+  z-index: 1;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--main--color);
+  background-color: var(--main--color);
+}
 
-    <!-- modal__overlay -->
-    <div
-      onclick="close_search(); close_sideNav(); close_productSide()"
-      class="modal__overlay"
-      id="modal__overlay"
-    ></div>
+.logo img{
+  padding: 0;
+  box-sizing: border-box;
+  height: 50px;
+  mix-blend-mode: multiply;
+}
 
-    <!-- search-->
+.nav__right{
+  margin-right: 10px;
+}
 
-    <div id="search_div" class="search_div">
-      <div class="seach__section">
-        <div class="search">
-          <span><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input
-            id="search__input"
-            oninput="filtersearch()"
-            type="search"
-            placeholder="Search.."
-            name="search"
-          />
-          <span>
-            <button
-              onclick="advanced_search()"
-              id="chevron-down"
-              class="chevron chevron-down"
-            >
-              <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            <button
-              onclick="close__advanced_search()"
-              id="chevron-up"
-              class="chevrop chevron-up"
-            >
-              <i class="fa-solid fa-chevron-up"></i>
-            </button>
-          </span>
-          <button onclick="close_search()">Hủy</button>
-        </div>
-        <div id="advanced_search"></div>
-        <div class="list__search"></div>
-        <div class="list__Page2">
-          <ul id="number__pages--two"></ul>
-        </div>
-      </div>
-    </div>
+nav ul,
+nav span {
+  position: relative;
+  display: flex;
+  margin: 5px;
+}
 
-    <!-- login/logout -->
+nav span {
+  padding: 0 30px;
+}
 
-    <div class="overlay">
-      <div class="form-container">
-        <button id="close__login" onclick="closeLogin()">x</button>
-        <!--login-->
-        <form action="" id="login-form" class="form login-form">
-          <h2>Login</h2>
-          <div class="input-box">
-            <input
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              required
-            />
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <br />
-          <div class="input-box">
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter password"
-              required
-            />
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
-          </div>
-          <br />
-          <button type="submit" class="login-button">Login</button>
+nav ul li {
+  list-style-type: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+}
 
-          <div class="login-signup">
-            Don't have an account?
-            <button type="button" id="signup" onclick="opensignup()">
-              Signup
-            </button>
-          </div>
-        </form>
+nav ul li .nav__item {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+  padding: 10px;
+  margin: auto;
+}
 
-        <!--signup form-->
-        <form action="" id="signup-form" class="form signup-form">
-          <h2>Sign up</h2>
-          <div class="input-box">
-            <input
-              id="sigus"
-              type="text"
-              placeholder="Enter your username"
-              required
-            />
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <p id="psigus"><br /></p>
-          <div class="input-box">
-            <input
-              id="sigpas"
-              type="password"
-              placeholder="Create password"
-              required
-            />
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
-          </div>
-          <p id="psigpas"><br /></p>
-          <div class="input-box">
-            <input
-              id="resigpas"
-              type="password"
-              placeholder="Confirm password"
-              required
-            />
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
-          </div>
-          <p id="presigpas"><br /></p>
-          <div class="input-box">
-            <input id="email" type="email" placeholder="Enter your email" />
-            <i class="fa-solid fa-envelope"></i>
-          </div>
-          <p id="pemail"><br /></p>
-          <div class="input-box">
-            <input id="sdt" type="number" placeholder="Enter your number" />
-            <i class="fa-solid fa-phone"></i>
-          </div>
-          <p id="pphone"><br /></p>
-          <div class="input-box">
-            <input id="address" type="text" placeholder="Enter your address" />
-            <i class="fa-solid fa-location-dot"></i>
-          </div>
-          <p id="paddress"><br /></p>
-          <button type="submit" class="login-button">Signup</button>
+.nav__item-bars {
+  margin-top: 5px;
+  display: none;
+}
 
-          <div class="login-signup">
-            Already have an account?
-            <button type="button" onclick="closeSignup()" id="login">
-              Login
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+.nav__mid li a:hover {
+  color: rgb(220, 220, 220);
+  text-decoration: underline;
+}
 
-    <!-- smenu-->
-    <div class="sideNav" id="sideNav">
-      <div class="sideNav__first">
-        <button onclick="close_sideNav()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <ul>
-        <li>
-          <a href="./main.html"><i class="fa-solid fa-house"></i>Trang chu</a>
-        </li>
-        <li onclick="open_productSide()" class="sideNav__product">
-          <a href="main.html"><i class="fa-solid fa-seedling"></i>san Pham</a>
-          <button><i class="fa-solid fa-greater-than"></i></button>
-        </li>
-        <li>
-          <a href=""><i class="fa-solid fa-address-book"></i>Lien He</a>
-        </li>
-        <li>
-          <a href=""><i class="fa-solid fa-question"></i>Tro Giup</a>
-        </li>
-      </ul>
-      <div class="sideNav__brand">
-        <img src="./file/image/img_brand/logo2.png" alt="" />
-      </div>
-    </div>
+#userlogin{
+  margin: 10px 0;
+  padding: 0;
+}
 
-    <div id="sideNav__productSide" class="sideNav__productSide">
-      <div class="productSide__first">
-        <button onclick="close_productSide()">
-          <i style="padding: 0 10px" class="fa-solid fa-less-than"></i>SanPham
-        </button>
-        <button onclick="close_sideNav(); close_productSide()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <ul id="mobile__product"></ul>
-      <div class="sideNav__brand">
-        <img src="./file/image/img_brand/logo2.png" alt="" />
-      </div>
-    </div>
+#userlogin span{
+  padding: 0;
+  text-wrap: nowrap;
+  max-width: 60px;
+  overflow: hidden;
+}
 
-    <div class="container">
-      <div class="list__product">
-        <h1>Chăm sóc khác hàng</h1>
-        <div class="container__section">
-          <details>
-            <summary>Bạn Quên mật khẩu</summary>
-            <h3>Đưng lo lắng</h3>
-            <p>
-              Bạn chỉ cần gửi email cho chúng tôi thông qua: mecha19@gmail.com
-              hoặc none.hoangvu@gmail.com
-            </p>
-            <p>
-              Chúng tôi sẽ giải đáp mọi thắc mắc của bạn trong 24 giờ. Cảm ơn
-              bạn
-            </p>
-          </details>
-        </div>
-        <div class="container__section">
-          <details>
-            <summary>Bạn không thể đăng ký?</summary>
-            <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
-          </details>
-          <details>
-            <summary>Bạn không thể đăng ký địa chỉ?</summary>
-            <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
-            <p>Bạn cần phải nhâp đúng địa chỉ là "số nhà "+ "đường", "phố", "phường" hoặc "xã" + "quận", "huyện", "thành phố" hoặc "tỉnh".</p>
-            <p>Chúc bạn thành công</p>
-          </details>
-          <details>
-            <summary>Bạn không thể đăng ký?</summary>
-            <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
-          </details>
-          <details>
-            <summary>Bạn không thể đăng ký?</summary>
-            <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
-          </details>
-        </div>
-      </div>
-    </div>
-    <div id="infor__Product" class="modal__product"></div>
+#userlogin:hover button{
+  display: block;
+}
 
-    <footer id="footer">
-      <div>
-        <h1>Địa Chỉ</h1>
-        <ul>
-          <li>Mecha - Mô hình anime chính hãng</li>
-          <li><i class="fa-solid fa-location-dot"></i> 273 An Dương Vương, P3, Quận 5, TPHCM</li>
-          <li><i class="fa-solid fa-location-dot"></i> 4 Đ. Tôn Đức Thắng, Bến Nghé, Quận 1, TPHCM</li>
-          <li><i class="fa-solid fa-location-dot"></i> 105 Bà Huyện Thanh Quan, P. Võ Thị Sáu, Quân3, TPHCM</li>
-        </ul>
-      </div>
-      <div>
-        <h1>Liên Hệ</h1>
-        <ul>
-          <li>email: mecha19@email.com</li>
-          <li>Gọi mua hàng: 0909258xxx</li>
-          <li>Gọi bảo hành: 0909782xxx</li>
-          <li>Gọi hợp tác kinh doanh, mua sỉ: 0982256xxx</li>
-        </ul>
-      </div>
-      <div>
-        <h1>Theo dõi chúng tôi tại:</h1>
-        <ul>
-          <li><a href=""><i class="fa-brands fa-youtube" style="color: #e70808;"></i> Youtube: MeCha</a></li>
-          <li><a href=""><i class="fa-brands fa-tiktok"></i> Tiktok: Mecha</a></li>
-          <li><a href=""><i class="fa-brands fa-facebook" style="color: #1571b7;"></i> Facebook: Mecha</a></li>
-          <li><a href=""><i class="fa-brands fa-instagram" style="color: rgb(201, 47, 73);"></i> Instagram: Mecha</a></li>
-        </ul>
-      </div>
-      <div class="brand-footer">
-        <a class="footer__brand" href=""><img src="./file/image/img_brand/logo1.png" alt=""></a>
-      </div>
-      <div class="footer__bot"><ul><li>© Copyright 2024 By NaiTin. Powered by Naitin</li></ul></div>
-    </footer>
-  </body>
-  <script src="./file/js/js.js"></script>
-</html>
+#userlogin button{
+  position: absolute;
+  top: 20px;
+  padding: 10px;
+  right: -40px; 
+  width: 120px;
+  border: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 15px 0;
+  background-color: var(--main--color);
+  display: none;
+}
+
+.modal__overlay {
+  z-index: 1;
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  justify-items: center;
+  background-color: rgba(200, 200, 200, 0.5);
+  overflow-x: scroll;
+  display: none;
+}
+
+/*search*/
+
+.search_div {
+  z-index: 1;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s;
+  overflow: auto;
+  display: none;
+  animation: ease 1s;
+}
+
+.search_div .seach__section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search_div .seach__section::-webkit-scrollbar{
+  display: none;
+}
+
+.search_div .seach__section .search {
+  height: 40px;
+  width: 800px;
+  max-width: 80%;
+  display: flex;
+  margin: 8px;
+  padding: 4px;
+  border-bottom: 3px solid var(--main--color);
+}
+
+.search_div .seach__section .search:hover {
+  background-color: rgb(220, 220, 220);
+  input {
+    background-color: rgb(220, 220, 220);
+  }
+}
+
+.search_div .seach__section .search span{
+  font-size: 25px;
+}
+
+.search_div .seach__section button {
+  all: unset;
+  cursor: pointer;
+  right: 0;
+  font-size: 25px;
+}
+
+.search_div .seach__section button:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.search_div .seach__section div button {
+  padding: 0 10px 0 0;
+}
+
+.search_div .seach__section div .chevron-up {
+  display: none;
+}
+
+.search_div input {
+  background-color: unset;
+  width: 100%;
+  margin-left: 14px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+/*advanced search*/
+
+#advanced_search {
+  overflow-x: auto;
+  width: 800px;
+  max-width: 100%;
+  margin-top: 10px;
+  display: none;
+  justify-content: center;
+  border-bottom: 3px solid var(--main--color);
+}
+
+#advanced_search h3{
+  text-wrap: nowrap;
+  padding: 10px;
+}
+
+#advanced_search select {
+  height: 30px;
+  margin: 5px 10px;
+}
+
+#advanced_search input{
+  border: 0.5px solid black;
+  height: 30px;
+  width:  50px;
+  margin: 5px;
+}
+
+.list__search {
+  width: 80%;
+}
+
+.div__product {
+  position: fixed;
+  overflow: hidden;
+  top: 50px;
+  height: 0px;
+  left: 0;
+  width: 100%;
+  background-color: var(--main--color);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.nav__product:hover .div__product {
+  height: 60px;
+  border-bottom: 0.5px solid var(--main--color);
+}
+
+.div__product a {
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+  margin: 10px 10px;
+}
+
+.nav__right li button {
+  border: unset;
+  background-color: unset;
+  font-size: 16px;
+  padding: 16px;
+}
+
+/*login*/
+
+.overlay{
+  content: "";
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  z-index: 100;
+  display: none;
+  pointer-events: none;
+  transition: all 0.5s ease-out;
+}
+
+.overlay.show {
+  display: block;
+}
+
+#close__login{
+  all: unset;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#close__login:hover{
+  background-color: var(--main--color);
+}
+
+.form-container {
+  position: relative;
+  max-width: 330px;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: white;
+  padding: 25px;
+  border-radius: 15px;
+  z-index: 101;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease-out;
+}
+
+.overlay.show .form-container {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.form-container .login-form{
+  display: block;
+}
+
+.signup-form {
+  display: none;
+}
+
+.signup-form p{
+  padding-left: 10px;
+  color: red;
+}
+
+.form-container.active .signup-form {
+  display: block;
+}
+
+.form-container.active .login-form {
+  display: none;
+}
+
+#signup,#login{
+  all: unset;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#signup:hover{
+  background-color: var(--main--color);
+}
+
+.close-form {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-container h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.form-container a {
+  text-decoration: none;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 40px;
+
+}
+
+.input-box input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1.5px solid rgb(223, 223, 223);
+  padding: 0 30px;
+  transition: all 0.5s ease;
+}
+
+.input-box input:focus {
+  border-color: black;
+}
+
+.input-box i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+}
+
+.input-box i.pw-hide {
+  font-size: 12px;
+  right: 0;
+  cursor: pointer;
+}
+
+.option-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.checkbox {
+  display: flex;
+  column-gap: 8px;
+  white-space: nowrap;
+}
+
+.checkbox input {
+  accent-color: black;
+  cursor: pointer;
+}
+
+.checkbox label {
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.forgot-password {
+  font-size: 12px;
+}
+
+.login-button {
+  font-size: 15px;
+  font-weight: bold;
+  background-color: var(--main--color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 30px;
+  width: 100%;
+  padding: 12px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.login-button:hover {
+  opacity: 0.7;
+}
+
+.login-button:active {
+  opacity: 0.4;
+}
+
+.login-signup {
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* menu sideNavbar */
+
+.sideNav {
+  position: fixed;
+  overflow: scroll;
+  top: 0;
+  right: -3px;
+  background-color: white;
+  border-left: 3px solid var(--main--color);
+  height: 100vh;
+  width: 0;
+  max-width: 100%;
+  z-index: 2;
+  transition: 0.5s;
+}
+
+.sideNav::-webkit-scrollbar,
+.sideNav__productSide::-webkit-scrollbar{
+  display: none;
+}
+
+.sideNav .sideNav__first {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.sideNav .sideNav__first button,
+.sideNav__productSide .productSide__first button {
+  all: unset;
+  cursor: pointer;
+  margin: 10px;
+  padding: 8px;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.sideNav .sideNav__first button:hover,
+.sideNav__productSide .productSide__first button:hover {
+  background-color: var(--main--color);
+}
+
+.sideNav li,
+.sideNav__productSide li {
+  list-style-type: none;
+}
+
+.sideNav__product {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sideNav__product button {
+  all: unset;
+  margin: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.sideNav a,
+.sideNav__productSide a {
+  all: unset;
+  cursor: pointer;
+  color: black;
+  margin: 10px;
+  padding: 12px 16px;
+  font-size: 20px;
+  display: block;
+}
+
+.sideNav a:hover,
+.sideNav__productSide a:hover {
+  color: rgb(220, 220, 220);
+}
+
+.sideNav__brand{
+  margin-top: 50px;
+  text-align: center;
+}
+
+.sideNav__brand img{
+  height: 300px;
+  font-size: 5vw;
+  width: 50vw;
+  max-width: 500px;
+  min-width: 300px;
+  mix-blend-mode: multiply;
+}
+
+/*sideNav__productSide*/
+
+.sideNav__productSide {
+  position: fixed;
+  overflow: scroll;
+  top: 0;
+  right: -3px;
+  background-color: white;
+  border-left: 3px solid var(--main--color);
+  height: 100vh;
+  width: 0;
+  max-width: 100%;
+  z-index: 3;
+  transition: 0.5s;
+}
+
+.sideNav__productSide .productSide__first {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 800px) {
+  .logo {
+    padding: 0 0 0 30px;
+  }
+  .nav__mid {
+    display: none;
+  }
+  .nav__item-bars {
+    display: block;
+  }
+}
+
+/*slider*/
+
+.slider {
+  z-index: -1;
+  position: relative;
+  top: 0;
+  left: 1.5%;
+  height: 28vw;
+  min-height: 200px;
+  width: 96%;
+  text-align: center;
+  background-size: 100% 100%;
+  margin: 10px;
+  box-shadow: 5px 5px 2px gray;
+  animation: slider 30s step-end infinite ;
+}
+
+@keyframes slider{
+  0%{background-image: url(../image/img__home/1.jpg);}
+  30%{background-image: url(../image/img__home/2.jpg);}
+  60%{background-image: url(../image/img__home/3.jpg);}
+  100%{background-image: url(../image/img__home/4.jpg);}
+}
+
+/*container*/
+
+.infor__product {
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--primary--color4);
+}
+.infor__product h3 {
+  display: inline-block;
+  position: relative;
+}
+.infor__product h3::after {
+  content: "";
+  height: 3px;
+  width: 100%;
+  background-color: var(--primary--color3);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: scale(0);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.infor__product h3:hover::after {
+  transform: scale(1);
+}
+.card__contain {
+  width: 100%;
+}
+
+
+.list__product {
+  background-color: white;
+  margin: auto;
+  width: 1200px;
+  max-width: 100%;
+  box-shadow: 0 0 10px 0 black;
+  border-radius: 5px;
+}
+.card__items {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 5px 10px 2px;
+}
+.card__item {
+  border-radius: 10px;
+  width: 24%;
+  min-width: 250px;
+  height: 300px;
+  position: relative;
+  text-align: center;
+  /* align-content: center; */
+  background-color: var(--primary--color3);
+  border: 0.5px solid black;
+  margin: 15px 0 0 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+
+
+
+#category {
+  /* background-color: white; */
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+#category h3 {
+  display: inline-block;
+}
+#category select {
+  height: 30px;
+  margin: 0px 30px 0px 10px;
+  /* width: 20%; */
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+#category input{
+  margin: 10px;
+  height: 30px;
+  width: 40px;
+}
+.control1 {
+  width: 15%;
+  background-color: rgb(189, 187, 187);
+  padding-top: 20px;
+  height: 70vh;
+}
+.control1 span {
+  cursor: pointer;
+  font-size: 13px;
+}
+.control1 h3 {
+  margin-left: 10px;
+}
+.control1 i {
+  margin-right: 10px;
+}
+.card__type {
+  cursor: pointer;
+  margin: 10px 10px;
+  width: 80%;
+  border-bottom: 0.5px solid rgb(179, 172, 172);
+  background-color: var(--primary--color3);
+  height: 30px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 7px 0px;
+  transition: all 0.5s;
+}
+.card__type:hover,
+.card__type:active {
+  background-color: rgb(93, 91, 91);
+  color: var(--primary--color3);
+}
+.card__cart {
+  left: unset;
+  right: 10px;
+}
+.card__img img {
+  width: 100%;
+  height: 210px;
+  transition: all 0.5s;
+}
+#img__after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+#img__after:hover {
+  opacity: 100;
+}
+.card__name,
+.card__introduce,
+.card__price {
+  text-align: center;
+  margin-top: 2px;
+  font-size: 12.2px;
+  font-weight: bold;
+}
+.card__introduce {
+  height: 30px;
+}
+.card__name,
+.card__introduce {
+  color: black;
+}
+.card__name p {
+  position: relative;
+  display: inline;
+}
+.card__name p::after {
+  content: "";
+  position: absolute;
+  background-color: var(--primary--color4);
+  width: 100%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  transform: scale(0);
+  transition: all 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.card__name p:hover::after {
+  transform: scale(1);
+}
+
+.card__view,
+.card__addcart {
+  position: absolute;
+  visibility: hidden;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-size: 15px;
+  top: 25%;
+  left: 45%;
+  cursor: pointer;
+}
+.card__item:hover .card__view {
+  visibility: visible;
+  animation: view linear 0.3s;
+}
+
+@keyframes view {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cart {
+  padding: 15px 5px;
+  width: 39%;
+  height: 80vh;
+  margin: 0 auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #353432;
+  overflow-y: scroll;
+  color: #edf5e1;
+  display: none;
+  opacity: 0;
+}
+.activeCart {
+  display: block;
+  opacity: 100;
+}
+.cart h2 {
+  text-align: center;
+  font-size: 25px;
+  border-radius: 5px;
+}
+thead th {
+  font-size: 18px;
+}
+.cart table {
+  width: 100%;
+}
+tbody tr td img {
+  width: 100px;
+  height: 100px;
+}
+tbody tr {
+  text-align: center;
+}
+
+.list__Page2,
+.list__Page1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.activelistPage {
+  display: none;
+}
+.active a {
+  background-color: var(--primary--color4);
+}
+.back,
+.go {
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 100px;
+  margin: 0px 8px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+.back:hover,
+.go:hover,
+.back:active,
+.go:active {
+  background-color: var(--primary--color4);
+}
+
+#number__pages--two,
+#number__pages--one {
+  margin: 10px;
+  display: flex;
+}
+
+#number__pages--two li,
+#number__pages--one li {
+  list-style-type: none;
+  text-decoration: none;
+  margin: 3px;
+}
+
+#number__pages--two li a,
+#number__pages--one li a {
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid var(--main--color);
+}
+.gioHang {
+  text-align: right;
+  width: 100%;
+}
+.gioHang a {
+  color: #353432;
+}
+.gioHang a i {
+  padding: 20px;
+}
+.close__cart {
+  background-color: var(--primary--color4);
+  position: absolute;
+  bottom: -10;
+  left: 2;
+  width: 98%;
+  height: 45px;
+  font-size: 30px;
+  padding-top: 7px;
+  display: flex;
+}
+.close__cart span,
+.close__cart a {
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+  border-right: 1px solid black;
+  color: var(--primary--color3);
+  cursor: pointer;
+  margin-top: -7px;
+  padding-top: 12px;
+}
+.close__cart a {
+  text-decoration: none;
+}
+
+.container__view {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  text-align: center;
+  display: none;
+}
+.activeView {
+  display: block;
+}
+.fa-window-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+/* .view__item {
+  background: var(--primary--color3);
+  width: 50rem;
+  max-width: 100%;
+  height: 40rem;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  margin: auto;
+  top: 3rem;
+  border-radius: 10px;
+  overflow: hidden;
+} */
+.view__img--top img {
+  width: 100%;
+  height: 55vh;
+}
+.view__img--bottom img {
+  width: 32.75%;
+  height: 20vh;
+}
+.view__name,
+.underline,
+.view__introduce,
+.view__price,
+.view__star,
+.view__text,
+.view__action {
+  margin: 18px;
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+.underline {
+  width: 30px;
+  border: none;
+  background-color: var(--primary--color4);
+}
+.view__text ul {
+  margin-left: 20px;
+}
+.view__introduce,
+.view__text,
+.view__price {
+  font-size: 15px;
+}
+.view__name {
+  font-size: 12px;
+}
+
+.view__action {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.view__input {
+  margin: 8px;
+}
+.view__input button {
+  all: unset;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border: 1px solid;
+}
+.view__action button {
+  width: 20px;
+  cursor: pointer;
+}
+#input__number {
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  border: unset;
+}
+.view__addcart {
+  all: unset;
+  cursor: pointer;
+  border: 1px solid;
+  width: 170px;
+  padding: 5px;
+}
+
+.view__input button:hover,
+.view__addcart:hover{
+  background-color: var(--main--color);
+}
+
+.imgs__hidden,
+.details__hidden {
+  display: none;
+}
+
+@media (max-width: 739px) {
+  .slider{
+    left: 0;
+  }
+  .view__item {
+    top: 0;
+    height: 100%;
+  }
+  .view__img--bottom img {
+    width: 32.3%;
+  }
+  .view__text {
+    display: none;
+  }
+  .view__action {
+    flex-wrap: wrap;
+  }
+  .view__addcart {
+    margin-top: 15px;
+  }
+}
+
+.modal__product {
+  z-index: 1;
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(200, 200, 200, 0.5);
+  display: none;
+}
+
+.Infor__Child {
+  position: relative;
+  margin: 50px auto;
+  text-align: center;
+  height: 600px;
+  width: 800px;
+  max-width: 100%;
+  border-radius: 10px;
+  overflow-y: scroll;
+  display: flex;
+  background-color: white;
+}
+
+.Infor__Child::-webkit-scrollbar{
+  display: none;
+}
+
+.close__infor {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.view__item--left {
+  width: 50%;
+  align-self: center;
+}
+
+.view__item--left img {
+  margin: 10px;
+  height: 90%;
+  width: 90%;
+}
+
+.view__item--right {
+  font-size: 20px;
+  width: 50%;
+  align-content: center;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view__item--right ul li {
+  text-decoration: none;
+  list-style-type: none;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  background-color: var(--main--color);
+  overflow: hidden;
+}
+
+footer div {
+  flex: 1 0 390px;
+}
+
+footer div h1,
+footer div ul {
+  padding: 10px 20px;
+  color: black;
+}
+
+footer div ul li {
+  font-size: 16px;
+  padding: 5px 0;
+  list-style-type: none;
+}
+
+footer div ul li a {
+  list-style-type: none;
+  text-decoration: none;
+  color: black;
+}
+
+.brand-footer {
+  text-align: center;
+}
+
+.brand-footer a {
+  text-decoration: none;
+}
+
+footer .footer__brand img{
+  height: 200px;
+  font-size: 5vw;
+  width: 50vw;
+  mix-blend-mode: multiply;
+}
+
+footer .footer__bot{
+  display: flex;
+  justify-content: center;
+  flex-basis: 100%;
+  color: rebeccapurple;
+}
+
+@media (max-width: 1200px) {
+  .list__product{
+    width: 950px;
+  }
+  .card__item {
+    width: 32%;
+  }
+}
+@media (max-width: 900px) {
+  .Infor__Child{
+    height: 100%;
+    margin: 0;
+  }
+  .list__product{
+    width: 650px;
+  }
+  .card__item {
+    width: 48%;
+  }
+}
+@media (max-width: 600px) {
+  .list__product{
+    width: 350px;
+  }
+  .card__items {
+    justify-content: center;
+  }
+  .card__item {
+    width: 80%;
+  }
+}
+
+#noti{
+  position: fixed;
+  top: 50px;
+  left: -600px;
+  height: 60px;
+  width: auto;
+  min-width: 300px;
+  padding: 20px;
+  padding-right: 30px;
+  overflow: hidden;
+  z-index: 102;
+  animation: noti 3s;
+}
+
+#noti span{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 25px;
+  rotate: 45deg;
+  cursor: pointer;
+}
+
+#noti span:hover{
+  color: black;
+}
+
+.success{
+  background-color: rgba(7, 222, 97, 0.8);
+  border-left: 5px solid #04AA6D; 
+  color: rgb(228, 241, 228);
+}
+
+.warning{
+  background-color: rgb(255, 208, 2);
+  border-left: 5px solid #ff9800;
+  color: rgb(30, 30, 29);
+}
+
+.error{
+  background-color: rgb(235, 143, 143);
+  border-left: 5px solid #ed0d0d;
+  color: rgb(73, 8, 8);
+}
+
+@keyframes noti{
+  from{
+    left: -200px;
+  }
+  15%{
+    left: 0;
+  }
+  85%{
+    left: 0;
+  }
+  to{
+    left: -600px;
+  }
+}
+
