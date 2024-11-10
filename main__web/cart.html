@@ -65,18 +65,32 @@
     <div class="seach__section">
       <div class="search">
         <span><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input id="search__input" oninput="searchProduct()" type="search" placeholder="Search.." name="search" />
+        <input
+          id="search__input"
+          oninput="filtersearch()"
+          type="search"
+          placeholder="Search.."
+          name="search"
+        />
         <span>
-          <button onclick="advanced_search()" id="chevron-down" class="chevron chevron-down">
+          <button
+            onclick="advanced_search()"
+            id="chevron-down"
+            class="chevron chevron-down"
+          >
             <i class="fa-solid fa-chevron-down"></i>
           </button>
-          <button onclick="close__advanced_search()" id="chevron-up" class="chevrop chevron-up">
+          <button
+            onclick="close__advanced_search()"
+            id="chevron-up"
+            class="chevrop chevron-up"
+          >
             <i class="fa-solid fa-chevron-up"></i>
           </button>
         </span>
         <button onclick="close_search()">Hủy</button>
       </div>
-      <section id="advanced_search"></section>
+      <div id="advanced_search"></div>
       <div class="list__search"></div>
       <div class="list__Page2">
         <ul id="number__pages--two"></ul>
