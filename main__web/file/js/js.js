@@ -109,7 +109,7 @@ function filtersearch() {
   min = min === "" ? 0 : parseFloat(min);
 
   let max = document.getElementById("max__search").value;
-  max = max === "" ? 1000 : parseFloat(max);
+  max = max === "" ? 100000 : parseFloat(max);
 
   for (let i = array.length - 1; i >= 0; i--) {
     if (array[i].price < min || array[i].price > max) {
@@ -261,9 +261,9 @@ function createAdmin() {
   var admin = {
     username: "admin",
     password: "admin",
-    phone: "",
-    email: "",
-    address: "",
+    phone: "09090000x",
+    email: "mecha19@email.com",
+    address: "273 An Dương Vương, P3, Quận 5, TPHCM",
   };
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
