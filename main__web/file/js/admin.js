@@ -30,12 +30,44 @@ function showProduct(sanPham) {
     return html;
 }
 
+function soluongProduct() {
+    document.querySelector("#soluongProduct").innerText = DanhSachSanPham.length;
+}
+function soluongUser() {
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    document.querySelector("#soluongUser").innerText = DanhSachKhachHang.length;
+}
+function soluongDoanhthu() {
+    if (localStorage.getItem("ArrayBill")) {
+        let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+        sum = 0;
+        for (let i = 0; i < DanhSachBill.length; i++) {
+            let j = 0;
+            while (j < DanhSachBill[i].cart.length) {
+                sum += DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4];
+                j++;
+            }
+        }
+        document.querySelector("#soluongDoanhthu").innerText = sum.toLocaleString();
+    }
+    else{
+        document.querySelector("#soluongDoanhthu").innerText=`0`;
+    }
+}
+function onloadAdmin() {
+    soluongProduct();
+    soluongUser();
+    soluongDoanhthu();
+}
 
 //show trang chủ
 function showpageMain() {
     document.querySelector(".container__right--card").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector(".container__right--main").style.display = "block";
+    document.querySelector("#formCustomer").style.display = "none";
+    document.querySelector("#formRevenue").style.display="none";
+    onloadAdmin();
 }
 
 //show trang sản phẩm
@@ -43,11 +75,10 @@ function showPageProduct() {
     document.querySelector(".container__right--card").style.display = "block";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
+    document.querySelector("#formCustomer").style.display = "none";
+    document.querySelector("#formRevenue").style.display="none";
     showArrayProduct();
 }
-
-
-
 
 //-----------------------------------------------THÊM SẢN PHẨM----------------------------------------------
 
@@ -76,7 +107,6 @@ function chooseFileimg2(fileInput) {
     }
 }
 
-
 //Đóng khung input THÊM SẢN PHẨM
 let nodeTemp = document.querySelector(".contain__addP--products");
 let nodeClose = nodeTemp.querySelector(".fa-window-close");
@@ -84,13 +114,10 @@ nodeClose.addEventListener("click", function () {
     document.querySelector(".container__addP--products").style.display = "none";
 })
 
-
 //Mở khung input THÊM SẢN PHẨM
 function showInputAddProduct() {
     document.querySelector(".container__addP--products").style.display = "block";
 }
-
-
 
 //đẩy sản phẩm vào localStorage và thêm vào trang bán hàng, trang admin
 function addProduct() {
@@ -145,13 +172,10 @@ function customAlert(message, type) {
     }, 2500)
 }
 
-//khi click vào button sẽ đóng khung thông báo Alert 
+//khi click vào button OK sẽ đóng khung thông báo Alert 
 function closeAlert() {
     document.querySelector(".customAlert").style.display = "none";
 }
-
-
-
 
 
 
@@ -169,8 +193,6 @@ function deleteP(id) {
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
     showArrayProduct();
 }
-
-
 
 
 //-----------------------------------------------------------------SỬA THÔNG TIN SẢN PHẨM ----------------------------------------------------
@@ -228,39 +250,34 @@ function showInputChangeProduct(id) {
             document.querySelector(".button__changeP").replaceWith(document.querySelector(".button__changeP").cloneNode(true));
             //thêm sự kiện click vào button LƯU sẽ cập nhật lại thông tin sản phẩm
             document.querySelector(".button__changeP").addEventListener("click", function () {
-                saveChangeProduct(DanhSachSanPham[i]);
+                saveChangeProduct(i);
             })
             return;
         }
     }
 }
 
-
-
 //Loại bỏ ảnh 1
 function setIMG1() {
     document.querySelector("#imgPreview1__changeP").src = " ";
 }
-
-
 
 //loại bỏ ảnh 2
 function setIMG2() {
     document.querySelector("#imgPreview2__changeP").src = " ";
 }
 
-
 //Lưu thông tin sau khi sửa
-function saveChangeProduct(sanPham) {
-    sanPham.image1 = document.querySelector("#imgPreview1__changeP").src;
-    sanPham.image2 = document.querySelector("#imgPreview2__changeP").src;
-    sanPham.name = document.querySelector(".input__changeP--name input").value;
-    sanPham.introduce = document.querySelector(".input__changeP--introduce input").value;
-    sanPham.price = document.querySelector(".input__changeP--price input").value;
-    sanPham.detail1 = document.querySelector("#detail1__changeP").value;
-    sanPham.detail2 = document.querySelector("#detail2__changeP").value;
-    sanPham.detail3 = document.querySelector("#detail3__changeP").value;
-    sanPham.detail4 = document.querySelector("#detail4__changeP").value;
+function saveChangeProduct(i) {
+    DanhSachSanPham[i].image1 = document.querySelector("#imgPreview1__changeP").src;
+    DanhSachSanPham[i].image2 = document.querySelector("#imgPreview2__changeP").src;
+    DanhSachSanPham[i].name = document.querySelector(".input__changeP--name input").value;
+    DanhSachSanPham[i].introduce = document.querySelector(".input__changeP--introduce input").value;
+    DanhSachSanPham[i].price = document.querySelector(".input__changeP--price input").value;
+    DanhSachSanPham[i].detail1 = document.querySelector("#detail1__changeP").value;
+    DanhSachSanPham[i].detail2 = document.querySelector("#detail2__changeP").value;
+    DanhSachSanPham[i].detail3 = document.querySelector("#detail3__changeP").value;
+    DanhSachSanPham[i].detail4 = document.querySelector("#detail4__changeP").value;
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
     showArrayProduct();
     document.querySelector(".container__changeP--products").style.display = "none";
@@ -270,37 +287,42 @@ function saveChangeProduct(sanPham) {
 function showPageBill() {
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formBill").style.display = "block";
+    document.querySelector("#formRevenue").style.display="none";
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
     showArrayBill(DanhSachBill);
 }
 
-//Đóng phần xem chi tiết giỏ hàng
+//Đóng phần xem chi tiết đơn hàng
 function closeViewDonHang() {
     document.querySelector(".modal__viewDonHang").style.display = "none";
 }
 
 function showArrayBill(arr) {
-    if(!localStorage.getItem("ArrayBill")){
-        html=`<tr><td>Không có đơn hàng nào ! </td></tr>`;
+    let html = "";
+    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]") {
+        html = `<thead id="theadBill"><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
+            <tbody id="tbodyBill"><tr><td colspan="6">Không có đơn hàng nào !</td></tr></tbody>`;
     }
-    else{
-        let html = `<thead id="theadBill">
+    else {
+        createFilterBill();
+        html = `<thead id="theadBill">
                 <th>STT</th>
                 <th>Tên khách hàng</th>
                 <th>Địa chỉ</th>
                 <th>Thời gian</th>
                 <th>Trạng thái</th>
-                <th>Chi tiết giỏ hàng</th>
+                <th>Chi tiết đơn hàng</th>
             </thead>
             <tbody id="tbodyBill">`;
-    for (let i = 0; i < arr.length; i++) {
-        let HTMLbill = showBill(arr[i], i);
-        html = html + HTMLbill;
+        for (let i = 0; i < arr.length; i++) {
+            let HTMLbill = showBill(arr[i], i);
+            html = html + HTMLbill;
+        }
+        html = html + `</tbody>`;
     }
-    html = html + `</tbody>`;
     document.querySelector("#tableBill").innerHTML = html;
-    }
 }
 
 //Show ra tất cả đơn hàng
@@ -309,17 +331,13 @@ function showBill(bill, soThuTu) {
     html += `<tr>
         <td>`+ soThuTu + `</td>
         <td>`+ bill.username + `</td>
-        <td>`+bill.address+`</td>
+        <td>`+ bill.address + `</td>
         <td>`+ bill.date + `</td>   
         <td>`+ bill.status + `</td>
-        <td style="text-align:center;"><button id="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
+        <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
             </tr>`
     return html;
 }
-
-
-
-
 
 //Show lại chi tiết đơn hàng mà khách đã đặt
 function showDonHang(vitri) {
@@ -376,25 +394,23 @@ function saveStatus(x) {
 
 
 //tạo ra filter lọc đơn hàng
-let statuss = ["chưa xử lý", "đã xác nhận","all", "giao hàng thành công", "đã hủy"];
-let day=["một ngày","một tuần","all","nửa tháng","một tháng"];
-let valueDay=["1","7","15","30"];
-createFilterBill();
-function createFilterBill(){
-    let html=`<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
+let statuss = ["chưa xử lý", "đã xác nhận", "all", "giao hàng thành công", "đã hủy"];
+let day = ["một ngày", "một tuần", "all", "nửa tháng", "một tháng"];
+let valueDay = ["all","1", "7", "15", "30"];
+function createFilterBill() {
+    let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
     <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusAndTime()">`
-    for(let i=0;i<statuss.length;i++)
-    {
-        html+=`<option value="`+statuss[i]+`">`+statuss[i]+`</option>`
+    for (let i = 0; i < statuss.length; i++) {
+        html += `<option value="` + statuss[i] + `">` + statuss[i] + `</option>`
     }
-    html+=`</select></div>`
-    html+=`<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Filter Day</p>
+    html += `</select></div>`
+    html += `<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Filter Day</p>
             <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusAndTime()">`
-    for(let i=0;i<day.length;i++){
-        html+=`<option value="`+valueDay[i]+`">`+day[i]+`</option>`
+    for (let i = 0; i < day.length; i++) {
+        html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
     }
-    html+=`</select></div>`
-    document.querySelector("#filterBill").innerHTML=html;
+    html += `</select></div>`
+    document.querySelector("#filterBill").innerHTML = html;
 }
 
 
@@ -420,8 +436,8 @@ function filterStatusAndTime() {
         if (timeB <= past && timeB >= now)
             arrayBillOfSTT.splice(i, 1);
     }
-    if(arrayBillOfSTT.length==0){
-        document.querySelector("#tableBill").innerHTML=`
+    if (arrayBillOfSTT.length == 0) {
+        document.querySelector("#tableBill").innerHTML = `
         <thead id="theadBill">
                 <th>STT</th>
                 <th>Tên khách hàng</th>
@@ -430,22 +446,336 @@ function filterStatusAndTime() {
                 <th>Trạng thái</th>
                 <th>Chi tiết giỏ hàng</th>
         </thead>
-        <tbody><tr><td style="text-align:center" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
+        <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
     }
-    else{
+    else {
         showArrayBill(arrayBillOfSTT);
     }
 }
 
 
-function logOutAdmin(){
-    localStorage.removeItem("un");
-    let users=JSON.parse(localStorage.getItem("users"));
-    for(let i=0;i<users.length;i++){
-        if(users[i].username=="admin"){
-            users.splice(i,1);
+function logOutAdmin() {
+    localStorage.removeItem("userLogin");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------DANH SACH KHACH HANG--------------------------------------------------------
+
+//Mở trang Khách hàng
+function showPageCustomer() {
+    document.querySelector("#formCustomer").style.display = "block";
+    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector(".container__right--main").style.display = "none";
+    document.querySelector("#formBill").style.display = "none";
+    document.querySelector("#formRevenue").style.display="none";
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    showArrayCustomer(DanhSachKhachHang);
+}
+
+// Hiển thị danh sách khách hàng
+function showArrayCustomer(arr) {
+    let html = '';
+    if (!localStorage.getItem("users")||localStorage.getItem("users")=="[]") {
+        html = `<thead id="theadCustomer"><tr><th>Tên</th><th>Mật khẩu</th><th>Email</th><th>SĐT</th><th>Địa chỉ</th><th>Chức năng</th></tr></thead>
+        <tbody><tr><td colspan="6">Không có khách hàng nào !</td></tr></tbody>`
+    }
+    else {
+        document.querySelector("#filterCustomer").innerHTML = `<button type="button" id="button__add--customer" onclick="showInputAddCustomer()">Thêm người dùng</button>`;
+        html = ` <thead id="theadCustomer">
+                <tr>
+                    <th>Tên</th>
+                    <th>Mật khẩu</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+        <tbody>`;
+        for (let i = 0; i < arr.length; i++) {
+            let HTML = showCustomer(arr[i], i);
+            html = html + HTML;
+        }
+        html = html + `</tbody>`;
+    }
+    document.querySelector("#tableCustomer").innerHTML = html;
+}
+
+
+//tạo 1 khách hàng
+function showCustomer(customer, index) {
+    let html = '';
+    html += `<tr>
+      <td>`+ customer.username + `</td>
+      <td>`+ customer.password + `</td>
+      <td>`+ customer.email + `</td>
+      <td>`+ customer.phone + `</td>
+      <td>`+ customer.address + `</td>
+      <td style="display:flex;justify-content: center;">
+      <input type="hidden" value="`+ index + `">
+      <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
+      <button onclick="deleteCustomer(`+ index + `)" type="button" class="button__delete--customer" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+      </td>
+    </tr>`
+    return html;
+}
+
+//xóa khách hàng
+function deleteCustomer(index) {
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    if (confirm("Bạn có chắc chắn xóa không ?"))
+        DanhSachKhachHang.splice(index, 1);
+    localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
+    showArrayCustomer(DanhSachKhachHang);
+}
+
+
+//Mở khung thêm người dùng
+function showInputAddCustomer() {
+    document.querySelector(".container__add--customer").style.display = "block";
+}
+
+// Thêm người dùng mới
+function addCustomer() {
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    let nameCustomer = document.querySelector("#usernameAdd");
+    let pswCustomer = document.querySelector("#passwordAdd");
+    let emailCustomer = document.querySelector("#emailAdd");
+    let phoneCustomer = document.querySelector("#phoneAdd");
+    let addressCustomer = document.querySelector("#addressAdd");
+    if (Number(nameCustomer.value) || nameCustomer.value == "") {
+        customAlert("Tên không hợp lệ!", "warning");
+        return false;
+    }
+    if ((pswCustomer.value).length < 8) {
+        customAlert("Mật khẩu không đủ điều kiện!", "warning");
+        return false;
+    }
+    if (!(emailCustomer.value).includes("@") || emailCustomer.value == "") {
+        customAlert("Email không hợp lệ!", "warning");
+        return false;
+    }
+    if (!Number(phoneCustomer.value) || (phoneCustomer.value).length < 10 || (phoneCustomer.value).length > 11) {
+        customAlert("Số điện thoại không hợp lệ", "warning");
+        return false;
+    }
+    if (addressCustomer.value == "" || /^[0-9]+$/.test(addressCustomer.value) || /^[a-zA-Z]+$/.test(addressCustomer.value)) {
+        customAlert("Địa chỉ không hợp lệ", "warning");
+        return false;
+    }
+    let usertemp = {
+        username: nameCustomer.value,
+        password: pswCustomer.value,
+        email: emailCustomer.value,
+        phone: phoneCustomer.value,
+        address: addressCustomer.value
+    }
+    DanhSachKhachHang.unshift(usertemp);
+    localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
+    showArrayCustomer(DanhSachKhachHang);
+    customAlert("Thêm khách hàng thành công!", "success")
+    closeInputAddCustomer();
+}
+
+
+//Đóng khung thêm người dùng
+function closeInputAddCustomer() {
+    document.querySelector(".container__add--customer").style.display = "none";
+}
+
+
+//Mở khung chỉnh sửa người dùng
+function showInputEditCustomer(index) {
+    document.querySelector(".container__edit--customer").style.display = "block";
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    for (let i = 0; i < DanhSachKhachHang.length; i++) {
+        if (index == i) {
+            let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+            document.querySelector("#usernameEdit").value = DanhSachKhachHang[i].username;
+            document.querySelector("#passwordEdit").value = DanhSachKhachHang[i].password;
+            document.querySelector("#emailEdit").value = DanhSachKhachHang[i].email;
+            document.querySelector("#phoneEdit").value = DanhSachKhachHang[i].phone;
+            document.querySelector("#addressEdit").value = DanhSachKhachHang[i].address;
+            document.querySelector("#save__edit").replaceWith(document.querySelector("#save__edit").cloneNode(true));
+            document.querySelector("#save__edit").addEventListener("click", function () {
+                updateCustomer(index);
+            })
+            return;
         }
     }
-    localStorage.setItem("users",stringify(users));
 }
+
+function updateCustomer(index) {
+    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    DanhSachKhachHang[index].username = document.querySelector("#usernameEdit").value;
+    DanhSachKhachHang[index].password = document.querySelector("#passwordEdit").value;
+    DanhSachKhachHang[index].email = document.querySelector("#emailEdit").value;
+    DanhSachKhachHang[index].phone = document.querySelector("#phoneEdit").value;
+    DanhSachKhachHang[index].address = document.querySelector("#addressEdit").value;
+    localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
+    showArrayCustomer(DanhSachKhachHang);
+    closeInputEditCustomer();
+}
+
+//Đóng khung chỉnh sửa người dùng
+function closeInputEditCustomer() {
+    document.querySelector(".container__edit--customer").style.display = "none";
+}
+
+function showPageRevenue(){
+    document.querySelector("#formBill").style.display="none";
+    document.querySelector("#formCustomer").style.display="none";
+    document.querySelector(".container__right--card").style.display="none";
+    document.querySelector(".container__right--main").style.display="none";
+    document.querySelector("#formRevenue").style.display="block"; 
+    let ArrayBill= JSON.parse(localStorage.getItem("ArrayBill")) || [];
+    customer_statistics(ArrayBill);
+    createFilterSta();
+}
+
+function showDetailStatistic(name){
+    let array= filterStatistics();
+    let arrayDetail= [];
+    for (let i = 0; i < array.length; i++) {
+        if(array[i].username == name){
+            arrayDetail.push(array[i]);
+        }
+    }
+    let html= `<div id="table__viewbills">
+                <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
+                <table>
+                    <thead>
+                        <th>Địa chỉ</th>
+                        <th>Thời Gian</th>
+                        <th>Tổng</th>
+                        <th>Chỉ tiết đơn hàng</th>
+                    </thead>
+                    <tbody>`;
+    for (let i = 0; i < arrayDetail.length; i++) {
+        html+= `<tr>
+                        <td>`+arrayDetail[i].address+`</td>
+                        <td>`+arrayDetail[i].date+`</td>
+                        <td>`+arrayDetail[i].sum+`</td>
+                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">aa</button></td>
+                </tr>`;
+    }
+    html+= `</tbody>
+                </table>
+            </div>`;
+    document.getElementById("modal__StatisticsBill").style.display="block";
+    document.getElementById("modal__StatisticsBill").innerHTML= html;
+       
+}
+
+function closeDetailStatistic(){
+    document.getElementById("modal__StatisticsBill").style.display="none";
+}
+
+// hàm show thống kê khác hàng 
+function showcustomer_statistics(arr) {
+    let html="";
+    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]"){
+        html = `<thead><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
+            <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
+    }
+    else {
+        html = `<thead><th>STT</th>
+                <th>Tên khách hàng</th>
+                <th>Tổng</th>
+                <th>Xem chi tiet </th></thead><tbody>`
+
+        for (let i = 0; i < arr.length; i++) {
+            let name=arr[i][0];
+            html+=
+                `<tr>
+                    <td>`+i+`</td>
+                    <td>`+arr[i][0]+`</td>
+                    <td>`+arr[i][1]+`</td>
+                    <td><button onclick="showDetailStatistic('` +arr[i][0]+`')">`+"Chi tiết"+`</button></td>
+                </tr>` 
+        }
+        html+=`</tbody>`
+    }
+    document.getElementById("tableRevenue").innerHTML = html;
+}
+// hàm lọc khách hàng có doanh thu nhiều nhất ddeer show ra
+function customer_statistics(array){
+    let sortCus= [];
+    let ArrayBill= array;
+    for (let i = 0; i < ArrayBill.length; i++) {
+        let j=0;
+        while(j < sortCus.length){
+            if(sortCus[j][0] == ArrayBill[i].username){
+                sortCus[j][1]+= ArrayBill[i].sum;
+                break;
+            }
+            j++;
+        }
+        if( j >= sortCus.length){
+            let f= new Array(
+                ArrayBill[i].username,
+                ArrayBill[i].sum,
+            );
+            sortCus.push(f);
+        }
+    }
+    sortCus.sort(function(a, b){
+         return b[1] - a[1];
+    });
+    showcustomer_statistics(sortCus);  
+}
+// tạo lọc thời gian của thống kê 
+function createFilterSta() {
+
+    let html = `<div id="sta__time">
+            <select style="height:40px;width:100px;" name="" id="sta__time-option" onchange="filterStatistics()">`
+    for (let i = 0; i < day.length; i++) {
+        html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
+    }
+    html += `</select></div>`
+    document.getElementById("filterStatistics").innerHTML = html;
+}
+
+// lọc thống kê theo thời gian
+function filterStatistics(){
+    let filter = document.getElementById("sta__time-option").value;
+    let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    let array = [];
+    if(filter == "all") array= ArrayBill;
+    else{
+        let now = new Date();
+        let past = new Date();
+        past.setDate(past.getDate() - parseInt(filter));
+        for (let i = 0; i < ArrayBill.length; i++) {
+            let timeB = new Date(ArrayBill[i].date);
+            if (timeB >= past && timeB <= now){
+                array.push(ArrayBill[i]);
+            }
+            
+        }
+    }
+    customer_statistics(array);
+    return array;
+}
+
+
+
+
+
+
+
+
+
 
