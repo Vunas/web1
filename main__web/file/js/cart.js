@@ -22,6 +22,7 @@ function showMenuCart() {
 }
 
 function loadMenuCart() {
+  
   var url = document.location.href;
   var tmp = url.split("?");
   var type;
@@ -45,6 +46,38 @@ function pay() {
     noti("ban phai dang nhap moi mua duoc hang", 1);
   }
 }
+// function pay() {
+//   let cart = JSON.parse(localStorage.getItem("gioHang")) || [];
+//   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
+//   if (localStorage.getItem("userLogin")) {
+//     if (!cart || cart.length === 0) {
+//       // Kiểm tra giỏ hàng có sản phẩm hay không
+//       noti("Không có sản phẩm trong giỏ hàng",1);
+//       return;
+//     }
+//     let sum=0;
+//     for (let i = 0; i < cart.length; i++) {
+//         sum+= cart[i][3] * cart[i][4];
+//     }
+//     userLogin= JSON.parse(localStorage.getItem("userLogin"));
+//     let Bill = {
+//       username: userLogin.username,
+//       address: userLogin.address,
+//       phone: userLogin.phone,
+//       status: "chưa xử lý",
+//       date: new Date().toDateString(),
+//       cart: cart,
+//       sum: sum,
+//     };
+//     ArrayBill.push(Bill);
+//     localStorage.setItem("ArrayBill", JSON.stringify(ArrayBill));
+//     localStorage.removeItem("gioHang");
+//     noti("dat hang thanh cong",0);
+//     showCart();
+//   } else {
+//     noti("ban phai dang nhap moi mua duoc hang",1);
+//   }
+// }
 
 //Tăng số lượng và tính lại cột Total
 function quantityUp(x) {
@@ -340,6 +373,9 @@ function showHistoryCart() {
   }
   document.getElementById("myCart").innerHTML = kq;
 }
+
+
+
 
 
 
