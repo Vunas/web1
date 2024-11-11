@@ -9,6 +9,7 @@
     --primary--color3: #FFFFFF;
     --primary--color4: rgb(250, 173, 31);
     --primary--color5: #D2B48C;
+    --primary--color6: #ffba66;
 }
 
 body {
@@ -24,7 +25,7 @@ body {
 }
 
 .container__left {
-    width: 20%;
+    width: 15%;
     height: 100vh;
     border-right: 1px solid gray;
 }
@@ -57,7 +58,7 @@ body {
     margin-top:40px;
 }
 .container__right--main {
-    width: 80%;
+    width: 85%;
 }
 
 .container__top {
@@ -67,7 +68,7 @@ body {
     border-radius: 50px;
     text-align: center;
     font-size: 25px;
-    padding-top: 10px;
+    padding: 10px;
     margin-top: 10px;
 }
 
@@ -77,23 +78,49 @@ body {
 }
 
 .text__user,
-.text__product {
-    width: 40%;
+.text__product,
+.text__revenue {
+    width: 32%;
+    cursor: pointer;
     text-align: center;
-    margin: 5px auto;
+    margin: 0 auto;
     border: 0.5px solid gray;
     border-radius: 10px;
+    transition: 0.5s all;
+}
+.text__user:hover ,.text__product:hover,.text__revenue:hover{
+    transform: scale(1.02);
+    color: var(--primary--color3);
     background-color: var(--primary--color5);
+}
+.text__user:hover #soluongUser,.text__product:hover #soluongProduct,.text__revenue:hover #soluongDoanhthu{
+    color: var(--primary--color3);
 }
 
 .text__user h3,
-.text__product h3 {
+.text__product h3,
+.text__revenue h3{
     font-size: 20px;
     padding: 5px;
 }
 
-.text__user--top img,
-.text__product--top img {
+.text__user--top,.text__product--top,.text__revenue--top{
+    position: relative;
+    padding:20px 0px 0px 0px;
+}
+#soluongUser,#soluongProduct,#soluongDoanhthu{
+    position: absolute;
+    top: 0px;
+    right:10px;
+    color: black;
+    text-align: center;
+    align-content: center;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+
+.text__user--top img,.text__product--top img,.text__revenue--top img {
     width: 100%;
     height: 300px;
 }
@@ -125,19 +152,22 @@ body {
         padding-top: 15px;
     }
     .text__user--bottom,
-    .text__product--bottom {
+    .text__product--bottom,.text__revenue--bottom {
         font-size: 13px;
     }
-    .text__user,.text__product{
-        width: 45%;
+    .text__user,.text__product,.text__revenue{
+        width: 40%;
     }
-    .text__user--top img,
-    .text__product--top img {
+    .text__user--top img,.text__product--top img,.text__revenue--top img {
         height: 150px;
     }
+    .text__user--top #soluongUser,.text__product--top #soluongProduct,.text__revenue--top #soluongDoanhthu{
+        font-size: 15px;
+    } 
 
-    .container__left .contain .nav1 li {
-        font-size: 16px;
+    .nav1 li,.nav2 li,.nav2 li a{
+        font-size: 13px;
+        margin: 20px 0px;
     }
 
     .logo img {
@@ -149,17 +179,23 @@ body {
     .contain__changeP--products,.contain__addP--products{
         min-width: 100%;
     }
-    #button__viewBill{
+    .button__viewBill{
         min-height: 80px;
     }
     #filterBill{
         flex-wrap: wrap;
     }
+    .contain__add--customer,.contain__edit--customer{
+        min-width: 100%;
+    }
+    #formCustomer{
+        overflow-x: scroll;
+    }
 }
 
 
 .container__right--card {
-    width: 80%;
+    width: 85%;
     height: 120vh;
     display: none;
     overflow-y: scroll;
@@ -171,10 +207,10 @@ body {
 #addP {
     all: unset;
     border: 0.1px solid;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
     margin: 10px;
-    padding:3px;
+    padding:5px 20px;
 }
 
 #addP:hover{
@@ -278,27 +314,18 @@ body {
 .background__addP--img1,
 .background__addP--img2
 {
-    width:80%;
+    width:85%;
     height:50%;
 }
 #imgPreview1__addP,#imgPreview2__addP{
     width:100%;
-    height:80%;
+    height:85%;
 }
-.input__addP--img,
-.input__addP--name,
-.input__addP--introduce,
-.input__addP--price,
-.input__addP--detail {
+.input__addP--img,.input__addP--name,.input__addP--introduce,.input__addP--price,.input__addP--detail {
     margin: 20px 0px;
 }
-.input__addP--img input,
-.input__addP--name input,
-.input__addP--introduce input ,
-.input__addP--price input,
-.input__addP--detail input,
-.button__addP{
-    width:80%;
+.input__addP--img input,.input__addP--name input,.input__addP--introduce input ,.input__addP--price input,.input__addP--detail input{
+    width:85%;
     height:30px;
 }
 
@@ -354,26 +381,33 @@ body {
     width: 50%;
 }
 .background__changeP--img1,.background__changeP--img2{
-    width:80%;
+    width:85%;
     height: 45%;
     margin:15px 0px;
 }
 #imgPreview1__changeP,#imgPreview2__changeP{
     width: 100%;
-    height:80%;
+    height:85%;
 }
 .input__changeP--name,.input__changeP--introduce,.input__changeP--price,.input__changeP--detail
 {
     margin:20px 0px;
 }
-.input__changeP--name input,
-.input__changeP--introduce input,
-.input__changeP--price input,
-.input__changeP--detail input,
-.button__changeP
+.input__changeP--name input,.input__changeP--introduce input,.input__changeP--price input,.input__changeP--detail input
 {
-    width:80%;
+    width: 85%;
     height:30px;
+}
+.button__addP,.button__changeP{
+    all:unset;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid;
+    width: 85%;
+    height:30px
+}
+.button__addP:hover,.button__changeP:hover{
+    background-color: #D2B48C;
 }
 .button__changeIMG1,.button__changeIMG2{
     width:100%;
@@ -381,6 +415,8 @@ body {
     height:30px;
     font-size: 15px;
 }
+
+
 
 
 .customAlert{
@@ -425,7 +461,7 @@ body {
 
 
 #formBill{
-    width:80%;
+    width:85%;
     display: none;
     height: 100vh;
     overflow-y: scroll;
@@ -434,12 +470,13 @@ body {
     width:100%;
 }
 #theadBill{
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
     height:30px;
     background-color: var(--primary--color5);
 }
 #tableBill tr td{
+    text-align: center;
     height:50px;
 }
 .modal__viewDonHang{
@@ -463,8 +500,8 @@ body {
     background-color: white;
 }
 #thead__viewDonHang{
-    font-size: 20px;
-    height:35px;
+    font-size: 17px;
+    height:30px;
 }
 #info{
     text-align: center;
@@ -492,3 +529,134 @@ body {
     justify-content: space-between
 }
 
+
+
+
+
+
+
+
+
+
+.container__add--customer,.container__edit--customer{
+    position: fixed;
+    inset: unset;
+    background-color: rgba(0, 0, 0, .8);
+    height: 100vh;
+    width: 100%;
+    display: none;
+    align-content: center;
+    justify-items: center;
+    overflow-y: scroll;
+}
+.contain__add--customer,.contain__edit--customer{
+    width: 70%;
+    background: var(--primary--color3);
+}
+.contain__add--customer h3,.contain__add--customer input,.contain__edit--customer h3,.contain__edit--customer input{
+    display: block;
+    width: 90%;
+    margin:20px;
+    padding: 5px;
+}
+.contain__add--customer button,.contain__edit--customer button{
+    all: unset;
+    border: 1px solid;
+    padding: 3px 20px;
+    cursor: pointer;
+}
+.button__save--add,.button__save--edit{
+    text-align: center;
+    padding:10px;
+}
+.contain__add--customer button:hover,.contain__edit--customer button:hover{
+    background-color: var(--primary--color5);
+}
+#formCustomer{
+    width: 85%;
+    display: none;
+}
+#formCustomer table{
+    width: 100%;
+}
+#formCustomer table thead{
+    background-color: #D2B48C;
+    height:30px;
+    font-size: 17px;
+}
+#formCustomer table tbody tr td{
+    justify-content: center;
+    text-align: center;
+    height:50px;
+}
+#button__add--customer{
+    all: unset;
+    padding: 5px 20px;
+    border: 1px solid;
+    cursor: pointer;
+    margin:10px;
+}
+.button__edit--customer,.button__delete--customer{
+    all: unset;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin:5px;
+}
+#button__add--customer:hover{
+    background-color: #D2B48C;
+}
+
+/*thong ke*/
+#modal__StatisticsBill {
+    /* z-index: 1; */
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    align-content: center;
+    justify-items: center;
+    background-color: rgba(200, 200, 200, 0.5);
+    overflow-x: scroll;
+    display: none;
+}
+
+#table__viewbills{
+    width: 90%;
+    margin: 50px auto;
+    color: black;
+    background-color: white;
+}
+
+#closetb__vbls{
+    width: 100%;
+    text-align: end;
+}
+#closetb__vbls button{
+    all: unset;
+    cursor: pointer;
+    margin: 10px;
+    rotate: 45deg;
+    font-size: 20px;
+}
+
+#table__viewbills table{
+    width: 100%;
+}
+  
+#table__viewbills th{
+    height: 40px;
+    background-color: var(--primary--color5);
+}
+#table__viewbills td{
+    text-align: center;
+    height: 50px;
+}
+#formRevenue {
+    width: 85%;
+}
+
+#formRevenue table{
+    width: 100%;
+    text-align: center;
+    border: 1px solid;
+}
