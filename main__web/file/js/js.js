@@ -249,6 +249,7 @@ function checkLogin() {
 
 function logout() {
   localStorage.removeItem("userLogin");
+  localStorage.removeItem("gioHang");
   checkLogin();
   document.getElementById("checkLogin").innerHTML = 
     `<button onclick="openlogin()" id="user-icon" class="nav__item">
@@ -260,7 +261,7 @@ function createAdmin() {
   var admin = {
     username: "admin",
     password: "admin",
-    sdt: "",
+    phone: "",
     email: "",
     address: "",
   };
@@ -284,7 +285,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   var username = document.getElementById("sigus").value;
   var password = document.getElementById("sigpas").value;
   var repassword = document.getElementById("resigpas").value;
-  var sdt = document.getElementById("sdt").value;
+  var phone = document.getElementById("phone").value;
   var email = document.getElementById("email").value;
   var address = document.getElementById("address").value;
   let signupFlag = true;
@@ -313,7 +314,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   signupFlag = false;
 } else document.getElementById("paddress").innerHTML = "";
   
-  if (sdt.length != 10) {
+  if (phone.length != 10) {
     document.getElementById("pphone").innerHTML = "Sdt không hợp lệ";
     signupFlag = false;
   } else document.getElementById("pphone").innerHTML = "";
@@ -325,7 +326,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   var newUser = {
     username: username,
     password: password,
-    sdt: sdt,
+    phone: phone,
     email: email,
     address: address,
   };
