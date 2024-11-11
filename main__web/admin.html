@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +8,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Quản Lý Cửa Hàng</title>
 </head>
-
-<body>
+<body onload="onloadAdmin()">
     <div class="container">
         <div class="container__left">
             <div class="logo">
-                <img src="./file/image/img_admin/logo.png" alt="">
+                <img src="./file/image/img_brand/logo2.png" alt="">
             </div>
             <div class="contain">
                 <ul class="nav1">
                     <li onclick="showpageMain()"><i class="fa fa-house"></i>Trang tổng quan</li>
                     <li onclick="showPageProduct()"><i class="fa fa-link" aria-hidden="true"></i>Sản phẩm</li>
-                    <li><i class="fas fa-user"></i>Khách hàng</li>
+                    <li onclick="showPageCustomer()"><i class="fas fa-user"></i>Khách hàng</li>
                     <li onclick="showPageBill()"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Đơn hàng</li>
-                    <li><i class="fa fa-bar-chart" aria-hidden="true"></i>Thống kê</li>
+                    <li onclick="showPageRevenue()" ><i class="fa fa-bar-chart" aria-hidden="true"></i>Thống kê</li>
                 </ul>
                 <ul class="nav2">
                     <li><a href="./main.html"><i class="fa fa-reply" aria-hidden="true"></i>Trang chủ</a></li>
-                    <li><a onclick="logOutAdmin()" href="./main.html"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng xuất</a></li>
+                    <li><a onclick="logOutAdmin()" href="./main.html"><i class="fa fa-sign-in"
+                                aria-hidden="true"></i>Đăng xuất</a></li>
                 </ul>
             </div>
         </div>
@@ -35,9 +34,10 @@
                 TRANG TỔNG QUÁT CỦA CỬA HÀNG GUNDAM SHOP
             </div>
             <div class="container__bottom">
-                <div class="text__user">
+                <div onclick="showPageCustomer()" class="text__user">
                     <div class="text__user--top">
                         <img src="./file/image/img_admin/img1.png" alt="">
+                        <div id="soluongUser" ></div>
                     </div>
                     <div class="text__user--bottom">
                         <h3>Khách hàng</h3>
@@ -49,8 +49,9 @@
                     </div>
                 </div>
                 <div class="text__product">
-                    <div class="text__product--top">
+                    <div onclick="showPageProduct()" class="text__product--top">
                         <img src="./file/image/img_admin/img2.png" alt="">
+                        <div id="soluongProduct"></div>
                     </div>
                     <div class="text__poduct--bottom">
                         <h3>Sản phẩm</h3>
@@ -59,14 +60,22 @@
                             Sản phẩm có thể ở dạng hữu hình (vật chất) hoặc vô hình (dịch vụ, ý tưởng).</p>
                     </div>
                 </div>
+                <div class="text__revenue">
+                    <div class="text__revenue--top">
+                        <img src="./file/image/img_admin/img3.png" alt="">
+                        <div id="soluongDoanhthu"></div>
+                    </div>
+                    <div class="text__revenue--bottom">
+                        <h3>Doanh thu</h3>
+                        <p>Doanh thu (revenue) là tổng giá trị các lợi ích kinh tế mà doanh nghiệp thu được trong kỳ kế toán,
+                            phát sinh từ các hoạt động sản xuất, kinh doanh thông thường của doanh nghiệp, góp phần làm tăng vốn chủ sở hữu</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="container__right--card">
-        
+
         </div>
-
-
-
 
         <!-- Thêm sản phẩm -->
         <div class="container__addP--products">
@@ -109,10 +118,6 @@
             </div>
         </div>
 
-
-
-
-
         <!-- Sửa sản phẩm -->
         <div class="container__changeP--products">
             <div class="contain__changeP--products">
@@ -144,14 +149,10 @@
                     </div>
                     <div class="input__changeP--detail">
                         <p>Thông tin sản phẩm</p>
-                        <input type="text" name="" id="detail1__changeP"
-                            placeholder="Nhập vào thông tin 1 của sản phẩm">
-                        <input type="text" name="" id="detail2__changeP"
-                            placeholder="Nhập vào thông tin 2 của sản phẩm">
-                        <input type="text" name="" id="detail3__changeP"
-                            placeholder="Nhập vào thông tin 3 của sản phẩm">
-                        <input type="text" name="" id="detail4__changeP"
-                            placeholder="Nhập vào thông tin 4 của sản phẩm">
+                        <input type="text" name="" id="detail1__changeP" placeholder="Nhập vào thông tin 1 của sản phẩm">
+                        <input type="text" name="" id="detail2__changeP" placeholder="Nhập vào thông tin 2 của sản phẩm">
+                        <input type="text" name="" id="detail3__changeP" placeholder="Nhập vào thông tin 3 của sản phẩm">
+                        <input type="text" name="" id="detail4__changeP" placeholder="Nhập vào thông tin 4 của sản phẩm">
                     </div>
                     <button class="button__changeP">
                         LƯU
@@ -160,15 +161,42 @@
             </div>
         </div>
 
+         <!-- Modal thêm người dùng -->
+         <div class="container__add--customer">
+            <div class="contain__add--customer">
+                <h3>Thêm người dùng mới</h3>
+                <input type="text" id="usernameAdd" placeholder="Username" required>
+                <input type="password" id="passwordAdd" placeholder="Password" required>
+                <input type="email" id="emailAdd" placeholder="Email" required>
+                <input type="text" id="phoneAdd" placeholder="Số điện thoại" required>
+                <input type="text" id="addressAdd" placeholder="Địa chỉ" required>
+                <div class="button__save--add">
+                    <button onclick="addCustomer()">Thêm</button>
+                    <button onclick="closeInputAddCustomer()">Hủy</button>
+                </div>
+            </div>
+        </div>
 
-        <div class="customAlert">
-            <div class="containAlert">
+        <!-- Modal chỉnh sửa người dùng -->
+        <div class="container__edit--customer">
+            <div class="contain__edit--customer">
+                <h3>Chỉnh sửa thông tin người dùng</h3>
+                <input type="text" id="usernameEdit" placeholder="Username">
+                <input type="password" id="passwordEdit" placeholder="Password">
+                <input type="email" id="emailEdit" placeholder="Email"> <!-- Thêm trường email -->
+                <input type="text" id="phoneEdit" placeholder="Số điện thoại"> <!-- Thêm trường số điện thoại -->
+                <input type="text" id="addressEdit" placeholder="Địa chỉ"> <!-- Thêm trường địa chỉ -->
+                <div class="button__save--edit">
+                    <button id="save__edit">Lưu</button>
+                    <button onclick="closeInputEditCustomer()">Hủy</button>
+                </div>
             </div>
         </div>
 
         <!-- Đơn hàng -->
         <form id="formBill" action="">
             <div id="filterBill">
+
             </div>
             <table id="tableBill">
 
@@ -176,8 +204,27 @@
         </form>
 
 
+        <!-- Khách hàng -->
+        <form id="formCustomer" action="">
+            <div id="filterCustomer">
+
+            </div>
+            <table id="tableCustomer">
+
+            </table>
+        </form>
 
 
+        <!-- Thống kê -->
+        <form action="" id="formRevenue">
+            <div id="filterStatistics"></div>
+            <table id="tableRevenue">
+
+            </table>
+        </form>
+
+        <div id="modal__StatisticsBill">
+        </div>
 
         <!-- Xem chi tiết đơn hàng -->
         <div class="modal__viewDonHang">
@@ -204,6 +251,11 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+
+        <div class="customAlert">
+            <div class="containAlert">
+            </div>
         </div>
     </div>
     <script src="./file/js/admin.js"></script>
