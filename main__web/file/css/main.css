@@ -135,6 +135,7 @@ nav ul li .nav__item {
   animation: ease 1s;
 }
 
+
 .search_div::-webkit-scrollbar{
   display: none;
 }
@@ -144,6 +145,7 @@ nav ul li .nav__item {
   justify-content: center;
   flex-wrap: wrap;
 }
+
 
 .search_div .seach__section .search {
   height: 40px;
