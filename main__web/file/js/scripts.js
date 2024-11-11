@@ -12,7 +12,10 @@ function Transaction__payment() {
     }
 
     let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
-
+    let sum=0;
+    for (let i = 0; i < cart.length; i++) {
+        sum+= cart[i][3] * cart[i][4];
+    }
     let Bill = {
         index: ArrayBill.length,
         username: userLogin.username,
@@ -21,9 +24,9 @@ function Transaction__payment() {
         status: "chưa xử lý",
         date: new Date().toDateString(),
         cart: cart,
+        sum: sum,
     };
     ArrayBill.push(Bill);
-    // ArrayBill = [];
     localStorage.setItem('ArrayBill', JSON.stringify(ArrayBill));
 
     ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
