@@ -17,7 +17,7 @@ function Transaction__payment() {
         index: ArrayBill.length,
         username: userLogin.username,
         address: userLogin.address,
-        phone: userLogin.sdt,
+        phone: userLogin.phone,
         status: "chưa xử lý",
         date: new Date().toDateString(),
         cart: cart,
