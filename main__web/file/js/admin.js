@@ -395,7 +395,7 @@ function saveStatus(x) {
 
 //tạo ra filter lọc đơn hàng
 let statuss = ["chưa xử lý", "đã xác nhận", "all", "giao hàng thành công", "đã hủy"];
-let day = ["một ngày", "một tuần", "all", "nửa tháng", "một tháng"];
+let day = ["all","một ngày", "một tuần","nửa tháng", "một tháng"];
 let valueDay = ["all","1", "7", "15", "30"];
 function createFilterBill() {
     let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
@@ -640,13 +640,123 @@ function showPageRevenue(){
     document.querySelector(".container__right--card").style.display="none";
     document.querySelector(".container__right--main").style.display="none";
     document.querySelector("#formRevenue").style.display="block"; 
-    let ArrayBill= JSON.parse(localStorage.getItem("ArrayBill")) || [];
-    customer_statistics(ArrayBill);
     createFilterSta();
+    loadStatistics();
+
 }
 
+//load trang thống kê
+function loadStatistics(){
+    let sta= document.getElementById("sta__sta-option").value;
+    if(sta == 1){
+        if(!document.getElementById("sta__sell")) createFilterSta();  
+        loadMatHang();
+    }
+    else customer_statistics();
+}
+
+//  thống kê mặt hàng theo doanh thu
+function loadMatHang(){
+    let array= filStatisticsTime();
+    let sortPro= [];
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].cart.length; j++) {
+            let k=0;
+            while(k < sortPro.length){
+
+                if(sortPro[k][2] == array[i].cart[j][2]){
+                    sortPro[k][4]+= array[i].cart[j][4];
+                    break;
+                }
+                k++;
+            }
+            if( k >= sortPro.length){
+                sortPro.push(array[i].cart[j]);
+            }
+        }
+    }
+    showMatHang_statistics(sortPro); 
+}
+
+// show thống ke mặt hàng
+function showMatHang_statistics(array){
+    let sell= document.getElementById("sta__sell-option").value;
+    if( sell == 1){
+        array.sort(function(a, b){
+            return b[4] - a[4];
+       });
+    }else{
+        array.sort(function(a, b){
+            return a[4] - b[4];
+       });
+    }
+    let html="";
+    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]"){
+        html = `<thead><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
+            <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
+    }
+    else {
+        html = `<thead><th>Mặt hàng</th>
+                <th>Giá</th>
+                <th>số lượng</th>
+                <th>Tổng giá</th>
+                <th>Xem chi tiet </th></thead><tbody>`
+
+        for (let i = 0; i < array.length; i++) {
+            html+=
+                `<tr>
+                    <td>`+array[i][2]+`</td>
+                    <td>`+(array[i][3]*1000).toLocaleString()+`</td>
+                    <td>`+array[i][4]+`</td>
+                    <td>`+(array[i][3]*array[i][4]*1000).toLocaleString()+`</td>
+                    <td><button onclick="showProductBills('` +array[i][2]+`')">`+"Chi tiết"+`</button></td>
+                </tr>` 
+        }
+        html+=`</tbody>`
+    }
+    document.getElementById("tableRevenue").innerHTML = html;
+}
+// show từng hóa đơn của từng măt hàng
+function showProductBills(name){
+    let array= filStatisticsTime();
+    let arrayDetail= [];
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].cart.length; j++) {
+            if(array[i].cart[j][2] == name){
+                arrayDetail.push(array[i]);
+                break;
+            }
+        }
+
+    }
+    let html= `<div id="table__viewbills">
+                <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
+                <table>
+                    <thead>
+                        <th>Địa chỉ</th>
+                        <th>Thời Gian</th>
+                        <th>Tổng</th>
+                        <th>Chỉ tiết đơn hàng</th>
+                    </thead>
+                    <tbody>`;
+    for (let i = 0; i < arrayDetail.length; i++) {
+        html+= `<tr>
+                        <td>`+arrayDetail[i].address+`</td>
+                        <td>`+arrayDetail[i].date+`</td>
+                        <td>`+arrayDetail[i].sum+`</td>
+                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
+                </tr>`;
+    }
+    html+= `</tbody>
+                </table>
+            </div>`;
+    document.getElementById("modal__StatisticsBill").style.display="block";
+    document.getElementById("modal__StatisticsBill").innerHTML= html;
+}
+
+// show từng hóa đơn của từng khách hàng
 function showDetailStatistic(name){
-    let array= filterStatistics();
+    let array= filStatisticsTime();
     let arrayDetail= [];
     for (let i = 0; i < array.length; i++) {
         if(array[i].username == name){
@@ -676,7 +786,6 @@ function showDetailStatistic(name){
             </div>`;
     document.getElementById("modal__StatisticsBill").style.display="block";
     document.getElementById("modal__StatisticsBill").innerHTML= html;
-       
 }
 
 function closeDetailStatistic(){
@@ -710,8 +819,11 @@ function showcustomer_statistics(arr) {
     }
     document.getElementById("tableRevenue").innerHTML = html;
 }
-// hàm lọc khách hàng có doanh thu nhiều nhất ddeer show ra
-function customer_statistics(array){
+// hàm lọc khách hàng có doanh thu nhiều nhất để show ra
+function customer_statistics(){
+    let array= filStatisticsTime();
+    if(document.getElementById("sta__sell"))
+        document.getElementById("sta__sell").outerHTML= "";
     let sortCus= [];
     let ArrayBill= array;
     for (let i = 0; i < ArrayBill.length; i++) {
@@ -724,10 +836,10 @@ function customer_statistics(array){
             j++;
         }
         if( j >= sortCus.length){
-            let f= new Array(
+            let f= [
                 ArrayBill[i].username,
                 ArrayBill[i].sum,
-            );
+            ];
             sortCus.push(f);
         }
     }
@@ -736,20 +848,32 @@ function customer_statistics(array){
     });
     showcustomer_statistics(sortCus);  
 }
-// tạo lọc thời gian của thống kê 
+// tạo lọc thống kê 
 function createFilterSta() {
+    let html='';
+    html += `<span id="sta__sta">
+            <select style="height:40px;width:100px;" name="" id="sta__sta-option" onchange="loadStatistics()">
+            <option value="1">Mặt Hàng</option>
+            <option value="2">Khách Hàng</option>
+            </select></span>`;
 
-    let html = `<div id="sta__time">
-            <select style="height:40px;width:100px;" name="" id="sta__time-option" onchange="filterStatistics()">`
+    html += `<span id="sta__sell">
+    <select style="height:40px;width:100px;" name="" id="sta__sell-option" onchange="loadMatHang()">
+    <option value="1">Bán Chạy Nhất</option>
+    <option value="2">Bán ế nhất</option>  
+    </select></span>`;
+
+    html += `<span id="sta__time">
+            <select style="height:40px;width:100px;" name="" id="sta__time-option" onchange="loadStatistics()">`
     for (let i = 0; i < day.length; i++) {
         html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
     }
-    html += `</select></div>`
+    html += `</select></span>`
     document.getElementById("filterStatistics").innerHTML = html;
 }
 
 // lọc thống kê theo thời gian
-function filterStatistics(){
+function filStatisticsTime(){
     let filter = document.getElementById("sta__time-option").value;
     let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill"));
     let array = [];
@@ -763,10 +887,8 @@ function filterStatistics(){
             if (timeB >= past && timeB <= now){
                 array.push(ArrayBill[i]);
             }
-            
         }
     }
-    customer_statistics(array);
     return array;
 }
 
