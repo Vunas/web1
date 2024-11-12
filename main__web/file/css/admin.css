@@ -631,6 +631,7 @@ body {
     width: 100%;
     text-align: end;
 }
+
 #closetb__vbls button{
     all: unset;
     cursor: pointer;
@@ -651,8 +652,28 @@ body {
     text-align: center;
     height: 50px;
 }
+#table__viewbills table td button{
+    all: unset;
+    padding: 3px;
+    cursor: pointer;
+    border: 0.1px solid ;
+}
+
+#table__viewbills table td button:hover{
+    background-color: var(--primary--color5);
+}
+
+
 #formRevenue {
     width: 85%;
+}
+
+#filterStatistics{
+    text-align: center;
+    margin: 5px;
+}
+#filterStatistics span{
+    margin: 5px;
 }
 
 #formRevenue table{
@@ -660,3 +681,24 @@ body {
     text-align: center;
     border: 1px solid;
 }
+
+#formRevenue table thead th {
+    height: 40px;
+    background-color: var(--primary--color5);
+}
+
+#formRevenue table tbody td {
+    height: 40px;
+}
+
+#formRevenue table tbody td button{
+    all: unset;
+    cursor: pointer;
+    padding: 5px;
+    border: 0.1px solid;
+}
+
+#formRevenue table tbody td button:hover{
+    background-color: var(--primary--color5);
+}
+
