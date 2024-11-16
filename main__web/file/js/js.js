@@ -346,6 +346,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
     password: password,
     phone: phone,
     email: email,
+    address: '',
   };
 
   userArray.push(newUser);
