@@ -50,8 +50,8 @@ function soluongDoanhthu() {
         }
         document.querySelector("#soluongDoanhthu").innerText = sum.toLocaleString();
     }
-    else{
-        document.querySelector("#soluongDoanhthu").innerText=`0`;
+    else {
+        document.querySelector("#soluongDoanhthu").innerText = `0`;
     }
 }
 function onloadAdmin() {
@@ -66,7 +66,7 @@ function showpageMain() {
     document.querySelector("#formBill").style.display = "none";
     document.querySelector(".container__right--main").style.display = "block";
     document.querySelector("#formCustomer").style.display = "none";
-    document.querySelector("#formRevenue").style.display="none";
+    document.querySelector("#formRevenue").style.display = "none";
     onloadAdmin();
 }
 
@@ -76,7 +76,7 @@ function showPageProduct() {
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
-    document.querySelector("#formRevenue").style.display="none";
+    document.querySelector("#formRevenue").style.display = "none";
     showArrayProduct();
 }
 
@@ -289,7 +289,7 @@ function showPageBill() {
     document.querySelector(".container__right--card").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formBill").style.display = "block";
-    document.querySelector("#formRevenue").style.display="none";
+    document.querySelector("#formRevenue").style.display = "none";
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
     showArrayBill(DanhSachBill);
 }
@@ -301,7 +301,7 @@ function closeViewDonHang() {
 
 function showArrayBill(arr) {
     let html = "";
-    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]") {
+    if (!localStorage.getItem("ArrayBill") || localStorage.getItem("ArrayBill") == "[]") {
         html = `<thead id="theadBill"><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
             <tbody id="tbodyBill"><tr><td colspan="6">Không có đơn hàng nào !</td></tr></tbody>`;
     }
@@ -395,19 +395,45 @@ function saveStatus(x) {
 
 //tạo ra filter lọc đơn hàng
 let statuss = ["chưa xử lý", "đã xác nhận", "all", "giao hàng thành công", "đã hủy"];
-let day = ["all","một ngày", "một tuần","nửa tháng", "một tháng"];
-let valueDay = ["all","1", "7", "15", "30"];
+let day = ["all", "một ngày", "một tuần", "nửa tháng", "một tháng"];
+let valueDay = ["all", "1", "7", "15", "30"];
+let districts = ["all",
+    "Quận 1",
+    "Quận 2",
+    "Quận 3",
+    "Quận 4",
+    "Quận 5",
+    "Quận 6",
+    "Quận 7",
+    "Quận 8",
+    "Quận 9",
+    "Quận 10",
+    "Quận 11",
+    "Quận 12",
+    "Tân Bình",
+    "Tân Phú",
+    "Bình Thạnh",
+    "Gò Vấp",
+    "Phú Nhuận",
+    "Thủ Đức"
+];
 function createFilterBill() {
     let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
-    <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusAndTime()">`
+    <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusTimeDistrict()">`
     for (let i = 0; i < statuss.length; i++) {
         html += `<option value="` + statuss[i] + `">` + statuss[i] + `</option>`
     }
     html += `</select></div>`
     html += `<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Filter Day</p>
-            <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusAndTime()">`
+            <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusTimeDistrict()">`
     for (let i = 0; i < day.length; i++) {
         html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
+    }
+    html += `</select></div>`
+    html += `<div id="filter__district--B"><p id="title__ftdistrict" style="display:inline;padding:0px 20px">Filter District</p>
+    <select style="height:40px;width:100px;" name="" id="filter__district--bill" onchange="filterStatusTimeDistrict()">`
+    for (let i = 0; i < districts.length; i++) {
+        html += `<option value="` + districts[i] + `">` + districts[i] + `</option>`
     }
     html += `</select></div>`
     document.querySelector("#filterBill").innerHTML = html;
@@ -415,28 +441,30 @@ function createFilterBill() {
 
 
 //lọc đơn hàng theo trạng thái bill và theo thời gian
-function filterStatusAndTime() {
+function filterStatusTimeDistrict() {
     let filterStt = document.querySelector("#filter__status--bill").value;
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
-    let arrayBillOfSTT = [];
-    if (filterStt == "all")
-        arrayBillOfSTT = DanhSachBill;
-    else {
-        for (let i = 0; i < DanhSachBill.length; i++) {
-            if (filterStt === DanhSachBill[i].status)
-                arrayBillOfSTT.push(DanhSachBill[i]);
-        }
+    let filterDis = document.querySelector("#filter__district--bill").value;
+    let arrayBillOfSTTANDDIS = [];
+
+    for (let i = 0; i < DanhSachBill.length; i++) {
+        let bill = DanhSachBill[i];
+        let matchStatus = (filterStt === "all" || bill.status === filterStt);
+        let matchDistrict = (filterDis === "all" || bill.location.some(district => district.district === filterDis));
+        if (matchStatus && matchDistrict)
+            arrayBillOfSTTANDDIS.push(bill);
     }
+
     let filterD = document.querySelector("#filter__time--bill").value;
     let now = new Date();
     let past = new Date();
     past.setDate(past.getDate() - parseInt(filterD));
-    for (let i = 0; i < arrayBillOfSTT.length; i++) {
-        let timeB = new Date(arrayBillOfSTT[i].date);
+    for (let i = 0; i < arrayBillOfSTTANDDIS.length; i++) {
+        let timeB = new Date(arrayBillOfSTTANDDIS[i].date);
         if (timeB <= past && timeB >= now)
-            arrayBillOfSTT.splice(i, 1);
+            arrayBillOfSTTANDDIS.splice(i, 1);
     }
-    if (arrayBillOfSTT.length == 0) {
+    if (arrayBillOfSTTANDDIS.length == 0) {
         document.querySelector("#tableBill").innerHTML = `
         <thead id="theadBill">
                 <th>STT</th>
@@ -449,7 +477,7 @@ function filterStatusAndTime() {
         <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
     }
     else {
-        showArrayBill(arrayBillOfSTT);
+        showArrayBill(arrayBillOfSTTANDDIS);
     }
 }
 
@@ -479,7 +507,7 @@ function showPageCustomer() {
     document.querySelector(".container__right--card").style.display = "none";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
-    document.querySelector("#formRevenue").style.display="none";
+    document.querySelector("#formRevenue").style.display = "none";
     let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
     showArrayCustomer(DanhSachKhachHang);
 }
@@ -487,7 +515,7 @@ function showPageCustomer() {
 // Hiển thị danh sách khách hàng
 function showArrayCustomer(arr) {
     let html = '';
-    if (!localStorage.getItem("users")||localStorage.getItem("users")=="[]") {
+    if (!localStorage.getItem("users") || localStorage.getItem("users") == "[]") {
         html = `<thead id="theadCustomer"><tr><th>Tên</th><th>Mật khẩu</th><th>Email</th><th>SĐT</th><th>Địa chỉ</th><th>Chức năng</th></tr></thead>
         <tbody><tr><td colspan="6">Không có khách hàng nào !</td></tr></tbody>`
     }
@@ -634,12 +662,12 @@ function closeInputEditCustomer() {
     document.querySelector(".container__edit--customer").style.display = "none";
 }
 
-function showPageRevenue(){
-    document.querySelector("#formBill").style.display="none";
-    document.querySelector("#formCustomer").style.display="none";
-    document.querySelector(".container__right--card").style.display="none";
-    document.querySelector(".container__right--main").style.display="none";
-    document.querySelector("#formRevenue").style.display="block"; 
+function showPageRevenue() {
+    document.querySelector("#formBill").style.display = "none";
+    document.querySelector("#formCustomer").style.display = "none";
+    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector(".container__right--main").style.display = "none";
+    document.querySelector("#formRevenue").style.display = "block";
     createFilterSta();
     loadStatistics();
 
@@ -868,7 +896,8 @@ function createFilterSta() {
     for (let i = 0; i < day.length; i++) {
         html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
     }
-    html += `</select></span>`
+    html += `</select></span>`;
+    html += `<div id="totalStatistics"></div>`;
     document.getElementById("filterStatistics").innerHTML = html;
 }
 
@@ -889,9 +918,13 @@ function filStatisticsTime(){
             }
         }
     }
+    let sum= 0;
+    for (let i = 0; i < array.length; i++) {
+        sum+= array[i].sum;
+    }
+    document.getElementById("totalStatistics").innerHTML=`<span>Tong gia `+(sum*1000).toLocaleString()+ ` VND</span>`;
     return array;
 }
-
 
 
 
