@@ -12,9 +12,9 @@ function Transaction__payment() {
     }
 
     let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
-    let sum=0;
+    let sum = 0;
     for (let i = 0; i < cart.length; i++) {
-        sum+= cart[i][3] * cart[i][4];
+        sum += cart[i][3] * cart[i][4];
     }
     let Bill = {
         index: ArrayBill.length,
@@ -25,6 +25,7 @@ function Transaction__payment() {
         date: new Date().toDateString(),
         cart: cart,
         sum: sum,
+        location: []
     };
     ArrayBill.push(Bill);
     localStorage.setItem('ArrayBill', JSON.stringify(ArrayBill));
@@ -33,6 +34,7 @@ function Transaction__payment() {
     let indexToDelete = ArrayBill.length - 1;
     let currentIndex = 0;
     let currentMethod = '';
+    // const prevAddressCheckbox = document.getElementById('prev_address');
 
     // Content
     const paymentData = [
@@ -52,47 +54,61 @@ function Transaction__payment() {
         </div>
         <div class="payment__information" id="payment__information">
         </div>
-    `,
-        `<div id="locat-delivery"> 
-    <h2>Where would you like to deliver?</h2>
-    <label for="location">Location delivery</label>
-    <br>
-    <input type="text" id="location" name="location" title="Please enter your location" placeholder="123/A Hau Giang Street, P11, Q6, TP.HCM" required>
-</div>
-<div class="error-message" id="error-locat-delivery"></div>
-<label for="prev_address">Do you want to use account address</label>
-<input type="checkbox" name="prev_address" id="prev_address">
-`,
-        `<div class="receipt-container">
-    <h2>Payment Detail</h2>
-    <div id="payment-info"></div>
-</div>
-`, `<div class="thank-you">
-<h2>Thank you for your purchase <i class="fa-solid fa-circle-check"></i></h2>
-<br>
-<h3>Transaction Complete!</h3></div>`
+        <div id="locat-delivery">
+            <label for="street">Street Address</label>
+            <input type="text" id="street" name="street" placeholder="123/A Hau Giang Street" required>
+            <br>
+            <label for="city">Tỉnh / thành</label>
+            <select id="city" name="city" required>
+            <option value="">Chọn tỉnh / thành</option>
+            </select>
+            <br>
+            <label for="district">Quận / huyện</label>
+            <select id="district" name="district" required>
+            <option value="">Chọn quận / huyện</option>
+            </select>
+            <br>
+            <label for="ward">Phường / xã</label>
+            <select id="ward" name="ward" required>
+            <option value="">Chọn phường / xã</option>
+            </select>
+        </div>
+        <div class="error-message" id="error-locat-delivery"></div>
+        <label for="prev_address">Do you want to use account address</label>
+        <input type="checkbox" name="prev_address" id="prev_address">
+        `,
+        `
+        <div class="receipt-container">
+            <h2>Payment Detail</h2>
+            <div id="payment-info"></div>
+        </div>
+        `
     ];
 
     function updateContent() {
         contentDiv.innerHTML = paymentData[currentIndex];
 
-        if (currentIndex === 1) {
+        if (currentIndex === 0) {
             const locationInput = document.getElementById('location');
             const prevAddressCheckbox = document.getElementById('prev_address');
 
-            if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].address) {
-                locationInput.value = ArrayBill[indexToDelete].address;
+
+            //Chưa sửa address của signin signup nên chưa có công dụng 
+            if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].location.length > 0) {
+                const userLocation = ArrayBill[indexToDelete].location[0];
+                locationInput.value = `${userLocation.street}, ${userLocation.ward}, ${userLocation.district}, ${userLocation.city}`;
             }
 
-            // Đăng ký sự kiện thay đổi cho checkbox
             prevAddressCheckbox.addEventListener('change', function () {
-                if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].address) {
-                    locationInput.value = ArrayBill[indexToDelete].address;
+                if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].location.length > 0) {
+                    const userLocation = ArrayBill[indexToDelete].location[0];
+                    locationInput.value = `${userLocation.street}, ${userLocation.ward}, ${userLocation.district}, ${userLocation.city}`;
                 } else {
                     locationInput.value = '';
                 }
             });
         }
+
 
         const radios = document.getElementsByName('payment');
 
@@ -218,6 +234,125 @@ function Transaction__payment() {
         });
     }
 
+    // Địa chỉ choices
+    const locations = [
+        {
+            city: "Hồ Chí Minh",
+            districts: [
+                {
+                    district: "Quận 1",
+                    wards: ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang", "Cầu Ông Lãnh", "Nguyễn Thái Bình", "Phạm Ngũ Lão"]
+                },
+                {
+                    district: "Quận 2",
+                    wards: ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi"]
+                },
+                {
+                    district: "Quận 3",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
+                },
+                {
+                    district: "Quận 4",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 8", "Phường 9"]
+                },
+                {
+                    district: "Quận 5",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Quận 6",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Quận 7",
+                    wards: ["Tân Thuận Đông", "Tân Thuận Tây", "Tân Kiểng", "Tân Hưng", "Bình Thuận", "Phú Mỹ", "Tân Phong", "Tân Quy"]
+                },
+                {
+                    district: "Quận 8",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Quận 9",
+                    wards: ["Long Bình", "Long Phước", "Long Thạnh Mỹ", "Long Trường", "Phước Bình", "Phước Long A", "Phước Long B"]
+                },
+                {
+                    district: "Quận 10",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Quận 11",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Quận 12",
+                    wards: ["Thạnh Xuân", "Thạnh Lộc", "Thới An", "Tân Chánh Hiệp", "An Phú Đông", "Tân Thới Hiệp", "Tân Hưng Thuận"]
+                },
+                {
+                    district: "Tân Bình",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Tân Phú",
+                    wards: ["Hiệp Tân", "Hòa Thạnh", "Phú Thọ Hòa", "Phú Thạnh", "Phú Trung", "Sơn Kỳ", "Tân Qúy", "Tân Sơn Nhì"]
+                },
+                {
+                    district: "Bình Thạnh",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Gò Vấp",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Phú Nhuận",
+                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                },
+                {
+                    district: "Thủ Đức",
+                    wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
+                }
+            ]
+        },
+    ];
+
+    const citySelector = document.getElementById("city");
+    const districtSelector = document.getElementById("district");
+    const wardSelector = document.getElementById("ward");
+
+    locations.forEach(location => {
+        const option = document.createElement("option");
+        option.value = location.city;
+        option.textContent = location.city;
+        citySelector.appendChild(option);
+    });
+
+    citySelector.addEventListener("change", () => {
+        districtSelector.innerHTML = "";
+        wardSelector.innerHTML = "";
+        const selectedCity = locations.find(location =>
+            location.city === citySelector.value);
+        selectedCity.districts.forEach(district => {
+            const option = document.createElement("option");
+            option.value = district.district;
+            option.textContent = district.district;
+            districtSelector.appendChild(option);
+        });
+    });
+
+    districtSelector.addEventListener("change", () => {
+        wardSelector.innerHTML = "";
+        const selectedCity = locations.find(location => location.city === citySelector.value);
+        const selectedDistrict = selectedCity.districts.find(district => district.district === districtSelector.value);
+        selectedDistrict.wards.forEach(ward => {
+            const option = document.createElement("option");
+            option.value = ward;
+            option.textContent = ward;
+            wardSelector.appendChild(option);
+        })
+    });
+
+    //
+
     function notShowInfo() {
         const paymentInfoDiv = document.getElementById('payment-info');
         if (paymentInfoDiv)
@@ -241,8 +376,12 @@ function Transaction__payment() {
                 <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
                 <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
                 <p><strong>PIN:</strong> ${ArrayBill[indexToDelete].pin}</p>
-                <p><strong>Location:</strong> ${ArrayBill[indexToDelete].location}</p>
-            </div>
+<p><strong>Location:</strong> 
+    Street: ${ArrayBill[indexToDelete].location[0].street}, 
+    District: ${ArrayBill[indexToDelete].location[0].district}, 
+    Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
+    City: ${ArrayBill[indexToDelete].location[0].city}
+</p>            </div>
         `;
                 break;
             case 'ATM':
@@ -255,8 +394,12 @@ function Transaction__payment() {
                 <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
                 <p><strong>PIN:</strong> ${ArrayBill[indexToDelete].pin}</p>
                 <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
-                <p><strong>Location:</strong> ${ArrayBill[indexToDelete].location}</p>
-            </div>
+<p><strong>Location:</strong> 
+    Street: ${ArrayBill[indexToDelete].location[0].street}, 
+    District: ${ArrayBill[indexToDelete].location[0].district}, 
+    Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
+    City: ${ArrayBill[indexToDelete].location[0].city}
+</p>            </div>
         `;
                 break;
             case 'Cash':
@@ -266,8 +409,12 @@ function Transaction__payment() {
                 <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
                 <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
                 <p><strong>Note:</strong> ${ArrayBill[indexToDelete].note}</p>
-                <p><strong>Location:</strong> ${ArrayBill[indexToDelete].location}</p>
-            </div>
+<p><strong>Location:</strong> 
+    Street: ${ArrayBill[indexToDelete].location[0].street}, 
+    District: ${ArrayBill[indexToDelete].location[0].district}, 
+    Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
+    City: ${ArrayBill[indexToDelete].location[0].city}
+</p>            </div>
         `;
                 break;
             default:
@@ -287,21 +434,17 @@ function Transaction__payment() {
             }
         }
 
-        const locatDelivery = document.getElementById('location');
-        const addressRegex = /[0-9]+.*(đường|phố|phường|xã|quận|huyện|thị xã|thành phố|tỉnh|việt nam)/i;
+        const street = document.getElementById('street').value;
+        const ward = document.getElementById('ward').value;
+        const district = document.getElementById('district').value;
+        const city = document.getElementById('city').value;
+        const errorMessage = document.getElementById('error-locat-delivery');
 
-        if (locatDelivery) {
-            if (locatDelivery.value === '') {
-                document.getElementById('error-locat-delivery').innerText = 'Location delivery is required';
-                document.getElementById('error-locat-delivery').style.display = 'block';
-                return false;
-            } else if (!addressRegex.test(locatDelivery.value)) {
-                document.getElementById('error-locat-delivery').innerText = 'Invalid address format';
-                document.getElementById('error-locat-delivery').style.display = 'block';
-                return false;
-            } else {
-                document.getElementById('error-locat-delivery').style.display = 'none';
-            }
+        if (!street || !ward || !district || !city) {
+            isValid = false;
+            errorMessage.textContent = "Vui lòng điền đầy đủ thông tin địa chỉ.";
+        } else {
+            errorMessage.textContent = "";
         }
 
         switch (currentMethod) {
@@ -414,21 +557,26 @@ function Transaction__payment() {
     }
 
     nextButton.addEventListener('click', () => {
-        if (currentIndex === 3) {
+        if (currentIndex === 1) {
             localStorage.setItem('ArrayBill', JSON.stringify(ArrayBill));
             case__payment.style.display = 'none';
             localStorage.removeItem("gioHang");
-            location.reload();
+            noti("Thanh toán thành công!", 0);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
         }
-        if (validateInputs()) {
-            if (currentIndex < paymentData.length) {
-                saveDataToLocalStorage();
-                currentIndex++;
-                updateContent();
-                if (currentIndex === 2)
-                    showInfo();
+        if (currentIndex === 0) {
+            if (validateInputs()) {
+                if (currentIndex < paymentData.length) {
+                    saveDataToLocalStorage();
+                    currentIndex++;
+                    updateContent();
+                    if (currentIndex === 1)
+                        showInfo();
+                }
+                console.log(currentIndex);
             }
-            console.log(currentIndex);
         }
     });
 
@@ -459,11 +607,20 @@ function Transaction__payment() {
                     break;
             }
         }
-        if (currentIndex === 1)
-            ArrayBill[indexToDelete].location = document.getElementById('location').value;
+
+        const location = {
+            street: document.getElementById('street').value,
+            ward: document.getElementById('ward').value,
+            district: document.getElementById('district').value,
+            city: document.getElementById('city').value,
+        };
+
+        if (!ArrayBill[indexToDelete].location) {
+            ArrayBill[indexToDelete].location = [];
+        }
+
+        ArrayBill[indexToDelete].location.push(location);
     }
-
-
 
     prevButton.addEventListener('click', () => {
         if (currentIndex === 0) {
@@ -479,7 +636,7 @@ function Transaction__payment() {
             currentIndex--;
             updateContent();
             // notShowInfo();
-            if (currentIndex === 2)
+            if (currentIndex === 1)
                 showInfo();
         }
         console.log(currentIndex);
@@ -495,11 +652,6 @@ function Transaction__payment() {
                         delete ArrayBill[indexToDelete][key];
                     }
                 }
-            }
-
-            if (currentIndex === 2) {
-                // Xóa location nếu ở trang 2
-                delete ArrayBill[indexToDelete].location;
             }
 
             if (currentIndex === 0) {
