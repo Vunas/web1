@@ -227,11 +227,13 @@ ShowHidePassword();
 function checkLogin() {
   let userLogin = JSON.parse(localStorage.getItem("userLogin"));
   if (userLogin) {
+    let ten= userLogin.fullname;
+    if(!ten) ten= userLogin.username;
     if (userLogin.username == "admin") {
       document.getElementById("checkLogin").innerHTML =
         `<span id="userlogin">
           <span>` +
-        userLogin.username +
+        ten +
         `</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>
@@ -242,7 +244,7 @@ function checkLogin() {
       document.getElementById("checkLogin").innerHTML =
         `<span id="userlogin">
           <span><i class="fa-regular fa-user"></i>` +
-        userLogin.username +
+        ten +
         `</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>`;
@@ -263,6 +265,7 @@ function logout() {
 
 function createAdmin() {
   var admin = {
+    fullname: 'Hoàng Vũ aaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     username: "admin",
     password: "admin",
     phone: "09090000x",
@@ -338,11 +341,11 @@ document.getElementById("signup-form").onsubmit = function (e) {
   }
 
   var newUser = {
+    fullname: fullname,
     username: username,
     password: password,
     phone: phone,
     email: email,
-    address: address,
   };
 
   userArray.push(newUser);
