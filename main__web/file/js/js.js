@@ -70,7 +70,7 @@ function close__advanced_search() {
 
 function createFil() {
   var kq = `<select name="" id="type__option-search" onchange="filtersearch()">`;
-      kq += '<option value=""></option>';
+  kq += '<option value=""></option>';
   for (let i = 0; i < menuList.length; i++) {
     kq += '<option value="' + menuList[i] + '">' + menuList[i] + "</option>";
   }
@@ -95,16 +95,15 @@ function filtersearch() {
   }
   let fil = document.getElementById("type__option-search").value.toLowerCase();
   if (fil == "all") {
-
   } else {
-    for (let i = 0; i <array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
       if (!array[i].name.toLowerCase().includes(fil)) {
         array.splice(i, 1);
         i--;
       }
     }
   }
-``
+  ``;
   let min = document.getElementById("min__search").value;
   min = min === "" ? 0 : parseFloat(min);
 
@@ -226,33 +225,38 @@ function ShowHidePassword() {
 ShowHidePassword();
 
 function checkLogin() {
-  let userLogin = JSON.parse(localStorage.getItem("userLogin")) ;
+  let userLogin = JSON.parse(localStorage.getItem("userLogin"));
   if (userLogin) {
     if (userLogin.username == "admin") {
       document.getElementById("checkLogin").innerHTML =
         `<span id="userlogin">
-          <span>`+userLogin.username+`</span>
+          <span>` +
+        userLogin.username +
+        `</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>
         <a href="./admin.html" class="nav__item">
             <i class="fa-solid fa-gear"></i>
           </a>`;
     } else {
-      document.getElementById("checkLogin").innerHTML = 
-      `<span id="userlogin">
-          <span><i class="fa-regular fa-user"></i>`+userLogin.username+`</span>
+      document.getElementById("checkLogin").innerHTML =
+        `<span id="userlogin">
+          <span><i class="fa-regular fa-user"></i>` +
+        userLogin.username +
+        `</span>
           <button id="logout" onclick="logout()">Đăng Xuất</button>
         </span>`;
     }
-  } 
+  }
 }
 
 function logout() {
   localStorage.removeItem("userLogin");
   localStorage.removeItem("gioHang");
   checkLogin();
-  document.getElementById("checkLogin").innerHTML = 
-    `<button onclick="openlogin()" id="user-icon" class="nav__item">
+  document.getElementById(
+    "checkLogin"
+  ).innerHTML = `<button onclick="openlogin()" id="user-icon" class="nav__item">
       <i class="fa-regular fa-user"></i>
     </button>`;
 }
@@ -287,33 +291,43 @@ document.getElementById("signup-form").onsubmit = function (e) {
   var repassword = document.getElementById("resigpas").value;
   var phone = document.getElementById("phone").value;
   var email = document.getElementById("email").value;
-  var address = document.getElementById("address").value;
+  var fullname = document.getElementById("fullname").value;
   let signupFlag = true;
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
-  const addressRegex = /([0-9]+.*(đường|duong|phố|pho|phường|phuong|xã|xa).*(quận|quan|huyện|huyen|thành phố|thanh pho|tỉnh|tinh)).*(việt nam|viet nam)?/i;
-
+ 
+  if (!fullname) {
+    document.getElementById("pfullname").innerHTML =
+      "Vui lòng nhập tên của bạn!"
+    signupFlag = false;
+  } else document.getElementById("pfullname").innerHTML = "";
 
   for (let i = 0; i < userArray.length; i++) {
     if (username == userArray[i].username) {
       document.getElementById("psigus").innerHTML = "Tài khoản đã tồn tại";
       signupFlag = false;
       break;
-    }else document.getElementById("psigus").innerHTML = "";
+    } else document.getElementById("psigus").innerHTML = "";
   }
+
+  if(!username){
+    document.getElementById("psigus").innerHTML =
+      "Vui lòng nhập tài khoản!";
+    signupFlag = false;
+  } else document.getElementById("psigus").innerHTML = "";
+  
+  if(!password){
+    document.getElementById("psigpas").innerHTML =
+      "Vui lòng nhập mất khẩu!";
+    signupFlag = false;
+  } else document.getElementById("psigpas").innerHTML = "";
 
   if (repassword != password) {
     document.getElementById("presigpas").innerHTML =
       "Mật khẩu khoong chính xác";
     signupFlag = false;
   } else document.getElementById("presigpas").innerHTML = "";
-  
-  if(!addressRegex.test(address)){
-    document.getElementById("paddress").innerHTML =
-    '"số nhà "+ "đường", "phố", "phường" hoặc "xã" + "quận", "huyện", "thành phố" hoặc "tỉnh"';
-  signupFlag = false;
-} else document.getElementById("paddress").innerHTML = "";
-  
+
   if (phone.length != 10) {
     document.getElementById("pphone").innerHTML = "Sdt không hợp lệ";
     signupFlag = false;
@@ -333,7 +347,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
 
   userArray.push(newUser);
   localStorage.setItem("users", JSON.stringify(userArray));
-  noti("Dăng ký thành công",0)
+  noti("Dăng ký thành công", 0);
   closeSignup();
 };
 
@@ -351,11 +365,11 @@ document.getElementById("login-form").onsubmit = function (e) {
       localStorage.setItem("userLogin", JSON.stringify(userLogin));
       checkLogin();
       closeLogin();
-      noti("Đăng Nhập thành công",0)
+      noti("Đăng Nhập thành công", 0);
       return false;
     }
   }
-  noti("Đăng nhập thất bại",1);
+  noti("Đăng nhập thất bại", 1);
 };
 
 /*sideNavbar*/
@@ -403,7 +417,7 @@ function showProductInfor(id) {
         DanhSachSanPham[i].introduce +
         `</h4>
       <h4>` +
-        (DanhSachSanPham[i].price*1000).toLocaleString() +
+        (DanhSachSanPham[i].price * 1000).toLocaleString() +
         `VND</h4>
       <h4>` +
         "Mô Tả:" +
@@ -443,16 +457,21 @@ function closeInfor() {
 //ham thong bao success, warning ,0 la success, 1 la warning , 2 la error
 
 function noti(s, n) {
-  let check= document.getElementById("noti");
-  if(check) check.outerHTML=""
-  let noti = ["success", "warning","error"];
+  let check = document.getElementById("noti");
+  if (check) check.outerHTML = "";
+  let noti = ["success", "warning", "error"];
   let footer = document.getElementById("footer");
-  footer.innerHTML += `<div id="noti"><strong>` + noti[n] + `! </strong>` + s + ` <span onclick="closeNoti()">+</span></div>`;
+  footer.innerHTML +=
+    `<div id="noti"><strong>` +
+    noti[n] +
+    `! </strong>` +
+    s +
+    ` <span onclick="closeNoti()">+</span></div>`;
   document.getElementById("noti").classList.add(noti[n]);
 }
 
 function closeNoti() {
-  let notiElement = document.getElementById("noti").outerHTML="";
+  let notiElement = (document.getElementById("noti").outerHTML = "");
 }
 
 function quantityDownn() {
@@ -464,7 +483,6 @@ function quantityDownn() {
 function quantityUpp() {
   document.getElementById("input__number").value++;
 }
-
 
 function capNhatSLGioHang(vitri) {
   for (let i = 0; i < gioHang.length; i++) {
@@ -511,7 +529,7 @@ function addcart(id) {
         gioHang.push(sp);
       }
       localStorage.setItem("gioHang", JSON.stringify(gioHang));
-      noti("thêm sản phầm thành công",0)
+      noti("thêm sản phầm thành công", 0);
       document.getElementById("infor__Product").style.display = "none";
       break;
     }
