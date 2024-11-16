@@ -40,7 +40,6 @@ function pay() {
     const case__payment = document.getElementById("case__payment");
     case__payment.style.display = "block";
     Transaction__payment();
-    noti("dat hang thanh cong", 0);
     showCart();
   } else {
     noti("ban phai dang nhap moi mua duoc hang", 1);
