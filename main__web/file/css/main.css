@@ -85,7 +85,7 @@ nav ul li .nav__item {
 #userlogin span{
   padding: 0;
   text-wrap: nowrap;
-  max-width: 60px;
+  max-width: 200px;
   overflow: hidden;
 }
 
@@ -570,7 +570,10 @@ nav ul li .nav__item {
 
 @media (max-width: 800px) {
   .logo {
-    padding: 0 0 0 30px;
+    padding: 0 0 0 2px;
+  }
+  #userlogin span{
+    max-width: 60px;
   }
   .nav__mid {
     display: none;
