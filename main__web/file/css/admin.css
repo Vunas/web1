@@ -702,3 +702,12 @@ body {
     background-color: var(--primary--color5);
 }
 
+#totalStatistics{
+    width: 100%;
+    padding: 10px;
+    /* height: 40px; */
+}
+
+#totalStatistics span{
+    
+}
