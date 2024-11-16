@@ -265,7 +265,7 @@ function logout() {
 
 function createAdmin() {
   var admin = {
-    fullname: 'Hoàng Vũ aaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    fullname: 'Hoàng Vũ',
     username: "admin",
     password: "admin",
     phone: "09090000x",
