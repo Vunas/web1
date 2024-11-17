@@ -1,3 +1,10 @@
+:root {
+    --primary--color2: #e3f1b6;
+    --primary--color3: #ffffff;
+    --primary--color4: rgb(250, 173, 31);
+    --main--color: #ffba66;
+  }
+
 #case__payment {
     display: none;
     position: fixed;
@@ -12,16 +19,22 @@
 .case__payment__content {
     position: absolute;
     width: 450px;
+    max-width: 100%;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     z-index: 30;
 }
 
+.case__payment__content select:hover,
+.case__payment__content input:hover{
+    background-color: var(--main--color);
+}
+
 .content {
-    background-color: #424549;
     border-radius: 4px 4px 0 0;
     padding: 10px;
+    background-color: white;
 }
 
 .payment__option {
@@ -43,9 +56,8 @@
 
 .payment__option__item input {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     color: #fff;
-    background-color: #1e2124;
 }
 
 .height-transition {
@@ -65,36 +77,23 @@
 .navigattion {
     display: flex;
     justify-content: space-between;
-    background-color: #282b30;
     border-radius: 0 0 4px 4px;
+    background-color: white;
 }
 
 #prev,
 #next {
     cursor: pointer;
-    border: 0;
-    color: aliceblue;
-    padding: 5px 10px;
-    margin: 10px 0;
+    border: 0.1px solid;
+    padding: 10px;
+    margin: 10px ;
+    background-color: unset;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#prev {
-    background-color: #424549;
-    margin-left: 10px;
-}
-
-#next {
-    background-color: rgb(0, 221, 125);
-    margin-right: 10px;
-}
-
+#next:hover,
 #prev:hover {
-    background-color: #1f2326;
-}
-
-#next:hover {
-    background-color: rgb(0, 200, 100);
+    background-color:   var(--main--color);
 }
 
 #next:active,
@@ -112,32 +111,6 @@
     margin: auto;
 }
 
-/* .order-details {
-    border-collapse: collapse;
-    margin-top: 10px;
-    color: aliceblue;
-}
-
-.order-details th,
-.order-details td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-}
-
-.order-details th {
-    background-color: #282b30;
-}
-
-.order-details tfoot tr td {
-    font-weight: bold;
-    background-color: #2d344f;
-}
-
-.order-details tfoot tr td:first-child {
-    text-align: right;
-} */
-
 #payment-info {
     font-size: 1.1em;
     line-height: 1.6em;
@@ -145,16 +118,15 @@
     border-radius: 8px;
 }
 
-#locat-delivery h2 {
-    color: aliceblue;
-    padding: 10px;
+#locat-delivery input {
+    margin: 10px;
+    padding: 8px;
+    border: 1px solid black;
+    color: #fff
 }
 
-#locat-delivery input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    color: #fff;
-    background-color: #1e2124;
+#locat-delivery select{
+    margin: 10px;
 }
 
 .error-message {
