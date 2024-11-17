@@ -57,7 +57,6 @@
 .payment__option__item input {
     padding: 8px;
     border: 1px solid black;
-    color: #fff;
 }
 
 .height-transition {
@@ -105,7 +104,6 @@
     box-sizing: border-box;
     padding: 20px;
     border-radius: 8px;
-    color: aliceblue;
     width: 100%;
     max-width: 500px;
     margin: auto;
@@ -121,8 +119,7 @@
 #locat-delivery input {
     margin: 10px;
     padding: 8px;
-    border: 1px solid black;
-    color: #fff
+    border: 1px solid black;    
 }
 
 #locat-delivery select{
