@@ -41,6 +41,10 @@
     padding: 10px;
 }
 
+.payment__option h2{
+    border-bottom: 3px solid var(--main--color);
+}
+
 .payment__information {
     display: flex;
     flex-wrap: wrap;
