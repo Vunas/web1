@@ -243,6 +243,9 @@ function showHoaDon() {
           </tr>`;
     }
   }
+  if(kq == ""){
+    kq = `<tr><td style="height:60px" colspan="7"> Không có hóa đơn nào </td></tr>`;
+  }
   document.getElementById("myCart").innerHTML = kq;
 }
 
@@ -344,6 +347,9 @@ function showHistoryCart() {
         </tr>`;
       }
     }
+  }
+  if(kq == ""){
+    kq = `<tr><td style="height:60px" colspan="7"> Không có sản phẩm nào </td></tr>`;
   }
   document.getElementById("myCart").innerHTML = kq;
 }
