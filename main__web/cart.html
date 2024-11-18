@@ -64,26 +64,12 @@
     <div class="seach__section">
       <div class="search">
         <span><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input
-          id="search__input"
-          oninput="filtersearch()"
-          type="search"
-          placeholder="Search.."
-          name="search"
-        />
+        <input id="search__input" oninput="filtersearch()" type="search" placeholder="Search.." name="search" />
         <span>
-          <button
-            onclick="advanced_search()"
-            id="chevron-down"
-            class="chevron chevron-down"
-          >
+          <button onclick="advanced_search()" id="chevron-down" class="chevron chevron-down">
             <i class="fa-solid fa-chevron-down"></i>
           </button>
-          <button
-            onclick="close__advanced_search()"
-            id="chevron-up"
-            class="chevrop chevron-up"
-          >
+          <button onclick="close__advanced_search()" id="chevron-up" class="chevrop chevron-up">
             <i class="fa-solid fa-chevron-up"></i>
           </button>
         </span>
@@ -123,48 +109,48 @@
         </div>
       </form>
 
-        <!--signup form-->
-        <form action="" id="signup-form" class="form signup-form">
-          <h2>Sign up</h2>
-          <div class="input-box">
-            <input id="fullname" type="text" placeholder="Nhập tên của bạn"/>
-          </div>
-          <p id="pfullname"><br></p>
-          <div class="input-box">
-            <input id="sigus" type="text" placeholder="Enter your username"/>
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <p id="psigus"><br></p> 
-          <div class="input-box">
-            <input id="sigpas" type="password" placeholder="Create password"/>
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
-          </div>
-          <p id="psigpas"><br></p>
-          <div class="input-box">
-            <input id="resigpas" type="password" placeholder="Confirm password"/>
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
-          </div>
-          <p id="presigpas"><br></p>
-          <div class="input-box">
-            <input id="email" type="email" placeholder="Enter your email" required/>
-            <i class="fa-solid fa-envelope"></i>
-          </div>
-          <p id="pemail"><br></p>
-          <div class="input-box">
-            <input id="phone" type="number" placeholder="Enter your number"/>
-            <i class="fa-solid fa-phone"></i>
-          </div>
-          <p id="pphone"><br></p>
-          <button type="submit" class="login-button">Signup</button>
-  
-          <div class="login-signup">
-            Already have an account? <button type="button" onclick="closeSignup()" id="login">Login</button>
-          </div>
-        </form>
-      </div>
+      <!--signup form-->
+      <form action="" id="signup-form" class="form signup-form">
+        <h2>Sign up</h2>
+        <div class="input-box">
+          <input id="fullname" type="text" placeholder="Nhập tên của bạn" />
+        </div>
+        <p id="pfullname"><br></p>
+        <div class="input-box">
+          <input id="sigus" type="text" placeholder="Enter your username" />
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <p id="psigus"><br></p>
+        <div class="input-box">
+          <input id="sigpas" type="password" placeholder="Create password" />
+          <i class="fa-solid fa-lock"></i>
+          <i class="fa-regular fa-eye-slash pw-hide"></i>
+        </div>
+        <p id="psigpas"><br></p>
+        <div class="input-box">
+          <input id="resigpas" type="password" placeholder="Confirm password" />
+          <i class="fa-solid fa-lock"></i>
+          <i class="fa-regular fa-eye-slash pw-hide"></i>
+        </div>
+        <p id="presigpas"><br></p>
+        <div class="input-box">
+          <input id="email" type="email" placeholder="Enter your email" required />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <p id="pemail"><br></p>
+        <div class="input-box">
+          <input id="phone" type="number" placeholder="Enter your number" />
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <p id="pphone"><br></p>
+        <button type="submit" class="login-button">Signup</button>
+
+        <div class="login-signup">
+          Already have an account? <button type="button" onclick="closeSignup()" id="login">Login</button>
+        </div>
+      </form>
     </div>
+  </div>
 
 
   <!-- smenu-->
@@ -264,15 +250,19 @@
     <div class="brand-footer">
       <a class="footer__brand" href=""><img src="./file/image/img_brand/logo1.png" alt=""></a>
     </div>
-    <div class="footer__bot"><ul><li>© Copyright 2024 By MeCha. Powered by MeCha</li></ul></div>
+    <div class="footer__bot">
+      <ul>
+        <li>© Copyright 2024 By MeCha. Powered by MeCha</li>
+      </ul>
+    </div>
   </footer>
 
   <div id="case__payment">
     <div class="case__payment__content">
       <div id="content" class="content"></div>
       <div class="navigattion">
-        <button id="prev">Prev</button>
-        <button id="next">Next</button>
+        <button id="prev">Quay lại</button>
+        <button id="next">Tiếp tục</button>
       </div>
     </div>
   </div>
