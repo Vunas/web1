@@ -44,7 +44,7 @@ function soluongDoanhthu() {
         for (let i = 0; i < DanhSachBill.length; i++) {
             let j = 0;
             while (j < DanhSachBill[i].cart.length) {
-                sum += DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4];
+                sum += DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4]*1000;
                 j++;
             }
         }
@@ -186,6 +186,7 @@ function deleteP(id) {
         if (DanhSachSanPham[i].id == id) {
             if (confirm('Bạn có muốn xóa sản phẩm này?')) {
                 DanhSachSanPham.splice(i, 1);
+                noti("Đã xóa thành công",0);
                 break;
             }
         }
@@ -251,6 +252,7 @@ function showInputChangeProduct(id) {
             //thêm sự kiện click vào button LƯU sẽ cập nhật lại thông tin sản phẩm
             document.querySelector(".button__changeP").addEventListener("click", function () {
                 saveChangeProduct(i);
+                noti("lưu thành công",0);
             })
             return;
         }
@@ -306,7 +308,6 @@ function showArrayBill(arr) {
             <tbody id="tbodyBill"><tr><td colspan="6">Không có đơn hàng nào !</td></tr></tbody>`;
     }
     else {
-        createFilterBill();
         html = `<thead id="theadBill">
                 <th>STT</th>
                 <th>Tên khách hàng</th>
@@ -327,11 +328,16 @@ function showArrayBill(arr) {
 
 //Show ra tất cả đơn hàng
 function showBill(bill, soThuTu) {
+    let diaChi= bill.location[0];
+    if(diaChi){
+        diaChi= bill.location[0].street + " " + bill.location[0].ward +" "+ bill.location[0].district +" " + bill.location[0].city;
+    }
+    else diaChi="";
     let html = '';
     html += `<tr>
         <td>`+ soThuTu + `</td>
         <td>`+ bill.username + `</td>
-        <td>`+ bill.address + `</td>
+        <td>`+ diaChi + `</td>
         <td>`+ bill.date + `</td>   
         <td>`+ bill.status + `</td>
         <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
@@ -438,6 +444,7 @@ function createFilterBill() {
     html += `</select></div>`
     document.querySelector("#filterBill").innerHTML = html;
 }
+createFilterBill();
 
 
 //lọc đơn hàng theo trạng thái bill và theo thời gian
@@ -456,13 +463,17 @@ function filterStatusTimeDistrict() {
     }
 
     let filterD = document.querySelector("#filter__time--bill").value;
-    let now = new Date();
-    let past = new Date();
-    past.setDate(past.getDate() - parseInt(filterD));
-    for (let i = 0; i < arrayBillOfSTTANDDIS.length; i++) {
-        let timeB = new Date(arrayBillOfSTTANDDIS[i].date);
-        if (timeB <= past && timeB >= now)
-            arrayBillOfSTTANDDIS.splice(i, 1);
+    if(filterD != "all"){
+        let now = new Date();
+        let past = new Date();
+        past.setDate(past.getDate() - parseInt(filterD));
+        for (let i = 0; i < arrayBillOfSTTANDDIS.length; i++) {
+            let timeB = new Date(arrayBillOfSTTANDDIS[i].date);
+            if (timeB <= past && timeB >= now){
+                arrayBillOfSTTANDDIS.splice(i, 1);
+                i--;
+            }
+        }
     }
     if (arrayBillOfSTTANDDIS.length == 0) {
         document.querySelector("#tableBill").innerHTML = `
@@ -544,13 +555,18 @@ function showArrayCustomer(arr) {
 
 //tạo 1 khách hàng
 function showCustomer(customer, index) {
+    let diaChi= customer.location;
+    if(diaChi){
+        diaChi= customer.location.street + " " + customer.location.ward +" "+ customer.location.district +" " + customer.location.city;
+    }
+    else diaChi="";
     let html = '';
     html += `<tr>
       <td>`+ customer.username + `</td>
       <td>`+ customer.password + `</td>
       <td>`+ customer.email + `</td>
       <td>`+ customer.phone + `</td>
-      <td>`+ customer.address + `</td>
+      <td>`+ diaChi + `</td>
       <td style="display:flex;justify-content: center;">
       <input type="hidden" value="`+ index + `">
       <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
@@ -563,8 +579,10 @@ function showCustomer(customer, index) {
 //xóa khách hàng
 function deleteCustomer(index) {
     let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
-    if (confirm("Bạn có chắc chắn xóa không ?"))
+    if (confirm("Bạn có chắc chắn xóa không ?")){
         DanhSachKhachHang.splice(index, 1);
+        noti("Xóa khách hàng thành công",0);
+    }
     localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
     showArrayCustomer(DanhSachKhachHang);
 }
@@ -639,6 +657,7 @@ function showInputEditCustomer(index) {
             document.querySelector("#save__edit").replaceWith(document.querySelector("#save__edit").cloneNode(true));
             document.querySelector("#save__edit").addEventListener("click", function () {
                 updateCustomer(index);
+                noti("lưu thành công",0);
             })
             return;
         }
@@ -724,7 +743,8 @@ function showMatHang_statistics(array){
             <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
     }
     else {
-        html = `<thead><th>Mặt hàng</th>
+        html = `<thead><th>Ảnh</th>
+                <th>Mặt hàng</th>
                 <th>Giá</th>
                 <th>số lượng</th>
                 <th>Tổng giá</th>
@@ -733,10 +753,11 @@ function showMatHang_statistics(array){
         for (let i = 0; i < array.length; i++) {
             html+=
                 `<tr>
+                    <td><img style="height:80px;width:80px"src="`+array[i][0]+`" alt=""></img></td>
                     <td>`+array[i][2]+`</td>
-                    <td>`+(array[i][3]*1000).toLocaleString()+`</td>
+                    <td>`+(array[i][3]*1000).toLocaleString()+` VND</td>
                     <td>`+array[i][4]+`</td>
-                    <td>`+(array[i][3]*array[i][4]*1000).toLocaleString()+`</td>
+                    <td>`+(array[i][3]*array[i][4]*1000).toLocaleString()+` VND</td>
                     <td><button onclick="showProductBills('` +array[i][2]+`')">`+"Chi tiết"+`</button></td>
                 </tr>` 
         }
@@ -768,10 +789,15 @@ function showProductBills(name){
                     </thead>
                     <tbody>`;
     for (let i = 0; i < arrayDetail.length; i++) {
+        let diaChi= arrayDetail[i].location[0];
+        if(diaChi){
+            diaChi= arrayDetail[i].location[0].street + " " + arrayDetail[i].location[0].ward +" "+ arrayDetail[i].location[0].district +" " + arrayDetail[i].location[0].city;
+        }
+        else diaChi="";
         html+= `<tr>
-                        <td>`+arrayDetail[i].address+`</td>
+                        <td>`+diaChi+`</td>
                         <td>`+arrayDetail[i].date+`</td>
-                        <td>`+arrayDetail[i].sum+`</td>
+                        <td>`+(arrayDetail[i].sum*1000).toLocaleString()+` VND</td>
                         <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
                 </tr>`;
     }
@@ -802,11 +828,16 @@ function showDetailStatistic(name){
                     </thead>
                     <tbody>`;
     for (let i = 0; i < arrayDetail.length; i++) {
+        let diaChi= arrayDetail[i].location[0];
+        if(diaChi){
+            diaChi= arrayDetail[i].location[0].street + " " + arrayDetail[i].location[0].ward +" "+ arrayDetail[i].location[0].district +" " + arrayDetail[i].location[0].city;
+        }
+        else diaChi="";
         html+= `<tr>
-                        <td>`+arrayDetail[i].address+`</td>
+                        <td>`+diaChi+`</td>
                         <td>`+arrayDetail[i].date+`</td>
-                        <td>`+arrayDetail[i].sum+`</td>
-                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">aa</button></td>
+                        <td>`+(arrayDetail[i].sum *1000).toLocaleString()+` VND</td>
+                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
                 </tr>`;
     }
     html+= `</tbody>
@@ -834,12 +865,11 @@ function showcustomer_statistics(arr) {
                 <th>Xem chi tiet </th></thead><tbody>`
 
         for (let i = 0; i < arr.length; i++) {
-            let name=arr[i][0];
             html+=
                 `<tr>
                     <td>`+i+`</td>
                     <td>`+arr[i][0]+`</td>
-                    <td>`+arr[i][1]+`</td>
+                    <td>`+(arr[i][1]*1000).toLocaleString()+` VND</td>
                     <td><button onclick="showDetailStatistic('` +arr[i][0]+`')">`+"Chi tiết"+`</button></td>
                 </tr>` 
         }
@@ -926,11 +956,20 @@ function filStatisticsTime(){
     return array;
 }
 
-
-
-
-
-
-
-
-
+function noti(s, n) {
+    let check = document.getElementById("noti");
+    if (check) check.outerHTML = "";
+    let noti = ["success", "warning", "error"];
+    let footer = document.getElementById("footer");
+    footer.innerHTML +=
+      `<div id="noti"><strong>` +
+      noti[n] +
+      `! </strong>` +
+      s +
+      ` <span onclick="closeNoti()">+</span></div>`;
+    document.getElementById("noti").classList.add(noti[n]);
+  }
+  
+  function closeNoti() {
+    document.getElementById("noti").outerHTML = "";
+  }
