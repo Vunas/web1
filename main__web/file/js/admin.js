@@ -934,7 +934,7 @@ function createFilterSta() {
 // lọc thống kê theo thời gian
 function filStatisticsTime(){
     let filter = document.getElementById("sta__time-option").value;
-    let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let array = [];
     if(filter == "all") array= ArrayBill;
     else{
