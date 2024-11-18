@@ -227,8 +227,8 @@ ShowHidePassword();
 function checkLogin() {
   let userLogin = JSON.parse(localStorage.getItem("userLogin"));
   if (userLogin) {
-    let ten= userLogin.fullname;
-    if(!ten) ten= userLogin.username;
+    let ten = userLogin.fullname;
+    if (!ten) ten = userLogin.username;
     if (userLogin.username == "admin") {
       document.getElementById("checkLogin").innerHTML =
         `<span id="userlogin">
@@ -270,7 +270,11 @@ function createAdmin() {
     password: "admin",
     phone: "09090000x",
     email: "mecha19@email.com",
-    address: "273 An Dương Vương, P3, Quận 5, TPHCM",
+    location : {
+      street: "273 An Dương Vương",
+      ward: "Phường 3",
+      district: "Quận 5",
+      city: "Hồ Chí Minh"}
   };
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
@@ -298,7 +302,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   let signupFlag = true;
   var userstring = localStorage.getItem("users");
   let userArray = userstring ? JSON.parse(userstring) : [];
- 
+
   if (!fullname) {
     document.getElementById("pfullname").innerHTML =
       "Vui lòng nhập tên của bạn!"
@@ -313,13 +317,13 @@ document.getElementById("signup-form").onsubmit = function (e) {
     } else document.getElementById("psigus").innerHTML = "";
   }
 
-  if(!username){
+  if (!username) {
     document.getElementById("psigus").innerHTML =
       "Vui lòng nhập tài khoản!";
     signupFlag = false;
   } else document.getElementById("psigus").innerHTML = "";
-  
-  if(!password){
+
+  if (!password) {
     document.getElementById("psigpas").innerHTML =
       "Vui lòng nhập mất khẩu!";
     signupFlag = false;
@@ -346,7 +350,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
     password: password,
     phone: phone,
     email: email,
-    address: '',
+    location: {}
   };
 
   userArray.push(newUser);
