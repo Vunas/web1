@@ -10,7 +10,6 @@ function Transaction__payment() {
         noti("Không có sản phẩm trong giỏ hàng", 1);
         return;
     }
-
     let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let sum = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -29,12 +28,14 @@ function Transaction__payment() {
     };
     ArrayBill.push(Bill);
     localStorage.setItem('ArrayBill', JSON.stringify(ArrayBill));
+    localStorage.setItem('userLogin', JSON.stringify(userLogin));
 
     ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let indexToDelete = ArrayBill.length - 1;
     let currentIndex = 0;
     let currentMethod = '';
-    // const prevAddressCheckbox = document.getElementById('prev_address');
+    let users = JSON.parse(localStorage.getItem("users"));
+    let indexUser = users.findIndex(user => user.username === userLogin.username);
 
     // Content
     const paymentData = [
@@ -84,27 +85,41 @@ function Transaction__payment() {
         </div>
         `
     ];
-
     function updateContent() {
         contentDiv.innerHTML = paymentData[currentIndex];
-
         if (currentIndex === 0) {
-            const locationInput = document.getElementById('location');
             const prevAddressCheckbox = document.getElementById('prev_address');
-
-
-            //Chưa sửa address của signin signup nên chưa có công dụng 
-            if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].location.length > 0) {
-                const userLocation = ArrayBill[indexToDelete].location[0];
-                locationInput.value = `${userLocation.street}, ${userLocation.ward}, ${userLocation.district}, ${userLocation.city}`;
-            }
+            handleLocationChange();
 
             prevAddressCheckbox.addEventListener('change', function () {
-                if (prevAddressCheckbox.checked && ArrayBill[indexToDelete].location.length > 0) {
-                    const userLocation = ArrayBill[indexToDelete].location[0];
-                    locationInput.value = `${userLocation.street}, ${userLocation.ward}, ${userLocation.district}, ${userLocation.city}`;
+
+                document.getElementById('street').value = '';
+                document.getElementById('city').value = '';
+                document.getElementById('district').innerHTML = `<option value="" selected>Chọn quận / huyện</option>`;
+                document.getElementById('ward').innerHTML = `<option value="" selected>Chọn phường / xã</option>`;
+                if (prevAddressCheckbox.checked) {
+
+                    if (Object.keys(users[indexUser].location).length === 0) {
+                        document.getElementById('error-locat-delivery').style.display = 'block';
+                        document.getElementById('error-locat-delivery').textContent = 'Chưa có địa chỉ trước đó!';
+                        console.log('Chưa có địa chỉ trước đó!');
+                    }
+                    else {
+                        const userLocation = users[indexUser].location;
+                        document.getElementById('error-locat-delivery').style.display = 'none';
+                        document.getElementById('error-locat-delivery').textContent = '';
+                        document.getElementById('street').value = userLocation.street || '';
+                        document.getElementById('city').value = userLocation.city || '';
+                        document.getElementById('district').innerHTML = `<option selected>${userLocation.district}</option>`;
+                        document.getElementById('ward').innerHTML = `<option selected>${userLocation.ward}</option>`;
+
+                        console.log(city.value);
+                        console.log(userLocation.district);
+                        console.log(userLocation.ward);
+                    }
                 } else {
-                    locationInput.value = '';
+                    // document.getElementById('error-locat-delivery').style.display = 'none';
+                    document.getElementById('error-locat-delivery').textContent = '';
                 }
             });
         }
@@ -235,121 +250,143 @@ function Transaction__payment() {
     }
 
     // Địa chỉ choices
-    const locations = [
-        {
-            city: "Hồ Chí Minh",
-            districts: [
-                {
-                    district: "Quận 1",
-                    wards: ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang", "Cầu Ông Lãnh", "Nguyễn Thái Bình", "Phạm Ngũ Lão"]
-                },
-                {
-                    district: "Quận 2",
-                    wards: ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi"]
-                },
-                {
-                    district: "Quận 3",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
-                },
-                {
-                    district: "Quận 4",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 8", "Phường 9"]
-                },
-                {
-                    district: "Quận 5",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Quận 6",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Quận 7",
-                    wards: ["Tân Thuận Đông", "Tân Thuận Tây", "Tân Kiểng", "Tân Hưng", "Bình Thuận", "Phú Mỹ", "Tân Phong", "Tân Quy"]
-                },
-                {
-                    district: "Quận 8",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Quận 9",
-                    wards: ["Long Bình", "Long Phước", "Long Thạnh Mỹ", "Long Trường", "Phước Bình", "Phước Long A", "Phước Long B"]
-                },
-                {
-                    district: "Quận 10",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Quận 11",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Quận 12",
-                    wards: ["Thạnh Xuân", "Thạnh Lộc", "Thới An", "Tân Chánh Hiệp", "An Phú Đông", "Tân Thới Hiệp", "Tân Hưng Thuận"]
-                },
-                {
-                    district: "Tân Bình",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Tân Phú",
-                    wards: ["Hiệp Tân", "Hòa Thạnh", "Phú Thọ Hòa", "Phú Thạnh", "Phú Trung", "Sơn Kỳ", "Tân Qúy", "Tân Sơn Nhì"]
-                },
-                {
-                    district: "Bình Thạnh",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Gò Vấp",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Phú Nhuận",
-                    wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                },
-                {
-                    district: "Thủ Đức",
-                    wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
-                }
-            ]
-        },
-    ];
+    function handleLocationChange() {
+        const locations = [
+            {
+                city: "Hồ Chí Minh",
+                districts: [
+                    {
+                        district: "Quận 1",
+                        wards: ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang", "Nguyễn Thái Bình", "Phạm Ngũ Lão"]
+                    },
+                    {
+                        district: "Quận 2",
+                        wards: ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi"]
+                    },
+                    {
+                        district: "Quận 3",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
+                    },
+                    {
+                        district: "Quận 4",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 8", "Phường 9"]
+                    },
+                    {
+                        district: "Quận 5",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Quận 6",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Quận 7",
+                        wards: ["Tân Thuận Đông", "Tân Thuận Tây", "Tân Kiểng", "Tân Hưng", "Bình Thuận", "Phú Mỹ", "Tân Phong", "Tân Quy"]
+                    },
+                    {
+                        district: "Quận 8",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Quận 9",
+                        wards: ["Long Bình", "Long Phước", "Long Thạnh Mỹ", "Long Trường", "Phước Bình", "Phước Long A", "Phước Long B"]
+                    },
+                    {
+                        district: "Quận 10",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Quận 11",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Quận 12",
+                        wards: ["Thạnh Xuân", "Thạnh Lộc", "Thới An", "Tân Chánh Hiệp", "An Phú Đông", "Tân Thới Hiệp", "Tân Hưng Thuận"]
+                    },
+                    {
+                        district: "Tân Bình",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Tân Phú",
+                        wards: ["Hiệp Tân", "Hòa Thạnh", "Phú Thọ Hòa", "Phú Thạnh", "Phú Trung", "Sơn Kỳ", "Tân Qúy", "Tân Sơn Nhì"]
+                    },
+                    {
+                        district: "Bình Thạnh",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Gò Vấp",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Phú Nhuận",
+                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+                    },
+                    {
+                        district: "Thủ Đức",
+                        wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
+                    }
+                ]
+            }
+        ];
 
-    const citySelector = document.getElementById("city");
-    const districtSelector = document.getElementById("district");
-    const wardSelector = document.getElementById("ward");
+        const citySelector = document.getElementById('city');
+        const districtSelector = document.getElementById('district');
+        const wardSelector = document.getElementById('ward');
 
-    locations.forEach(location => {
-        const option = document.createElement("option");
-        option.value = location.city;
-        option.textContent = location.city;
-        citySelector.appendChild(option);
-    });
-
-    citySelector.addEventListener("change", () => {
-        districtSelector.innerHTML = "";
-        wardSelector.innerHTML = "";
-        const selectedCity = locations.find(location =>
-            location.city === citySelector.value);
-        selectedCity.districts.forEach(district => {
-            const option = document.createElement("option");
-            option.value = district.district;
-            option.textContent = district.district;
-            districtSelector.appendChild(option);
+        // Populate city dropdown initially
+        locations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location.city;
+            option.textContent = location.city;
+            citySelector.appendChild(option);
         });
-    });
 
-    districtSelector.addEventListener("change", () => {
-        wardSelector.innerHTML = "";
-        const selectedCity = locations.find(location => location.city === citySelector.value);
-        const selectedDistrict = selectedCity.districts.find(district => district.district === districtSelector.value);
-        selectedDistrict.wards.forEach(ward => {
-            const option = document.createElement("option");
-            option.value = ward;
-            option.textContent = ward;
-            wardSelector.appendChild(option);
-        })
-    });
+        // Event listener for city selection
+        citySelector.addEventListener('change', () => {
+            // Clear previous options
+            districtSelector.innerHTML = '<option value="">Chọn quận / huyện</option>';
+            wardSelector.innerHTML = '<option value="">Chọn phường / xã</option>';
+
+            // Find selected city
+            const selectedCity = locations.find(location => location.city === citySelector.value);
+            console.log('Selected City:', selectedCity); // Log to check if selection is correct
+
+            if (selectedCity && selectedCity.districts) {
+                selectedCity.districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.district;
+                    option.textContent = district.district;
+                    districtSelector.appendChild(option);
+                });
+            } else {
+                console.error("City selection invalid or no data available for city:", citySelector.value);
+            }
+        });
+
+        // Event listener for district selection
+        districtSelector.addEventListener('change', () => {
+            // Clear previous options
+            wardSelector.innerHTML = '<option value="">Chọn phường / xã</option>';
+
+            const selectedCity = locations.find(location => location.city === citySelector.value);
+            const selectedDistrict = selectedCity ? selectedCity.districts.find(district => district.district === districtSelector.value) : null;
+            console.log('Selected District:', selectedDistrict); // Log to check if selection is correct
+
+            if (selectedDistrict && selectedDistrict.wards) {
+                selectedDistrict.wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward;
+                    option.textContent = ward;
+                    wardSelector.appendChild(option);
+                });
+            } else {
+                console.error("District selection invalid or no wards available for district:", districtSelector.value);
+            }
+        });
+    }
+
 
     //
 
@@ -439,6 +476,8 @@ function Transaction__payment() {
         const district = document.getElementById('district').value;
         const city = document.getElementById('city').value;
         const errorMessage = document.getElementById('error-locat-delivery');
+
+        console.log(ward, district, city);
 
         if (!street || !ward || !district || !city) {
             isValid = false;
@@ -562,9 +601,7 @@ function Transaction__payment() {
             case__payment.style.display = 'none';
             localStorage.removeItem("gioHang");
             noti("Thanh toán thành công!", 0);
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
+            showCart();
         }
         if (currentIndex === 0) {
             if (validateInputs()) {
@@ -575,7 +612,6 @@ function Transaction__payment() {
                     if (currentIndex === 1)
                         showInfo();
                 }
-                console.log(currentIndex);
             }
         }
     });
@@ -608,7 +644,7 @@ function Transaction__payment() {
             }
         }
 
-        const location = {
+        let setlocation = {
             street: document.getElementById('street').value,
             ward: document.getElementById('ward').value,
             district: document.getElementById('district').value,
@@ -618,8 +654,11 @@ function Transaction__payment() {
         if (!ArrayBill[indexToDelete].location) {
             ArrayBill[indexToDelete].location = [];
         }
-
-        ArrayBill[indexToDelete].location.push(location);
+        if (Object.keys(users[indexUser].location).length === 0) {
+            users[indexUser].location = setlocation;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        ArrayBill[indexToDelete].location.push(setlocation);
     }
 
     prevButton.addEventListener('click', () => {
