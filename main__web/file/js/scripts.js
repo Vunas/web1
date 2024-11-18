@@ -41,7 +41,7 @@ function Transaction__payment() {
     const paymentData = [
         `
         <div class="payment__option" id="payment__option">
-            <h2>How would you like to pay?</h2>
+            <h2>Hãy chọn phương thức thanh toán!</h2>
             <br>
             <label>
                 <input type="radio" name="payment" value="Momo"> Momo
@@ -50,13 +50,13 @@ function Transaction__payment() {
                 <input type="radio" name="payment" value="ATM"> ATM
             </label>
             <label>
-                <input type="radio" name="payment" value="Cash"> Cash
+                <input type="radio" name="payment" value="Cash"> Tiền mặt
             </label>
         </div>
         <div class="payment__information" id="payment__information">
         </div>
         <div id="locat-delivery">
-            <label for="street">Street Address</label>
+            <label for="street">Địa chỉ</label>
             <input type="text" id="street" name="street" placeholder="123/A Hau Giang Street" required>
             <br>
             <label for="city">Tỉnh / thành</label>
@@ -75,12 +75,12 @@ function Transaction__payment() {
             </select>
         </div>
         <div class="error-message" id="error-locat-delivery"></div>
-        <label for="prev_address">Do you want to use account address</label>
+        <label for="prev_address">Bạn muốn dùng địa chỉ tài khoản không?</label>
         <input type="checkbox" name="prev_address" id="prev_address">
         `,
         `
         <div class="receipt-container">
-            <h2>Payment Detail</h2>
+            <h2>Chi tiết thanh toán</h2>
             <div id="payment-info"></div>
         </div>
         `
@@ -149,19 +149,19 @@ function Transaction__payment() {
             case 'Momo':
                 options.innerHTML = `
                         <div class="payment__option__item">
-                            <label for="momo_phone">Phone number</label>
+                            <label for="momo_phone">Số điện thoại</label>
                             <input type="text" name="momo_phone" id="momo_phone" inputmode="numeric" pattern="[0-9]*"
-                                title="Please enter Phone number" placeholder="Number" required
+                                title="Please enter Phone number" placeholder="SĐT" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="10">
                             <div class="error-message" id="error-momo_phone"></div>
                         </div>
                         <div class="payment__option__item">
-                            <label for="momo_name">Name</label>
-                            <input type="text" name="momo_name" id="momo_name" title="Please enter Name" placeholder="Name" required>
+                            <label for="momo_name">Tên</label>
+                            <input type="text" name="momo_name" id="momo_name" title="Please enter Name" placeholder="Tên" required>
                         <div class="error-message" id="error-momo_name"></div>
                             </div>
                         <div class="payment__option__item">
-                            <label for="momo_pin">Pin code</label>
+                            <label for="momo_pin">mã Pin</label>
                             <input type="text" name="momo_pin" id="momo_pin" inputmode="numeric" pattern="[0-9]*"
                                 title="Please enter Pin code" placeholder="******" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="6">
@@ -173,14 +173,14 @@ function Transaction__payment() {
             case 'ATM':
                 options.innerHTML = `
                         <div class="payment__option__item">
-                            <label for="atm_card_number">Card number</label>
+                            <label for="atm_card_number">Mã số thẻ</label>
                             <input type="text" inputmode="numeric" name="atm_card_number" id="atm_card_number" pattern="[0-9]*"
-                                title="Please enter Card number" placeholder="Card number" required
+                                title="Please enter Card number" placeholder="Mã số thẻ" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                                         <div class="error-message" id="error-atm_card_number"></div>
                         </div>
                         <div class="payment__option__item">
-                            <label for="atm_expired_date">Expired date</label>
+                            <label for="atm_expired_date">Ngày hết hạn</label>
                             <input type="text" name="atm_expired_date" id="atm_expired_date" pattern="(?:0[0-9]|1[0-2])/[0-9]{2}"
                             title="Please enter Expired date (MM/YY)" placeholder="MM/YY" required
                             oninput="this.value = this.value.replace(/[^0-9/]/g, '')" maxlength="5">
@@ -194,22 +194,22 @@ function Transaction__payment() {
                         <div class="error-message" id="error-atm_cvc"></div>
                                 </div>
                         <div class="payment__option__item">
-                            <label for="atm_phone">Phone number</label>
+                            <label for="atm_phone">Số điện thoại</label>
                             <input type="text" name="atm_phone" id="atm_phone" inputmode="numeric" pattern="[0-9]*"
-                                title="Please enter Phone number" placeholder="Number" required
+                                title="Please enter Phone number" placeholder="SĐT" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="10">
                         <div class="error-message" id="error-atm_phone"></div>
                                 </div>
                         <div class="payment__option__item">
-                            <label for="atm_pin">Pin code</label>
+                            <label for="atm_pin">mã Pin</label>
                             <input type="text" name="atm_pin" id="atm_pin" inputmode="numeric" pattern="[0-9]*"
                                 title="Please enter Pin code" placeholder="******" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="6">
                         <div class="error-message" id="error-atm_pin"></div>
                         </div>
                         <div class="payment__option__item">
-                            <label for="atm_name">Name</label>
-                            <input type="text" name="atm_name" id="atm_name" title="Please enter Name" placeholder="Name" required>
+                            <label for="atm_name">Tên</label>
+                            <input type="text" name="atm_name" id="atm_name" title="Please enter Name" placeholder="Tên" required>
                         <div class="error-message" id="error-atm_name"></div>
                             </div>
                     `;
@@ -218,20 +218,20 @@ function Transaction__payment() {
             case 'Cash':
                 options.innerHTML = `
                         <div class="payment__option__item">
-                            <label for="cash_phone">Phone number</label>
+                            <label for="cash_phone">Số điện thoại</label>
                             <input type="text" name="cash_phone" id="cash_phone" inputmode="numeric" pattern="[0-9]*"
-                                title="Please enter Phone number" placeholder="Number" required
+                                title="Please enter Phone number" placeholder="SĐT" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="10">
                         <div class="error-message" id="error-cash_phone"></div>                        
                         </div>
                         <div class="payment__option__item">
-                            <label for="cash_name">Name</label>
-                            <input type="text" name="cash_name" id="cash_name" title="Please enter Name" placeholder="Name" required>
+                            <label for="cash_name">Tên</label>
+                            <input type="text" name="cash_name" id="cash_name" title="Please enter Name" placeholder="Tên" required>
                         <div class="error-message" id="error-cash_name"></div>                        
                         </div>
                         <div class="payment__option__item">
-                            <label for="cash_note">Note (optional)</label>
-                            <input type="text" name="cash_note" id="cash_note" title="Enter Note" placeholder="Note (optional)">
+                            <label for="cash_note">Ghi chú (tùy chọn)</label>
+                            <input type="text" name="cash_note" id="cash_note" title="Enter Note" placeholder="ghi chú (tùy chọn)">
                         </div>
                     `;
                 break;
@@ -409,11 +409,11 @@ function Transaction__payment() {
             case 'Momo':
                 content += `
             <div class="col-md-6 col-payment">
-                <p><strong>Payment method:</strong> ${ArrayBill[indexToDelete].method}</p>
-                <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
-                <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
+                <p><strong>Phương thức thanh toán:</strong> ${ArrayBill[indexToDelete].method}</p>
+                <p><strong>Tên:</strong> ${ArrayBill[indexToDelete].name}</p>
+                <p><strong>SĐT:</strong> ${ArrayBill[indexToDelete].phone}</p>
                 <p><strong>PIN:</strong> ${ArrayBill[indexToDelete].pin}</p>
-<p><strong>Location:</strong> 
+<p><strong>Địa chỉ:</strong> 
     Street: ${ArrayBill[indexToDelete].location[0].street}, 
     District: ${ArrayBill[indexToDelete].location[0].district}, 
     Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
@@ -424,14 +424,14 @@ function Transaction__payment() {
             case 'ATM':
                 content += `
             <div class="col-md-6 col-payment">
-                <p><strong>Payment method:</strong> ${ArrayBill[indexToDelete].method}</p>
-                <p><strong>Card number:</strong> ${ArrayBill[indexToDelete].cardNumber}</p>
-                <p><strong>Expired date:</strong> ${ArrayBill[indexToDelete].expiredDate}</p>
+                <p><strong>Phương thức thanh toán:</strong> ${ArrayBill[indexToDelete].method}</p>
+                <p><strong>Số thẻ:</strong> ${ArrayBill[indexToDelete].cardNumber}</p>
+                <p><strong>Ngày hết hạn:</strong> ${ArrayBill[indexToDelete].expiredDate}</p>
                 <p><strong>CVC:</strong> ${ArrayBill[indexToDelete].cvc}</p>
-                <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
+                <p><strong>SĐT:</strong> ${ArrayBill[indexToDelete].phone}</p>
                 <p><strong>PIN:</strong> ${ArrayBill[indexToDelete].pin}</p>
-                <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
-<p><strong>Location:</strong> 
+                <p><strong>Tên:</strong> ${ArrayBill[indexToDelete].name}</p>
+<p><strong>Địa chỉ:</strong> 
     Street: ${ArrayBill[indexToDelete].location[0].street}, 
     District: ${ArrayBill[indexToDelete].location[0].district}, 
     Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
@@ -442,15 +442,15 @@ function Transaction__payment() {
             case 'Cash':
                 content += `
             <div class="col-md-6 col-payment">
-                <p><strong>Payment method:</strong> ${ArrayBill[indexToDelete].method}</p>
-                <p><strong>Phone:</strong> ${ArrayBill[indexToDelete].phone}</p>
-                <p><strong>Name:</strong> ${ArrayBill[indexToDelete].name}</p>
-                <p><strong>Note:</strong> ${ArrayBill[indexToDelete].note}</p>
-<p><strong>Location:</strong> 
-    Street: ${ArrayBill[indexToDelete].location[0].street}, 
-    District: ${ArrayBill[indexToDelete].location[0].district}, 
-    Ward: ${ArrayBill[indexToDelete].location[0].ward}, 
-    City: ${ArrayBill[indexToDelete].location[0].city}
+                <p><strong>Phương thức thanh toán:</strong> ${ArrayBill[indexToDelete].method}</p>
+                <p><strong>SĐT:</strong> ${ArrayBill[indexToDelete].phone}</p>
+                <p><strong>Tên:</strong> ${ArrayBill[indexToDelete].name}</p>
+                <p><strong>Ghi chú:</strong> ${ArrayBill[indexToDelete].note}</p>
+<p><strong>Địa chỉ:</strong> 
+    Đường: ${ArrayBill[indexToDelete].location[0].street}, 
+    Quận: ${ArrayBill[indexToDelete].location[0].district}, 
+    Phường: ${ArrayBill[indexToDelete].location[0].ward}, 
+    Thành phố: ${ArrayBill[indexToDelete].location[0].city}
 </p>            </div>
         `;
                 break;
@@ -597,6 +597,7 @@ function Transaction__payment() {
 
     nextButton.addEventListener('click', () => {
         if (currentIndex === 1) {
+
             localStorage.setItem('ArrayBill', JSON.stringify(ArrayBill));
             case__payment.style.display = 'none';
             localStorage.removeItem("gioHang");
@@ -605,6 +606,7 @@ function Transaction__payment() {
         }
         if (currentIndex === 0) {
             if (validateInputs()) {
+                document.getElementById('next').innerText = "Thanh toán";
                 if (currentIndex < paymentData.length) {
                     saveDataToLocalStorage();
                     currentIndex++;
