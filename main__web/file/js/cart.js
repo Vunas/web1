@@ -22,7 +22,7 @@ function showMenuCart() {
 }
 
 function loadMenuCart() {
-  
+
   var url = document.location.href;
   var tmp = url.split("?");
   var type;
@@ -39,7 +39,8 @@ function pay() {
   if (localStorage.getItem("userLogin")) {
     const case__payment = document.getElementById("case__payment");
     case__payment.style.display = "block";
-    Transaction__payment();
+    if (localStorage.getItem("gioHang"))
+      Transaction__payment();
     showCart();
   } else {
     noti("ban phai dang nhap moi mua duoc hang", 1);
@@ -210,12 +211,18 @@ function showHoaDon() {
           <th>xem chi tiết</th>
         </tr>`;
 
+  let j=0;
   for (let i = ArrayBill.length - 1; i >= 0; i--) {
     if (ArrayBill[i].username == userLogin.username) {
+      let diaChi= ArrayBill[i].location[0];
+      if(diaChi){
+          diaChi= ArrayBill[i].location[0].street + " " + ArrayBill[i].location[0].ward +" "+ ArrayBill[i].location[0].district +" " + ArrayBill[i].location[0].city;
+      }
+      else diaChi="";
       kq +=
         `<tr>
             <td>` +
-        i +
+        j++ +
         `</td>
             <td>` +
         ArrayBill[i].date +
@@ -227,7 +234,7 @@ function showHoaDon() {
         ArrayBill[i].status +
         `</td>
         <td>` +
-        ArrayBill[i].address +
+        diaChi +
         `</td>
         <td>` +
         ArrayBill[i].phone +
@@ -340,9 +347,3 @@ function showHistoryCart() {
   }
   document.getElementById("myCart").innerHTML = kq;
 }
-
-
-
-
-
-
