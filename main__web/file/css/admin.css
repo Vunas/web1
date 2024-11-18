@@ -88,6 +88,10 @@ body {
     border-radius: 10px;
     transition: 0.5s all;
 }
+
+.text__revenue img{
+    mix-blend-mode: multiply;
+}
 .text__user:hover ,.text__product:hover,.text__revenue:hover{
     transform: scale(1.02);
     color: var(--primary--color3);
@@ -705,9 +709,68 @@ body {
 #totalStatistics{
     width: 100%;
     padding: 10px;
-    /* height: 40px; */
 }
 
-#totalStatistics span{
-    
+#anhTk{
+    width: 40px;
+}
+
+#noti{
+position: fixed;
+top: 50px;
+left: -600px;
+height: 60px;
+width: auto;
+min-width: 300px;
+padding: 20px;
+padding-right: 30px;
+overflow: hidden;
+z-index: 102;
+animation: noti 3s;
+}
+
+#noti span{
+position: absolute;
+top: 15px;
+right: 10px;
+font-size: 25px;
+rotate: 45deg;
+cursor: pointer;
+}
+
+#noti span:hover{
+color: black;
+}
+
+.success{
+background-color: rgba(7, 222, 97, 0.8);
+border-left: 5px solid #04AA6D; 
+color: rgb(228, 241, 228);
+}
+
+.warning{
+background-color: rgb(255, 208, 2);
+border-left: 5px solid #ff9800;
+color: rgb(30, 30, 29);
+}
+
+.error{
+background-color: rgb(235, 143, 143);
+border-left: 5px solid #ed0d0d;
+color: rgb(73, 8, 8);
+}
+
+@keyframes noti{
+from{
+  left: -200px;
+}
+15%{
+  left: 0;
+}
+85%{
+  left: 0;
+}
+to{
+  left: -600px;
+}
 }
