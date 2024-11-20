@@ -235,9 +235,9 @@ function checkLogin() {
           <span>` +
         ten +
         `</span>
-          <button id="logout" onclick="logout()">Đăng Xuất</button>
+          <button title="Đăng xuất" id="logout" onclick="logout()">Đăng Xuất</button>
         </span>
-        <a href="./admin.html" class="nav__item">
+        <a title="Đến trang Admin" href="./admin.html" class="nav__item">
             <i class="fa-solid fa-gear"></i>
           </a>`;
     } else {
