@@ -1266,3 +1266,17 @@ footer .footer__bot{
   }
 }
 
+.Chamsoc{
+  text-align: center;
+  border-bottom: 5px solid var(--main--color);
+}
+
+.list__product summary{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+details{
+  margin: 10px;
+}
+
