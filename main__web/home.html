@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanh toán</title>
-    <link rel="stylesheet" href="./file/css/home.css" />
+    <title>Mecha (Trợ Giúp)</title>
     <link rel="stylesheet" href="./file/css/main.css" />
     <link
       rel="stylesheet"
@@ -30,12 +29,12 @@
       </ul>
       <ul class="nav__right">
         <li>
-          <button onclick="open_search()" class="nav__item">
+          <button title="Tìm Kiếm..." onclick="open_search()" class="nav__item">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </li>
         <li>
-          <a href="./cart.html" class="nav__item">
+          <a title="Giỏ Hàng" href="./cart.html" class="nav__item">
             <i class="fa-solid fa-cart-shopping"></i>
           </a>
         </li>
@@ -101,82 +100,70 @@
     </div>
 
     <!-- login/logout -->
-
+    
     <div class="overlay">
       <div class="form-container">
         <button id="close__login" onclick="closeLogin()">x</button>
         <!--login-->
         <form action="" id="login-form" class="form login-form">
-          <h2>Login</h2>
+          <h2>Đăng nhập</h2>
           <div class="input-box">
-            <input
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              required
-            />
+            <input id="username" type="text" placeholder="Nhập tên tài khoản" required />
             <i class="fa-solid fa-user"></i>
           </div>
-          <br />
+          <br>
           <div class="input-box">
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter password"
-              required
-            />
+            <input id="password" type="password" placeholder="Nhập mật khẩu" required />
             <i class="fa-solid fa-lock"></i>
             <i class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
-          <br />
-          <button type="submit" class="login-button">Login</button>
-
+          <br>
+  
+          <button type="submit" class="login-button">Đăng nhập</button>
+  
           <div class="login-signup">
-            Don't have an account?
-            <button type="button" id="signup" onclick="opensignup()">
-              Signup
-            </button>
+            Bạn chưa có tài khoản? <button type="button" id="signup" onclick="opensignup()">Dăng ký ngay</button>
           </div>
         </form>
-
+  
         <!--signup form-->
         <form action="" id="signup-form" class="form signup-form">
-          <h2>Sign up</h2>
+          <h2>Đăng ký</h2>
           <div class="input-box">
             <input id="fullname" type="text" placeholder="Nhập tên của bạn"/>
           </div>
           <p id="pfullname"><br></p>
           <div class="input-box">
-            <input id="sigus" type="text" placeholder="Enter your username"/>
+            <input id="sigus" type="text" placeholder="nhập tên tài khoản"/>
             <i class="fa-solid fa-user"></i>
           </div>
           <p id="psigus"><br></p> 
           <div class="input-box">
-            <input id="sigpas" type="password" placeholder="Create password"/>
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
+            <input id="sigpas" type="password" placeholder="Nhập mật khẩu"/>
+            <i title="Hiện mật khẩu" class="fa-solid fa-lock"></i>
+            <i title="Ẩn mật khẩu" class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
           <p id="psigpas"><br></p>
           <div class="input-box">
-            <input id="resigpas" type="password" placeholder="Confirm password"/>
-            <i class="fa-solid fa-lock"></i>
-            <i class="fa-regular fa-eye-slash pw-hide"></i>
+            <input id="resigpas" type="password" placeholder="Xác nhận mật khẩu"/>
+            <i title="Hiện mật khẩu" class="fa-solid fa-lock"></i>
+            <i title="Ẩn mật khẩu" class="fa-regular fa-eye-slash pw-hide"></i>
           </div>
           <p id="presigpas"><br></p>
           <div class="input-box">
-            <input id="email" type="email" placeholder="Enter your email" required/>
+            <input id="email" type="email" placeholder="Nhập email" required/>
             <i class="fa-solid fa-envelope"></i>
           </div>
           <p id="pemail"><br></p>
           <div class="input-box">
-            <input id="phone" type="number" placeholder="Enter your number"/>
+            <input id="phone" type="number" placeholder="Nhập số điện thoại"/>
             <i class="fa-solid fa-phone"></i>
           </div>
           <p id="pphone"><br></p>
-          <button type="submit" class="login-button">Signup</button>
+          <button type="submit" class="login-button">Đăng ký</button>
   
           <div class="login-signup">
-            Already have an account? <button type="button" onclick="closeSignup()" id="login">Login</button>
+            Bạn đã có tài khoản? <button type="button" onclick="closeSignup()" id="login">Đăng nhập ngay</button>
           </div>
         </form>
       </div>
@@ -226,8 +213,8 @@
     </div>
 
     <div class="container">
-      <div class="list__product">
-        <h1>Chăm sóc khác hàng</h1>
+      <div class="list__product" style="font-size: 16px;padding: 30px;">
+        <h1 class="Chamsoc">Chăm sóc khác hàng</h1>
         <div class="container__section">
           <details>
             <summary>Bạn Quên mật khẩu</summary>
@@ -241,16 +228,16 @@
               bạn
             </p>
           </details>
-        </div>
-        <div class="container__section">
           <details>
             <summary>Bạn không thể đăng ký?</summary>
             <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
+            <p>Hãy có gắng đăng ký theo yêu cầu của form , nếu như bạn vẫn không làm được hãy liên hệ mecha14@gmail.com.</p>
+            <p>Chúc bạn thành công</p>
           </details>
           <details>
             <summary>Bạn không thể đăng ký địa chỉ?</summary>
             <h3>Đừng lo lắng, chúng tôi sẽ giúp bạn</h3>
-            <p>Bạn cần phải nhâp đúng địa chỉ là "số nhà "+ "đường", "phố", "phường" hoặc "xã" + "quận", "huyện", "thành phố" hoặc "tỉnh".</p>
+            <p>Bạn cần phải nhâp đúng địa chỉ theo yêu cầu của form, Chúc bạn thành công.</p>
             <p>Chúc bạn thành công</p>
           </details>
           <details>
