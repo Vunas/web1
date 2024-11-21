@@ -253,6 +253,7 @@ function Transaction__payment() {
     function handleLocationChange() {
         const locations = [
             {
+                
                 city: "Hồ Chí Minh",
                 districts: [
                     {
@@ -328,7 +329,76 @@ function Transaction__payment() {
                         wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
                     }
                 ]
-            }
+            },
+            {
+                city: "Hà Nội",
+                districts: [
+                    {
+                        district: "Quận Ba Đình",
+                        wards: ["Cống Vị", "Điện Biên", "Đội Cấn", "Giảng Võ", "Kim Mã", "Liễu Giai", "Ngọc Hà", "Ngọc Khánh", "Nguyễn Trung Trực", "Phúc Xá", "Quán Thánh", "Thành Công", "Trúc Bạch", "Vĩnh Phúc"]
+                    },
+                    {
+                        district: "Quận Hoàn Kiếm",
+                        wards: ["Chương Dương Độ", "Cửa Đông", "Cửa Nam", "Đồng Xuân", "Hàng Bạc", "Hàng Bài", "Hàng Bồ", "Hàng Bông", "Hàng Buồm", "Hàng Đào", "Hàng Gai", "Hàng Mã", "Hàng Trống", "Lý Thái Tổ", "Phan Chu Trinh", "Phúc Tân", "Tràng Tiền", "Trần Hưng Đạo"]
+                    },
+                    {
+                        district: "Quận Đống Đa",
+                        wards: ["Cát Linh", "Giảng Võ", "Hàng Bột", "Khâm Thiên", "Khương Thượng", "Kim Liên", "Láng Hạ", "Láng Thượng", "Nam Đồng", "Ngã Tư Sở", "Ô Chợ Dừa", "Phương Liên", "Phương Mai", "Quang Trung", "Quốc Tử Giám", "Thịnh Quang", "Thổ Quan", "Trung Liệt", "Trung Phụng", "Trung Tự", "Văn Chương", "Văn Miếu"]
+                    },
+                    {
+                        district: "Quận Hai Bà Trưng",
+                        wards: ["Bạch Đằng", "Bách Khoa", "Bạch Mai", "Cầu Dền", "Đống Mác", "Đồng Nhân", "Đồng Tâm", "Đồng Xuân", "Lê Đại Hành", "Minh Khai", "Nguyễn Du", "Phạm Đình Hổ", "Phố Huế", "Quỳnh Lôi", "Quỳnh Mai", "Thanh Lương", "Thanh Nhàn", "Trương Định", "Vĩnh Tuy"]
+                    },
+                    {
+                        district: "Quận Thanh Xuân",
+                        wards: ["Hạ Đình", "Khương Đình", "Khương Mai", "Khương Trung", "Nhân Chính", "Phương Liệt", "Thanh Xuân Bắc", "Thanh Xuân Nam", "Thanh Xuân Trung", "Thượng Đình"]
+                    },
+                    {
+                        district: "Quận Tây Hồ",
+                        wards: ["Bưởi", "Nhật Tân", "Phú Thượng", "Quảng An", "Thụy Khuê", "Tứ Liên", "Xuân La", "Yên Phụ"]
+                    },
+                    {
+                        district: "Quận Cầu Giấy",
+                        wards: ["Dịch Vọng", "Dịch Vọng Hậu", "Mai Dịch", "Nghĩa Đô", "Nghĩa Tân", "Quan Hoa", "Trung Hòa", "Yên Hòa"]
+                    },
+                    {
+                        district: "Quận Hoàng Mai",
+                        wards: ["Đại Kim", "Định Công", "Giáp Bát", "Hoàng Liệt", "Hoàng Văn Thụ", "Lĩnh Nam", "Mai Động", "Tân Mai", "Thanh Trì", "Thịnh Liệt", "Trần Phú", "Tương Mai", "Vĩnh Hưng", "Yên Sở"]
+                    },
+                    {
+                        district: "Quận Long Biên",
+                        wards: ["Bồ Đề", "Cự Khối", "Đức Giang", "Gia Thụy", "Giang Biên", "Long Biên", "Ngọc Lâm", "Ngọc Thụy", "Phúc Đồng", "Phúc Lợi", "Sài Đồng", "Thạch Bàn", "Thượng Thanh", "Việt Hưng"]
+                    },
+                    {
+                        district: "Quận Nam Từ Liêm",
+                        wards: ["Cầu Diễn", "Đại Mỗ", "Mễ Trì", "Mỹ Đình 1", "Mỹ Đình 2", "Phú Đô", "Phương Canh", "Tây Mỗ", "Trung Văn", "Xuân Phương"]
+                    },
+                    {
+                        district: "Quận Bắc Từ Liêm",
+                        wards: ["Cổ Nhuế 1", "Cổ Nhuế 2", "Đông Ngạc", "Đức Thắng", "Liên Mạc", "Minh Khai", "Phú Diễn", "Phúc Diễn", "Tây Tựu", "Thượng Cát", "Thụy Phương", "Xuân Đỉnh", "Xuân Tảo"]
+                    },
+                    {
+                        district: "Huyện Gia Lâm",
+                        wards: ["Cát Quế", "Đặng Xá", "Đa Tốn", "Đình Xuyên", "Dương Hà", "Dương Quang", "Dương Xá", "Kim Lan", "Kim Sơn", "Lệ Chi", "Ninh Hiệp", "Phù Đổng", "Phú Thị", "Trâu Quỳ", "Yên Thường", "Yên Viên"]
+                    },
+                    {
+                        district: "Huyện Đông Anh",
+                        wards: ["Bắc Hồng", "Cổ Loa", "Dục Tú", "Đại Mạch", "Đông Hội", "Hải Bối", "Kim Chung", "Kim Nỗ", "Liên Hà", "Mai Lâm", "Nguyên Khê", "Tàm Xá", "Thụy Lâm", "Tiên Dương", "Uy Nỗ", "Vân Hà", "Vân Nội", "Việt Hùng", "Vĩnh Ngọc", "Võng La", "Xuân Canh", "Xuân Nộn"]
+                    },
+                    {
+                        district: "Huyện Sóc Sơn",
+                        wards: ["Bắc Sơn", "Đông Xuân", "Hiền Ninh", "Hồng Kỳ", "Kim Lũ", "Mai Đình", "Minh Phú", "Minh Trí", "Nam Sơn", "Phù Linh", "Phú Cường", "Phú Minh", "Phủ Lỗ", "Quang Tiến", "Tân Dân", "Tân Hưng", "Thụy Hương", "Tiên Dược", "Trung Giã", "Việt Long", "Xuân Giang", "Xuân Thu"]
+                    },
+                    {
+                        district: "Huyện Thanh Trì",
+                        wards: ["Đại Áng", "Đông Mỹ", "Duyên Hà", "Hữu Hòa", "Liên Ninh", "Ngọc Hồi", "Tả Thanh Oai", "Tam Hiệp", "Tân Triều", "Thanh Liệt", "Tứ Hiệp", "Vạn Phúc", "Vĩnh Quỳnh", "Yên Mỹ"]
+                    },
+                    {
+                        district: "Huyện Thường Tín",
+                        wards: ["Dũng Tiến", "Hà Hồi", "Hiền Giang", "Hòa Bình", "Hồng Vân", "Khánh Hà", "Liên Phương", "Minh Cường", "Nghiêm Xuyên", "Nguyễn Trãi", "Nhị Khê", "Ninh Sở", "Quất Động", "Thắng Lợi", "Thống Nhất", "Thư Phú", "Tô Hiệu", "Tự Nhiên", "Vạn Điểm", "Vân Tảo", "Văn Bình", "Văn Phú", "Văn Tự", "Vân Tử", "Vũ Lăng", "Xà Cầu", "Duyên Thái"]
+                    },
+                ]
+            }          
         ];
 
         const citySelector = document.getElementById('city');
