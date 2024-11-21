@@ -250,7 +250,7 @@ function showHoaDon() {
     }
   }
   if(kq == ""){
-    kq = `<tr><td style="height:60px" colspan="7"> Không có hóa đơn nào </td></tr>`;
+    kq = `<tr><td style="height:60px" colspan="8"> Không có hóa đơn nào </td></tr>`;
   }
   document.getElementById("myCart").innerHTML = kq;
 }
