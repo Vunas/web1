@@ -130,15 +130,19 @@ function addProduct() {
     let textIntroduce = document.querySelector("#introduce__addP");
     let textPrice = document.querySelector("#price__addP");
     if ((document.querySelector("#imgPreview1__addP").src).includes("html") || (document.querySelector("#imgPreview2__addP").src).includes("html")) {
-        customAlert("Không có hình ảnh", "warning");
+        customAlert("Không có hình ảnh !", "warning");
         return false;
     }
-    if (textName.value == "" || textIntroduce.value == "" || textDetail1.value == "" || textDetail2.value == "" || textDetail3.value == "" || textDetail4.value == "") {
-        customAlert("Bạn chưa nhập nội dụng", "warning");
+    if(textName.value==""||!isNaN(Number(textName.value))){
+        customAlert("Hãy nhập lại tên sản phẩm !","warning");
         return false;
     }
-    if (isNaN(Number(textPrice.value))) {
-        customAlert("Giá không hợp lệ", "warning");
+    if (isNaN(Number(textPrice.value))||textPrice.value=="") {
+        customAlert("Giá không hợp lệ !", "warning");
+        return false;
+    }
+    if (textIntroduce.value == "" || textDetail1.value == "" || textDetail2.value == "" || textDetail3.value == "" || textDetail4.value == "") {
+        customAlert("Bạn chưa nhập đủ nội dung !", "warning");
         return false;
     }
     let productTemp = {
@@ -252,7 +256,6 @@ function showInputChangeProduct(id) {
             //thêm sự kiện click vào button LƯU sẽ cập nhật lại thông tin sản phẩm
             document.querySelector(".button__changeP").addEventListener("click", function () {
                 saveChangeProduct(i);
-                noti("lưu thành công",0);
             })
             return;
         }
@@ -271,6 +274,24 @@ function setIMG2() {
 
 //Lưu thông tin sau khi sửa
 function saveChangeProduct(i) {
+    if(document.querySelector("#imgPreview1__changeP").src==""|| document.querySelector("#imgPreview2__changeP").src==""){
+        customAlert("Không có hình ảnh !", "warning");
+        return false;
+    }
+    if(document.querySelector(".input__changeP--name input").value==""||!isNaN(Number(document.querySelector(".input__changeP--name input").value))){
+        customAlert("Tên không hợp lệ !","warning");
+        return false;
+    }
+    if(isNaN(Number(document.querySelector(".input__changeP--price input").value))||document.querySelector(".input__changeP--price input").value==""){
+        customAlert("Giá không hợp lệ ! ","warning");
+        return false;
+    }
+    if(document.querySelector("#detail1__changeP").value==""||document.querySelector("#detail2__changeP").value==""
+       ||document.querySelector("#detail3__changeP").value==""||document.querySelector("#detail4__changeP").value==""
+       ||document.querySelector(".input__changeP--introduce input").value==""){
+        customAlert("Bạn chưa nhập đủ nội dung !","warning");
+        return false;
+    }
     DanhSachSanPham[i].image1 = document.querySelector("#imgPreview1__changeP").src;
     DanhSachSanPham[i].image2 = document.querySelector("#imgPreview2__changeP").src;
     DanhSachSanPham[i].name = document.querySelector(".input__changeP--name input").value;
@@ -281,6 +302,7 @@ function saveChangeProduct(i) {
     DanhSachSanPham[i].detail3 = document.querySelector("#detail3__changeP").value;
     DanhSachSanPham[i].detail4 = document.querySelector("#detail4__changeP").value;
     localStorage.setItem("product", JSON.stringify(DanhSachSanPham));
+    noti("lưu thành công",0);
     showArrayProduct();
     document.querySelector(".container__changeP--products").style.display = "none";
 }
