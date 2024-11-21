@@ -89,21 +89,26 @@ nav ul li .nav__item {
   overflow: hidden;
 }
 
-#userlogin:hover button{
-  display: block;
-}
-
-#userlogin button{
+#userlogin button {
   position: absolute;
-  top: 20px;
+  top: 60px;
   padding: 10px;
-  right: -40px; 
+  right: -20px;
   width: 120px;
   border: 10px;
   cursor: pointer;
+  border-radius: 15px;
   box-shadow: 0 0 15px 0;
   background-color: var(--main--color);
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, top 0.8s ease;
+}
+
+#userlogin:hover button {
+  opacity: 1;
+  visibility: visible;
+  top: 20px;
 }
 
 .modal__overlay {
@@ -124,21 +129,22 @@ nav ul li .nav__item {
 .search_div {
   z-index: 1;
   top: 0;
-  left: 0;
+  right: 0;
   position: fixed;
   background-color: white;
-  width: 100%;
+  width: 60%;
   height: 0;
   overflow: auto;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, height 0.5s ease, visibility 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .show__search_div {
   opacity: 1;
   visibility: visible;
   height: 100%;
+  width: 100%;
 }
 
 .search_div::-webkit-scrollbar{
@@ -316,6 +322,17 @@ nav ul li .nav__item {
   opacity: 0;
   pointer-events: none;
   transition: all 0.4s ease-out;
+  animation: deta 0.5s ease;
+}
+
+@keyframes deta{
+  from{
+    opacity: 0;
+    top:30%;
+  }
+  to{
+    opacity: 1;
+  }
 }
 
 .overlay.show .form-container {
@@ -893,9 +910,9 @@ tbody tr {
 #number__pages--two li a,
 #number__pages--one li a {
   text-decoration: none;
+  color: black;
   font-size: 16px;
   padding: 10px;
-  border: 1px solid var(--main--color);
 }
 .gioHang {
   text-align: right;
@@ -1089,6 +1106,15 @@ tbody tr {
   overflow-y: scroll;
   display: flex;
   background-color: white;
+  animation:  infor__child 0.25s ease;
+}
+@keyframes infor__child{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
 
 .Infor__Child::-webkit-scrollbar{
