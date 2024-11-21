@@ -44,14 +44,14 @@ function showListMobile() {
 
 function open_search() {
   document.getElementById("modal__overlay").style.display = "block";
-  document.getElementById("search_div").style.display = "block";
+  document.getElementById("search_div").classList.add("show__search_div");
   document.getElementById("search__input").focus();
 }
 
 function close_search() {
   close__advanced_search();
   document.getElementById("modal__overlay").style.display = "none";
-  document.getElementById("search_div").style.display = "none";
+  document.getElementById("search_div").classList.remove("show__search_div");
 }
 
 /*advanced search*/
