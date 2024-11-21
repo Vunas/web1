@@ -309,10 +309,13 @@ function showArrayBill(arr) {
     }
     else {
         html = `<thead id="theadBill">
-                <th>STT</th>
-                <th>Tên khách hàng</th>
+                <th>Mã đơn hàng</th>
+                <th>Tên người nhận</th>
+                <th>Tên tài khoản</th>
                 <th>Địa chỉ</th>
+                <th>Phương thức</th>
                 <th>Thời gian</th>
+                <th>Ghi chú</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết đơn hàng</th>
             </thead>
@@ -335,10 +338,13 @@ function showBill(bill, soThuTu) {
     else diaChi="";
     let html = '';
     html += `<tr>
-        <td>`+ soThuTu + `</td>
+        <td>`+ "M"+ bill.index + `</td>
+        <td>`+ bill.name + `</td>
         <td>`+ bill.username + `</td>
         <td>`+ diaChi + `</td>
-        <td>`+ bill.date + `</td>   
+        <td>`+ bill.method + `</td>  
+        <td>`+ bill.date + `</td>  
+        <td>`+ bill.note + `</td> 
         <td>`+ bill.status + `</td>
         <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
             </tr>`
@@ -424,19 +430,19 @@ let districts = ["all",
     "Thủ Đức"
 ];
 function createFilterBill() {
-    let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Filter Status</p>
+    let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Trạng thái</p>
     <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusTimeDistrict()">`
     for (let i = 0; i < statuss.length; i++) {
         html += `<option value="` + statuss[i] + `">` + statuss[i] + `</option>`
     }
     html += `</select></div>`
-    html += `<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Filter Day</p>
+    html += `<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Ngày</p>
             <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusTimeDistrict()">`
     for (let i = 0; i < day.length; i++) {
         html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
     }
     html += `</select></div>`
-    html += `<div id="filter__district--B"><p id="title__ftdistrict" style="display:inline;padding:0px 20px">Filter District</p>
+    html += `<div id="filter__district--B"><p id="title__ftdistrict" style="display:inline;padding:0px 20px">Quận</p>
     <select style="height:40px;width:100px;" name="" id="filter__district--bill" onchange="filterStatusTimeDistrict()">`
     for (let i = 0; i < districts.length; i++) {
         html += `<option value="` + districts[i] + `">` + districts[i] + `</option>`
@@ -649,11 +655,17 @@ function showInputEditCustomer(index) {
     for (let i = 0; i < DanhSachKhachHang.length; i++) {
         if (index == i) {
             let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+            let diaChi= DanhSachKhachHang[i].location;
+            if(diaChi){
+                diaChi= DanhSachKhachHang[i].location.street + " " + DanhSachKhachHang[i].location.ward +" "+ DanhSachKhachHang[i].location.district +" " + DanhSachKhachHang[i].location.city;
+            }
+            else diaChi="";
+            
             document.querySelector("#usernameEdit").value = DanhSachKhachHang[i].username;
             document.querySelector("#passwordEdit").value = DanhSachKhachHang[i].password;
             document.querySelector("#emailEdit").value = DanhSachKhachHang[i].email;
             document.querySelector("#phoneEdit").value = DanhSachKhachHang[i].phone;
-            document.querySelector("#addressEdit").value = DanhSachKhachHang[i].address;
+            document.querySelector("#addressEdit").value = diaChi;
             document.querySelector("#save__edit").replaceWith(document.querySelector("#save__edit").cloneNode(true));
             document.querySelector("#save__edit").addEventListener("click", function () {
                 updateCustomer(index);
@@ -821,7 +833,13 @@ function showDetailStatistic(name){
                 <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
                 <table>
                     <thead>
+                        <th>Mã đơn hàng</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tên người nhận</th>
                         <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Phương thức</th>
+                        <th>Ghi chú</th>
                         <th>Thời Gian</th>
                         <th>Tổng</th>
                         <th>Chỉ tiết đơn hàng</th>
@@ -834,7 +852,13 @@ function showDetailStatistic(name){
         }
         else diaChi="";
         html+= `<tr>
+                        <td>`+"M"+arrayDetail[i].index+`</td>
+                        <td>`+arrayDetail[i].username+`</td>
+                        <td>`+arrayDetail[i].name+`</td>
                         <td>`+diaChi+`</td>
+                        <td>`+arrayDetail[i].phone+`</td>
+                        <td>`+arrayDetail[i].method+`</td>
+                        <td>`+arrayDetail[i].note+`</td>
                         <td>`+arrayDetail[i].date+`</td>
                         <td>`+(arrayDetail[i].sum *1000).toLocaleString()+` VND</td>
                         <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
@@ -859,16 +883,30 @@ function showcustomer_statistics(arr) {
             <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
     }
     else {
-        html = `<thead><th>STT</th>
+        html = `<thead><th>Mã khách hàng</th>
                 <th>Tên khách hàng</th>
+                <th>Tên tài khoản</th>
+                <th>email</th>
+                <th>Số điện thoại</th>
                 <th>Tổng</th>
                 <th>Xem chi tiet </th></thead><tbody>`
 
         for (let i = 0; i < arr.length; i++) {
+            let users= JSON.parse(localStorage.getItem("users"));
+            let user;
+            for(let j=0; j< users.length; j++){
+                if(users[j].username == arr[1][0]){
+                    user= users[j];
+                    break;
+                }
+            }
             html+=
                 `<tr>
-                    <td>`+i+`</td>
+                    <td>`+"KH"+i+`</td>
+                    <td>`+user.fullname+`</td>
                     <td>`+arr[i][0]+`</td>
+                    <td>`+user.email+`</td>
+                    <td>`+user.phone+`</td>
                     <td>`+(arr[i][1]*1000).toLocaleString()+` VND</td>
                     <td><button onclick="showDetailStatistic('` +arr[i][0]+`')">`+"Chi tiết"+`</button></td>
                 </tr>` 
@@ -952,7 +990,7 @@ function filStatisticsTime(){
     for (let i = 0; i < array.length; i++) {
         sum+= array[i].sum;
     }
-    document.getElementById("totalStatistics").innerHTML=`<span>Tong gia `+(sum*1000).toLocaleString()+ ` VND</span>`;
+    document.getElementById("totalStatistics").innerHTML=`<span>Tổng Giá `+(sum*1000).toLocaleString()+ ` VND</span>`;
     return array;
 }
 
