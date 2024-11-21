@@ -1096,10 +1096,11 @@ tbody tr {
 }
 
 .close__infor {
+  rotate: 45deg;
   position: absolute;
   right: 0;
   font-size: 30px;
-  padding: 20px;
+  padding: 5px 15px;
   cursor: pointer;
 }
 
