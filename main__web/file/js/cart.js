@@ -177,7 +177,7 @@ function showCart() {
             </td>
             <td class="totalTr">` +
         (gioHang[i][3] * gioHang[i][4] * 1000).toLocaleString() +
-        ` VNĐ</td>
+        `</td>
             <td><span onclick="deleteItemCart(this)">Xóa</span></td>
             </tr>`;
       if (i == gioHang.length - 1)
