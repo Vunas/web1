@@ -63,13 +63,14 @@ tbody tr td img{
     height:100px;
 }
 tbody tr{
-    text-align: center;
+   height: 40px;
 }
 tbody tr td button{
     all: unset;
     cursor: pointer;
-    height: 30px;
+    padding: 3px;
     width: 20px;
+    height: 25px;
     border: 0.1px solid;
 }
 
@@ -97,6 +98,7 @@ tbody tr td input{
     height: 30px;
     width: 30px;
 }
+
 table th{
     background-color: var(--main--color);
     height:46px;
