@@ -255,12 +255,12 @@ function checkLogin() {
 function logout() {
   localStorage.removeItem("userLogin");
   localStorage.removeItem("gioHang");
-  checkLogin();
   document.getElementById(
     "checkLogin"
   ).innerHTML = `<button onclick="openlogin()" id="user-icon" class="nav__item">
       <i class="fa-regular fa-user"></i>
     </button>`;
+  location.reload();
 }
 
 function createAdmin() {
@@ -374,6 +374,7 @@ document.getElementById("login-form").onsubmit = function (e) {
       checkLogin();
       closeLogin();
       noti("Đăng Nhập thành công", 0);
+      location.reload();
       return false;
     }
   }
