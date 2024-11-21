@@ -12,8 +12,13 @@
     left: 0;
     width: 100%;
     height: 100%;
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 2;
+}
+
+#case__payment::-webkit-scrollbar{
+    display: none;
 }
 
 .case__payment__content {
