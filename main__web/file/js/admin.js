@@ -274,7 +274,7 @@ function setIMG2() {
 
 //Lưu thông tin sau khi sửa
 function saveChangeProduct(i) {
-    if(document.querySelector("#imgPreview1__changeP").src==""|| document.querySelector("#imgPreview2__changeP").src==""){
+    if(document.querySelector("#imgPreview2__changeP").src.includes("html")||document.querySelector("#imgPreview1__changeP").src.includes("html")){
         customAlert("Không có hình ảnh !", "warning");
         return false;
     }
@@ -306,7 +306,6 @@ function saveChangeProduct(i) {
     showArrayProduct();
     document.querySelector(".container__changeP--products").style.display = "none";
 }
-
 //click vào đơn hàng mở ra trang đơn hàng
 function showPageBill() {
     document.querySelector(".container__right--main").style.display = "none";
@@ -816,7 +815,13 @@ function showProductBills(name){
                 <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
                 <table>
                     <thead>
+                        <th>Mã đơn hàng</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tên người nhận</th>
                         <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Phương thức</th>
+                        <th>Ghi chú</th>
                         <th>Thời Gian</th>
                         <th>Tổng</th>
                         <th>Chỉ tiết đơn hàng</th>
@@ -829,7 +834,13 @@ function showProductBills(name){
         }
         else diaChi="";
         html+= `<tr>
+                        <td>`+"M"+arrayDetail[i].index+`</td>
+                        <td>`+arrayDetail[i].username+`</td>
+                        <td>`+arrayDetail[i].name+`</td>
                         <td>`+diaChi+`</td>
+                        <td>`+arrayDetail[i].phone+`</td>
+                        <td>`+arrayDetail[i].method+`</td>
+                        <td>`+arrayDetail[i].note+`</td>
                         <td>`+arrayDetail[i].date+`</td>
                         <td>`+(arrayDetail[i].sum*1000).toLocaleString()+` VND</td>
                         <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
