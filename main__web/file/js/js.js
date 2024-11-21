@@ -411,7 +411,7 @@ function showProductInfor(id) {
       p.innerHTML =
         `
       <div class="Infor__Child"> 
-      <div class="close__infor" onclick="closeInfor()">X</div>
+      <div class="close__infor" onclick="closeInfor()">+</div>
       <div class="view__item--left">
       <img src="` +
         DanhSachSanPham[i].image1 +
