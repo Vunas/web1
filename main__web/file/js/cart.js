@@ -205,14 +205,15 @@ function showHoaDon() {
           <th>Mã hóa đơn</th>
           <th>ngày</th>
           <th>Tên người nhận</th>
-          <th>trạng thái</th>
+          <th>Tên tài khoản</th>
           <th>Địa chỉ</th>
           <th>Số điện thoại</th>
           <th>Ghi chú</th>
+          <th>Tổng giá</th>
+          <th>trạng thái</th>
           <th>xem chi tiết</th>
         </tr>`;
 
-  let j=0;
   for (let i = ArrayBill.length - 1; i >= 0; i--) {
     if (ArrayBill[i].username == userLogin.username) {
       let diaChi= ArrayBill[i].location[0];
@@ -224,17 +225,17 @@ function showHoaDon() {
       if(!note) note= "Không có ghi chú";
       kq +=
         `<tr>
-            <td>` +
-        j++ +
+            <td>M` +
+        ArrayBill[i].index +
         `</td>
             <td>` +
         ArrayBill[i].date +
         `</td>
             <td>` +
-        ArrayBill[i].username +
+        ArrayBill[i].name +
         `</td>
-            <td>` +
-        ArrayBill[i].status +
+        <td>` +
+        ArrayBill[i].username +
         `</td>
         <td>` +
         diaChi +
@@ -244,6 +245,12 @@ function showHoaDon() {
         `</td>
         <td>` +
         note +
+        `</td>
+         <td>` +
+        (ArrayBill[i].sum*1000).toLocaleString() +
+        ` VND</td>
+         <td>` +
+        ArrayBill[i].status +
         `</td>
             <td><button style="width: unset" onclick="detail(`+ i + `)">Chi tiết</button></td>
           </tr>`;
@@ -262,7 +269,7 @@ function detail(id) {
   var kq = ``;
   kq +=
     `
-          <div class="close__infor" onclick="closeDatail()">X</div>
+          <div class="close__infor" onclick="closeDatail()">+</div>
           <table>
           <thead id="myhead">
             <tr>
