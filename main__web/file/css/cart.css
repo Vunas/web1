@@ -150,3 +150,7 @@ table th{
     min-width: 600px;
 }
 
+#detailBill table{
+    padding-top: 40px;
+}
+
