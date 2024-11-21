@@ -1,138 +1,138 @@
 let MenuCart = ["Giỏ Hàng", "Hóa Đơn", "Lịch sử"];
 
 function loadDataCart() {
-  showMenu();
-  showMenuCart();
-  loadMenuCart();
-  checkLogin();
+    showMenu();
+    showMenuCart();
+    loadMenuCart();
+    checkLogin();
 }
 
 function showMenuCart() {
-  var ul = document.getElementById("MenuCart");
-  var li = "";
-  for (var i = 0; i < MenuCart.length; i++) {
-    li +=
-      '<li><a href="cart.html?' +
-      MenuCart[i].toLowerCase() +
-      '">' +
-      MenuCart[i] +
-      "</a></li>";
-  }
-  ul.innerHTML = li;
+    var ul = document.getElementById("MenuCart");
+    var li = "";
+    for (var i = 0; i < MenuCart.length; i++) {
+        li +=
+            '<li><a href="cart.html?' +
+            MenuCart[i].toLowerCase() +
+            '">' +
+            MenuCart[i] +
+            "</a></li>";
+    }
+    ul.innerHTML = li;
 }
 
 function loadMenuCart() {
-
-  var url = document.location.href;
-  var tmp = url.split("?");
-  var type;
-  if (tmp[1]) {
-    type = tmp[1].split("#")[0];
-  }
-  type = decodeURIComponent(type);
-  if (!tmp[1] || type == MenuCart[0].toLowerCase()) showCart();
-  else if (type == MenuCart[1].toLowerCase()) showHoaDon();
-  else showHistoryCart();
+    var url = document.location.href;
+    var tmp = url.split("?");
+    var type;
+    if (tmp[1]) {
+        type = tmp[1].split("#")[0];
+    }
+    type = decodeURIComponent(type);
+    if (!tmp[1] || type == MenuCart[0].toLowerCase()) showCart();
+    else if (type == MenuCart[1].toLowerCase()) showHoaDon();
+    else showHistoryCart();
 }
 
 function pay() {
-  if (localStorage.getItem("userLogin")) {
-    const case__payment = document.getElementById("case__payment");
-    case__payment.style.display = "block";
-    if (localStorage.getItem("gioHang"))
-      Transaction__payment();
-    showCart();
-  } else {
-    noti("ban phai dang nhap moi mua duoc hang", 1);
-  }
+    if (localStorage.getItem("userLogin")) {
+        const case__payment = document.getElementById("case__payment");
+        case__payment.style.display = "block";
+        if (localStorage.getItem("gioHang"))
+            Transaction__payment();
+        showCart();
+    } else {
+        noti("ban phai dang nhap moi mua duoc hang", 1);
+    }
 }
 
-//Tăng số lượng và tính lại cột Total
+// Tăng số lượng và tính lại cột Total
 function quantityUp(x) {
-  let vitriItem = x.parentNode.children[0].value;
-  let soluongNew = 0,
-    sumP = 0;
-  for (let i = 0; i < gioHang.length; i++) {
-    if (parseInt(vitriItem) == i) {
-      soluongNew = parseInt(gioHang[i][4]) + 1;
-      gioHang[i][4] = parseInt(gioHang[i][4]) + 1;
-      sumP += parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-      break;
+    let vitriItem = x.parentNode.children[0].value;
+    let soluongNew = 0,
+        sumP = 0;
+    for (let i = 0; i < gioHang.length; i++) {
+        if (parseInt(vitriItem) == i) {
+            soluongNew = parseInt(gioHang[i][4]) + 1;
+            gioHang[i][4] = parseInt(gioHang[i][4]) + 1;
+            sumP += parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+            break;
+        }
     }
-  }
-  localStorage.setItem("gioHang", JSON.stringify(gioHang));
-  x.parentNode.children[2].value = soluongNew;
-  x.parentNode.parentNode.children[4].innerText = sumP.toLocaleString();
-  totalPrice();
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    x.parentNode.children[2].value = soluongNew;
+    x.parentNode.parentNode.children[4].innerText = sumP.toLocaleString();
+    totalPrice();
 }
 
-//Giảm số lượng và tính lại cột Total
+// Giảm số lượng và tính lại cột Total
 function quantityDown(x) {
-  let vitriItem = x.parentNode.children[0].value;
-  let soluongNew = 0,
-    sumP = 0;
-  for (let i = 0; i < gioHang.length; i++) {
-    if (parseInt(vitriItem) == i) {
-      if (parseInt(gioHang[i][4]) > 1) {
-        soluongNew = parseInt(gioHang[i][4]) - 1;
-        gioHang[i][4] = gioHang[i][4] - 1;
-        sumP = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-      } else {
-        soluongNew = 1;
-        sumP = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-      }
-      break;
+    let vitriItem = x.parentNode.children[0].value;
+    let soluongNew = 0,
+        sumP = 0;
+    for (let i = 0; i < gioHang.length; i++) {
+        if (parseInt(vitriItem) == i) {
+            if (parseInt(gioHang[i][4]) > 1) {
+                soluongNew = parseInt(gioHang[i][4]) - 1;
+                gioHang[i][4] = gioHang[i][4] - 1;
+                sumP = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+            } else {
+                soluongNew = 1;
+                sumP = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+            }
+            break;
+        }
     }
-  }
-  localStorage.setItem("gioHang", JSON.stringify(gioHang));
-  x.parentNode.children[2].value = soluongNew;
-  x.parentNode.parentNode.children[4].innerText = sumP.toLocaleString();
-  totalPrice();
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    x.parentNode.children[2].value = soluongNew;
+    x.parentNode.parentNode.children[4].innerText = sumP.toLocaleString();
+    totalPrice();
 }
 
-//thay đổi số lượng bằng thao tác onchange và cập nhật lại cột total và dòng thành tiền
+// Thay đổi số lượng bằng thao tác onchange và cập nhật lại cột total và dòng thành tiền
 function totalItem(x) {
-  let vitriItem = x.parentNode.children[0].value;
-  for (let i = 0; i < gioHang.length; i++) {
-    if (parseInt(vitriItem) == i) {
-      if (x.value > 1) {
-        gioHang[i][4] = x.value;
-        sum = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-      } else {
-        x.value = 1;
-        gioHang[i][4] = x.value;
-        sum = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-      }
+    let vitriItem = x.parentNode.children[0].value;
+    for (let i = 0; i < gioHang.length; i++) {
+        if (parseInt(vitriItem) == i) {
+            if (x.value > 1) {
+                gioHang[i][4] = x.value;
+                sum = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+            } else {
+                x.value = 1;
+                gioHang[i][4] = x.value;
+                sum = parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+            }
+        }
     }
-  }
-  localStorage.setItem("gioHang", JSON.stringify(gioHang));
-  x.parentNode.parentNode.children[4].innerText = sum.toLocaleString();
-  totalPrice();
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    x.parentNode.parentNode.children[4].innerText = sum.toLocaleString();
+    totalPrice();
 }
 
-//Hàm chỉnh lại dòng thành tiền
+// Hàm chỉnh lại dòng thành tiền
 function totalPrice() {
-  let totalPrice = 0;
-  for (let i = 0; i < gioHang.length; i++) {
-    totalPrice += parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
-  }
-  document.querySelector(".totalPrice").innerText = totalPrice.toLocaleString();
+    let totalPrice = 0;
+    for (let i = 0; i < gioHang.length; i++) {
+        totalPrice += parseInt(gioHang[i][3]) * parseInt(gioHang[i][4]) * 1000;
+    }
+    document.querySelector(".totalPrice").innerText = totalPrice.toLocaleString();
 }
 
-//Xóa 1 sản phẩm trong giỏ hàng
+// Xóa 1 sản phẩm trong giỏ hàng
 function deleteItemCart(x) {
-  let vitriItem = x.parentNode.parentNode.children[3].children[0].value;
-  for (let i = 0; i < gioHang.length; i++) {
-    if (parseInt(vitriItem) == i) {
-      x.parentNode.remove();
-      gioHang.splice(i, 1);
-      break;
+    let vitriItem = x.parentNode.parentNode.children[3].children[0].value;
+    for (let i = 0; i < gioHang.length; i++) {
+        if (parseInt(vitriItem) == i) {
+            x.parentNode.remove();
+            gioHang.splice(i, 1);
+            break;
+        }
     }
-  }
-  localStorage.setItem("gioHang", JSON.stringify(gioHang));
-  totalPrice();
-  showCart();
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    totalPrice();
+    showCart();
 }
+
 
 //tạo ra giỏ hàng và show ra màn hình
 function showCart() {
@@ -202,12 +202,13 @@ function showHoaDon() {
   let kq = "";
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
   document.getElementById("myhead").innerHTML = `<tr>
-          <th>Stt</th>
+          <th>Mã hóa đơn</th>
           <th>ngày</th>
-          <th>người mua</th>
+          <th>Tên người nhận</th>
           <th>trạng thái</th>
           <th>Địa chỉ</th>
           <th>Số điện thoại</th>
+          <th>Ghi chú</th>
           <th>xem chi tiết</th>
         </tr>`;
 
@@ -219,6 +220,8 @@ function showHoaDon() {
           diaChi= ArrayBill[i].location[0].street + " " + ArrayBill[i].location[0].ward +" "+ ArrayBill[i].location[0].district +" " + ArrayBill[i].location[0].city;
       }
       else diaChi="";
+      let note= ArrayBill[i].note;
+      if(!note) note= "Không có ghi chú";
       kq +=
         `<tr>
             <td>` +
@@ -239,7 +242,10 @@ function showHoaDon() {
         <td>` +
         ArrayBill[i].phone +
         `</td>
-            <td><button onclick="detail(`+ i + `)">...</button></td>
+        <td>` +
+        note +
+        `</td>
+            <td><button style="width: unset" onclick="detail(`+ i + `)">Chi tiết</button></td>
           </tr>`;
     }
   }
@@ -306,14 +312,13 @@ function showHistoryCart() {
   let kq = "";
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
   document.getElementById("myhead").innerHTML = `<tr>
-          <th>ngay</th>
+          <th>Ngày</th>
           <th>Sản phẩm</th>
           <th>Tên</th>
-          <th>gia</th>
-          <th>so luong</th>
-          <th>Tong gia</th>
-          <th>trang thai</th>
-         
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Tổng Giá</th>
+          <th>Trạng thái</th>
         </tr>`;
 
   for (let i = ArrayBill.length - 1; i >= 0; i--) {
