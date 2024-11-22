@@ -619,6 +619,13 @@ body {
     background-color: #D2B48C;
 }
 
+.button__lock--customer{
+    all: unset;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin:5px;
+}
+
 /*thong ke*/
 #modal__StatisticsBill {
     /* z-index: 1; */
