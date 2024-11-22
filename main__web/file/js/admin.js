@@ -616,6 +616,7 @@ function showCustomer(customer, index) {
       <input type="hidden" value="`+ index + `">
       <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
       <button onclick="deleteCustomer(`+ index + `)" type="button" class="button__delete--customer" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+      <button onclick="${customer.isLocked ? 'unlockUser' : 'lockUser'}(${index})" type="button" class="button__lock--customer">${customer.isLocked ? '<i class="fa-solid fa-user-large-slash" ></i>' : '<i class="fa-solid fa-user-large" aria-hidden="true"></i>'}</button>
       </td>
     </tr>`
     return html;
@@ -632,6 +633,20 @@ function deleteCustomer(index) {
     showArrayCustomer(DanhSachKhachHang);
 }
 
+//Khóa người dùng
+function lockUser(index) {
+    let users = JSON.parse(localStorage.getItem("users"));
+    users[index].isLocked = true; // Khóa người dùng
+    localStorage.setItem("users", JSON.stringify(users));
+    showArrayCustomer(users); // Cập nhật danh sách hiển thị
+}
+
+function unlockUser(index) {
+    let users = JSON.parse(localStorage.getItem("users"));
+    users[index].isLocked = false; // Mở khóa người dùng
+    localStorage.setItem("users", JSON.stringify(users));
+    showArrayCustomer(users); // Cập nhật danh sách hiển thị
+}
 
 //Mở khung thêm người dùng
 function showInputAddCustomer() {
@@ -671,7 +686,8 @@ function addCustomer() {
         password: pswCustomer.value,
         email: emailCustomer.value,
         phone: phoneCustomer.value,
-        address: addressCustomer.value
+        address: addressCustomer.value,
+        isLocked: false,
     }
     DanhSachKhachHang.unshift(usertemp);
     localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
@@ -686,6 +702,16 @@ function closeInputAddCustomer() {
     document.querySelector(".container__add--customer").style.display = "none";
 }
 
+//Ktra trùng lặp
+function checkDuplicateUsername(newUsername, currentUsername) {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    for (let user of users) {
+        if (user.username === newUsername && user.username !== currentUsername) {
+            return true; // Tên người dùng trùng lặp
+        }
+    }
+    return false; // Không trùng lặp
+}
 
 //Mở khung chỉnh sửa người dùng
 function showInputEditCustomer(index) {
