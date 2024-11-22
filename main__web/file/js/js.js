@@ -270,6 +270,7 @@ function createAdmin() {
     password: "admin",
     phone: "09090000x",
     email: "mecha19@email.com",
+    isLocked: false,
     location : {
       street: "273 An Dương Vương",
       ward: "Phường 3",
@@ -350,6 +351,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
     password: password,
     phone: phone,
     email: email,
+    isLocked: false,
     location: {}
   };
 
@@ -368,13 +370,16 @@ document.getElementById("login-form").onsubmit = function (e) {
   let users = JSON.parse(localStorage.getItem("users"));
 
   for (let i = 0; i < users.length; i++) {
-    if (username == users[i].username && password == users[i].password) {
+    if (username == users[i].username && password == users[i].password ) {
+      if(users[i].isLocked == true){
+        noti("Tài khoản của bạn đã bí khóa",2);
+        return false;
+      }
       var userLogin = users[i];
       localStorage.setItem("userLogin", JSON.stringify(userLogin));
       checkLogin();
       closeLogin();
       noti("Đăng Nhập thành công", 0);
-      location.reload();
       return false;
     }
   }
