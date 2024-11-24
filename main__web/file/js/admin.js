@@ -1,4 +1,4 @@
-let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
+let DanhSachSanPham = JSON.parse(localStorage.getItem("product")) || [];
 function showArrayProduct() {
     let HTML = `<div class="card__items">
                 <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`;
