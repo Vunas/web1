@@ -311,6 +311,7 @@ createAdmin();
 // đăng ký
 document.getElementById("signup-form").onsubmit = function (e) {
   e.preventDefault();
+  
   var username = document.getElementById("sigus").value;
   var password = document.getElementById("sigpas").value;
   var repassword = document.getElementById("resigpas").value;
@@ -322,41 +323,48 @@ document.getElementById("signup-form").onsubmit = function (e) {
   let userArray = userstring ? JSON.parse(userstring) : [];
 
   if (!fullname) {
-    document.getElementById("pfullname").innerHTML =
-      "Vui lòng nhập tên của bạn!"
+    document.getElementById("pfullname").innerHTML = "Vui lòng nhập tên của bạn!";
     signupFlag = false;
-  } else document.getElementById("pfullname").innerHTML = "";
-
-  for (let i = 0; i < userArray.length; i++) {
-    if (username == userArray[i].username) {
-      document.getElementById("psigus").innerHTML = "Tài khoản đã tồn tại";
-      signupFlag = false;
-      break;
-    } else document.getElementById("psigus").innerHTML = "";
+  } else {
+    document.getElementById("pfullname").innerHTML = "";
   }
 
   if (!username) {
-    document.getElementById("psigus").innerHTML =
-      "Vui lòng nhập tài khoản!";
+    document.getElementById("psigus").innerHTML = "Vui lòng nhập tài khoản!";
     signupFlag = false;
-  } else document.getElementById("psigus").innerHTML = "";
+  } else {
+    document.getElementById("psigus").innerHTML = "";
+    for (let i = 0; i < userArray.length; i++) {
+      if (username == userArray[i].username) {
+        document.getElementById("psigus").innerHTML = "Tài khoản đã tồn tại";
+        signupFlag = false;
+        break;
+      } else {
+        document.getElementById("psigus").innerHTML = "";
+      }
+    }
+  }
 
   if (!password) {
-    document.getElementById("psigpas").innerHTML =
-      "Vui lòng nhập mất khẩu!";
+    document.getElementById("psigpas").innerHTML = "Vui lòng nhập mật khẩu!";
     signupFlag = false;
-  } else document.getElementById("psigpas").innerHTML = "";
+  } else {
+    document.getElementById("psigpas").innerHTML = "";
+  }
 
   if (repassword != password) {
-    document.getElementById("presigpas").innerHTML =
-      "Mật khẩu khoong chính xác";
+    document.getElementById("presigpas").innerHTML = "Mật khẩu không chính xác";
     signupFlag = false;
-  } else document.getElementById("presigpas").innerHTML = "";
+  } else {
+    document.getElementById("presigpas").innerHTML = "";
+  }
 
   if (phone.length != 10) {
-    document.getElementById("pphone").innerHTML = "Sdt không hợp lệ";
+    document.getElementById("pphone").innerHTML = "Số điện thoại không hợp lệ";
     signupFlag = false;
-  } else document.getElementById("pphone").innerHTML = "";
+  } else {
+    document.getElementById("pphone").innerHTML = "";
+  }
 
   if (!signupFlag) {
     return false;
@@ -374,9 +382,10 @@ document.getElementById("signup-form").onsubmit = function (e) {
 
   userArray.push(newUser);
   localStorage.setItem("users", JSON.stringify(userArray));
-  noti("Dăng ký thành công", 0);
+  noti("Đăng ký thành công", 0);
   closeSignup();
 };
+
 
 // đăng nhập
 document.getElementById("login-form").onsubmit = function (e) {
