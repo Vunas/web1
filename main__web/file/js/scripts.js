@@ -759,7 +759,7 @@ function Transaction__payment() {
             if (currentIndex === 1) {
                 // Xóa các thuộc tính không cần thiết trong phần tử
                 for (let key in ArrayBill[indexToDelete]) {
-                    if (key !== "index" && key !== "username" && key !== "address" && key !== "phone" && key !== "status" && key !== "cart" && key !== "date") {
+                    if (key !== "index" && key !== "username" && key !== "address" && key !== "phone" && key !== "status" && key !== "cart" && key !== "date" && key != "sum") {
                         delete ArrayBill[indexToDelete][key];
                     }
                 }
