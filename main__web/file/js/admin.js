@@ -99,7 +99,7 @@ function chooseFileimg1(fileInput) {
     if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#imgPreview1__addP').attr('src', e.target.result);
+            document.getElementById('imgPreview1__addP').src = e.target.result;
             recentImg1 = reader.result;
         }
         reader.readAsDataURL(fileInput.files[0]);
@@ -111,7 +111,7 @@ function chooseFileimg2(fileInput) {
     if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#imgPreview2__addP').attr('src', e.target.result);
+            document.getElementById('imgPreview2__addP').src = e.target.result;
             recentImg2 = reader.result;
         }
         reader.readAsDataURL(fileInput.files[0]);
@@ -218,7 +218,7 @@ function chooseFile1(fileInput) {
     if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#imgPreview1__changeP').attr('src', e.target.result);
+            document.getElementById('imgPreview1__changeP').src = e.target.result;
         }
         reader.readAsDataURL(fileInput.files[0]);
     }
@@ -229,7 +229,7 @@ function chooseFile2(fileInput) {
     if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#imgPreview2__changeP').attr('src', e.target.result);
+            document.getElementById('imgPreview2__changeP').src = e.target.result;
         }
         reader.readAsDataURL(fileInput.files[0]);
     }
