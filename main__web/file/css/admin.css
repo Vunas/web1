@@ -137,6 +137,25 @@ body {
     font-size: 14px;
 }
 
+.button__viewBill{
+    all: unset;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid;
+}
+.button__viewBill:hover{
+    background-color: var(--primary--color5);
+}
+
+.nav1 li,.nav2 li{
+    transition: all 0.5s;
+}
+.nav1 li:hover,.nav2 li:hover{
+    background-color: var(--primary--color5);
+    border-radius: 10px;
+    padding:3px;
+}
+
 @media (min-width:755px) and (max-width:1024px) {
     .container__left .contain .nav1 li {
         font-size: 15px;
@@ -494,10 +513,11 @@ body {
     width:85%;
     display: none;
     height: 100vh;
-    overflow-y: scroll;
+    overflow: auto;
 }
 #tableBill{
     width:100%;
+    min-width: 800px;
     border: 1.2px solid black;
 }
 #theadBill{
@@ -611,6 +631,7 @@ body {
     display: none;
 }
 #formCustomer table{
+    min-width: 700px;
     width: 100%;
     border: 1.2px solid black;
 }
@@ -720,6 +741,7 @@ body {
 
 #formRevenue table{
     width: 100%;
+    min-width: 700px;
     text-align: center;
     border: 1px solid;
 }
