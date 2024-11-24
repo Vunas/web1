@@ -31,11 +31,22 @@ function showProduct(sanPham) {
 }
 
 function soluongProduct() {
-    document.querySelector("#soluongProduct").innerText = DanhSachSanPham.length;
+    if(!localStorage.getItem("product")||localStorage.getItem("product")=="[]"){
+        document.querySelector("#soluongProduct").innerText = `0`;
+    }
+    else{
+        let DanhSachSanPham=JSON.parse(localStorage.getItem("product"));
+        document.querySelector("#soluongProduct").innerText=DanhSachSanPham.length;
+    }
 }
 function soluongUser() {
-    let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
-    document.querySelector("#soluongUser").innerText = DanhSachKhachHang.length;
+    if(!localStorage.getItem("users")||localStorage.getItem("users")=="[]"){
+        document.querySelector("#soluongUser").innerText = `0`;
+    }
+    else{
+        let DanhSachKhachHang=JSON.parse(localStorage.getItem("users"));
+        document.querySelector("#soluongUser").innerText = DanhSachKhachHang.length;
+    }
 }
 function soluongDoanhthu() {
     if (localStorage.getItem("ArrayBill")) {
@@ -495,32 +506,26 @@ createFilterBill();
 //lọc đơn hàng theo trạng thái bill và theo thời gian
 function filterStatusTimeDistrict() {
     let filterStt = document.querySelector("#filter__status--bill").value;
-    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let filterDis = document.querySelector("#filter__district--bill").value;
-    let arrayBillOfSTTANDDIS = [];
-
-    for (let i = 0; i < DanhSachBill.length; i++) {
-        let bill = DanhSachBill[i];
-        let matchStatus = (filterStt === "all" || bill.status === filterStt);
-        let matchDistrict = (filterDis === "all" || bill.location.some(district => district.district === filterDis));
-        if (matchStatus && matchDistrict)
-            arrayBillOfSTTANDDIS.push(bill);
-    }
-
     let filterD = document.querySelector("#filter__time--bill").value;
-    if(filterD != "all"){
-        let now = new Date();
-        let past = new Date();
-        past.setDate(past.getDate() - parseInt(filterD));
-        for (let i = 0; i < arrayBillOfSTTANDDIS.length; i++) {
-            let timeB = new Date(arrayBillOfSTTANDDIS[i].date);
-            if (timeB <= past && timeB >= now){
-                arrayBillOfSTTANDDIS.splice(i, 1);
-                i--;
-            }
-        }
+
+    // Lọc theo trạng thái, quận và thời gian
+    let now = new Date();
+    let past = new Date();
+    if (filterD !== "all") {
+        past.setDate(now.getDate() - parseInt(filterD));
     }
-    if (arrayBillOfSTTANDDIS.length == 0) {
+    let arrayBillOfSTTANDDIS = DanhSachBill.filter(bill => {
+        let matchStatus = (filterStt === "all" || bill.status === filterStt);
+        let matchDistrict = (filterDis === "all" || 
+            (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
+        let matchTime = (filterD === "all" || (new Date(bill.date) >= past && new Date(bill.date) <= now));
+        return matchStatus && matchDistrict && matchTime;
+    });
+
+    // Hiển thị kết quả
+    if (arrayBillOfSTTANDDIS.length === 0) {
         document.querySelector("#tableBill").innerHTML = `
         <thead id="theadBill">
                 <th>STT</th>
@@ -531,8 +536,7 @@ function filterStatusTimeDistrict() {
                 <th>Chi tiết giỏ hàng</th>
         </thead>
         <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
-    }
-    else {
+    } else {
         showArrayBill(arrayBillOfSTTANDDIS);
     }
 }
