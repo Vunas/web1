@@ -1,3 +1,4 @@
+//-------------------------onload trang cart.html-------------------------------------//
 let MenuCart = ["Giỏ Hàng", "Hóa Đơn", "Lịch sử"];
 
 function loadDataCart() {
@@ -33,7 +34,8 @@ function loadMenuCart() {
     else if (type == MenuCart[1].toLowerCase()) showHoaDon();
     else showHistoryCart();
 }
-
+//-------------------------------------------trang giỏ hàng------------------------------------//
+// hàm mua ngay
 function pay() {
     if (localStorage.getItem("userLogin")) {
         const case__payment = document.getElementById("case__payment");
@@ -195,6 +197,8 @@ function showCart() {
   localStorage.setItem("gioHang", JSON.stringify(gioHang));
 }
 
+//---------------------------------------trang hóa đơn------------------------------------------//
+// hàm show hóa đơn
 function showHoaDon() {
   let userLogin = JSON.parse(localStorage.getItem("userLogin")) || '';
   document.getElementById("nav__table").innerHTML = "Xem Lại Hóa Đơn";
@@ -261,7 +265,7 @@ function showHoaDon() {
   }
   document.getElementById("myCart").innerHTML = kq;
 }
-
+// xem chi tiết từng hóa đơn
 function detail(id) {
   document.getElementById("modal__detail").style.display = "block";
   // document.getElementById("detailBill").style.display = "block";
@@ -308,10 +312,13 @@ function detail(id) {
 
   document.getElementById("detailBill").innerHTML = kq;
 }
+// đóng xem chi tiết
 function closeDatail() {
   document.getElementById("modal__detail").style.display = "none";
 }
 
+//---------------------------------------------------trang lịch sử mua hàng--------------------------------------------//
+// xem lại lịch sử mua hàng
 function showHistoryCart() {
   let userLogin = JSON.parse(localStorage.getItem("userLogin")) || '';
   document.getElementById("nav__table").innerHTML = "Lịch Sử Mua Hàng";
