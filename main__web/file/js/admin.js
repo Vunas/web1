@@ -438,11 +438,11 @@ function saveStatus(x) {
 
 
 //tạo ra filter lọc đơn hàng
-let statuss = ["all", "chưa xử lý", "đã xác nhận", "giao hàng thành công", "đã hủy"];
-let day = ["all", "một ngày", "một tuần", "nửa tháng", "một tháng"];
-let valueDay = ["all", "1", "7", "15", "30"];
+let statuss = ["tất cả", "chưa xử lý", "đã xác nhận", "giao hàng thành công", "đã hủy"];
+let day = ["tất cả", "một ngày", "một tuần", "nửa tháng", "một tháng"];
+let valueDay = ["tất cả", "1", "7", "15", "30"];
 let districts = [
-        "all",
+        "tất cả",
         "Quận 1",
         "Quận 2",
         "Quận 3",
@@ -513,14 +513,14 @@ function filterStatusTimeDistrict() {
     // Lọc theo trạng thái, quận và thời gian
     let now = new Date();
     let past = new Date();
-    if (filterD !== "all") {
+    if (filterD !== "tất cả") {
         past.setDate(now.getDate() - parseInt(filterD));
     }
     let arrayBillOfSTTANDDIS = DanhSachBill.filter(bill => {
-        let matchStatus = (filterStt === "all" || bill.status === filterStt);
-        let matchDistrict = (filterDis === "all" || 
+        let matchStatus = (filterStt === "tất cả" || bill.status === filterStt);
+        let matchDistrict = (filterDis === "tất cả" || 
             (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
-        let matchTime = (filterD === "all" || (new Date(bill.date) >= past && new Date(bill.date) <= now));
+        let matchTime = (filterD === "tất cả" || (new Date(bill.date) >= past && new Date(bill.date) <= now));
         return matchStatus && matchDistrict && matchTime;
     });
 
@@ -1058,7 +1058,7 @@ function filStatisticsTime(){
     let filter = document.getElementById("sta__time-option").value;
     let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let array = [];
-    if(filter == "all") array= ArrayBill;
+    if(filter == "tất cả") array= ArrayBill;
     else{
         let now = new Date();
         let past = new Date();
