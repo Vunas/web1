@@ -438,7 +438,7 @@ function saveStatus(x) {
 
 
 //tạo ra filter lọc đơn hàng
-let statuss = ["chưa xử lý", "đã xác nhận", "all", "giao hàng thành công", "đã hủy"];
+let statuss = ["all", "chưa xử lý", "đã xác nhận", "giao hàng thành công", "đã hủy"];
 let day = ["all", "một ngày", "một tuần", "nửa tháng", "một tháng"];
 let valueDay = ["all", "1", "7", "15", "30"];
 let districts = [
@@ -979,7 +979,7 @@ function showcustomer_statistics(arr) {
             let users= JSON.parse(localStorage.getItem("users"));
             let user;
             for(let j=0; j< users.length; j++){
-                if(users[j].username == arr[1][0]){
+                if(users[j].username == arr[i][0]){
                     user= users[j];
                     break;
                 }
