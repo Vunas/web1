@@ -758,6 +758,8 @@ function closeInputEditCustomer() {
     document.querySelector(".container__edit--customer").style.display = "none";
 }
 
+// -----------------------------Thống kê khách hàng và sản phẩm ---------------------------------------------------------
+// mở trang thống kê
 function showPageRevenue() {
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
@@ -948,6 +950,7 @@ function showDetailStatistic(name){
     document.getElementById("modal__StatisticsBill").innerHTML= html;
 }
 
+// đóng xem chi tiết đơn hàng
 function closeDetailStatistic(){
     document.getElementById("modal__StatisticsBill").style.display="none";
 }
@@ -1071,6 +1074,7 @@ function filStatisticsTime(){
     return array;
 }
 
+// hàm thông báo
 function noti(s, n) {
     let check = document.getElementById("noti");
     if (check) check.outerHTML = "";
