@@ -27,7 +27,7 @@ body {
 .container__left {
     width: 15%;
     overflow: hidden;
-    height: 100vh;
+    height: 120vh;
     border-right: 1px solid gray;
     transition: 0.3s;
 }
@@ -87,12 +87,12 @@ body {
     cursor: pointer;
     text-align: center;
     margin: 0 auto;
-    border: 0.5px solid gray;
+    border-top: 0.5px solid gray;
     border-radius: 10px;
     transition: 0.5s all;
 }
 
-.text__revenue img{
+.text__revenue img,.text__product img,.text__user img{
     mix-blend-mode: multiply;
 }
 .text__user:hover ,.text__product:hover,.text__revenue:hover{
@@ -134,8 +134,7 @@ body {
 
 .text__infor{
     padding: 10px;
-    font-size: 16px;
-    
+    font-size: 14px;
 }
 
 @media (min-width:755px) and (max-width:1024px) {
@@ -149,13 +148,30 @@ body {
         font-size: 20px;
         padding-top: 12px;
     }
-
+    .text__infor {
+        font-size: 13.5px;
+    }
+    .text__user--bottom h3,.text__product--bottom h3,.text__revenue--bottom h3{
+        font-size: 16px;
+    }
+    .text__user--top img,.text__product--top img,.text__revenue--top img {
+        height: 135px;
+    }
     .container__left .contain .nav1 li {
         font-size: 15px;
     }
-
     .logo img {
         height: 200px;
+    }
+    .container__left{
+        height:120vh;
+    }
+    .nav1 li,.nav2 li,.nav2 li a{
+        font-size: 15px;
+        margin: 20px 0px;
+    }
+    .button__viewBill{
+        min-height: 100%;
     }
 }
 
@@ -164,22 +180,24 @@ body {
         font-size: 15px;
         padding-top: 15px;
     }
-    .text__user--bottom,
-    .text__product--bottom,.text__revenue--bottom {
-        font-size: 13px;
+    .text__infor {
+        font-size: 12.5px;
+    }
+    .text__user--bottom h3,.text__product--bottom h3,.text__revenue--bottom h3{
+        font-size: 15px;
     }
     .text__user,.text__product,.text__revenue{
         width: 40%;
     }
     .text__user--top img,.text__product--top img,.text__revenue--top img {
-        height: 150px;
+        height: 140px;
     }
     .text__user--top #soluongUser,.text__product--top #soluongProduct,.text__revenue--top #soluongDoanhthu{
         font-size: 15px;
     } 
 
-    .nav1 li,.nav2 li,.nav2 li a{
-        font-size: 13px;
+    .nav1 li,.nav2 li a{
+        font-size: 15px;
         margin: 20px 0px;
     }
 
@@ -205,7 +223,6 @@ body {
         overflow-x: scroll;
     }
 }
-
 
 .container__right--card {
     width: 85%;
@@ -481,6 +498,7 @@ body {
 }
 #tableBill{
     width:100%;
+    border: 1.2px solid black;
 }
 #theadBill{
     font-size: 17px;
@@ -503,6 +521,9 @@ body {
     justify-items: center;
     overflow-y: scroll;
 } 
+#formBill::-webkit-scrollbar{
+    display: none;
+}
 .modal__viewDonHang::-webkit-scrollbar{
     display: none;
 }
@@ -539,7 +560,7 @@ body {
 }
 #filterBill{
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 
@@ -591,6 +612,7 @@ body {
 }
 #formCustomer table{
     width: 100%;
+    border: 1.2px solid black;
 }
 #formCustomer table thead{
     background-color: #D2B48C;
