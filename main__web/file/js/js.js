@@ -1,3 +1,4 @@
+//---------------------------onload trang giỏ hàng----------------------------//
 function loadData() {
   showMenu();
   checkLogin();
@@ -40,6 +41,8 @@ function showListMobile() {
   ul.innerHTML = li;
 }
 
+//----------------------------------------tìm kiếm-----------------------------------------//
+
 /* div search*/
 
 function open_search() {
@@ -68,6 +71,7 @@ function close__advanced_search() {
   document.getElementById("chevron-down").style.display = "block";
 }
 
+// tạo lọc trên tìm kiếm
 function createFil() {
   var kq = `<select name="" id="type__option-search" onchange="filtersearch()">`;
   kq += '<option value=""></option>';
@@ -83,16 +87,18 @@ function createFil() {
   document.getElementById("advanced_search").innerHTML = kq;
 }
 createFil();
-
+// lọc tìm kiếm
 function filtersearch() {
   let s = document.getElementById("search__input").value.toLowerCase();
   let array = [];
   let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
+  //lọc theo tên
   for (let i = 0; i < DanhSachSanPham.length; i++) {
     if (DanhSachSanPham[i].introduce.toLowerCase().includes(s)) {
       array.push(DanhSachSanPham[i]);
     }
   }
+  //lọc theo loại
   let fil = document.getElementById("type__option-search").value.toLowerCase();
   if (fil == "all") {
   } else {
@@ -104,6 +110,7 @@ function filtersearch() {
     }
   }
   ``;
+  // lọc theo giá
   let min = document.getElementById("min__search").value;
   min = min === "" ? 0 : parseFloat(min);
 
@@ -123,6 +130,7 @@ function filtersearch() {
   loadItem2();
 }
 
+// 2 hàm show sản phẩm trong tìm kiếm
 function convertSearch(array) {
   let item = document.querySelector(".list__search");
   let kq = '<div class="card__items" id="card__items--two">';
@@ -160,9 +168,11 @@ function ConvertHTMLSearch(sanpham) {
   return html;
 }
 
+// phân trang trang cho tìm kiếm
 let thisPage2 = 1;
 let limit2 = 8;
 let listItem2 = document.querySelectorAll("#card__item--two");
+// show những sản phaảm tại ví trí trang 
 function loadItem2() {
   let starT2 = (thisPage2 - 1) * limit2;
   let enD2 = limit2 * thisPage2 - 1;
@@ -172,6 +182,7 @@ function loadItem2() {
   });
   listPage2();
 }
+// tô màu cho trang đang đứng và đếm tổng số trang
 function listPage2() {
   let totalPage2 = Math.ceil(listItem2.length / limit2);
   document.querySelector("#number__pages--two").innerHTML = " ";
@@ -187,11 +198,15 @@ function listPage2() {
     addINUL2.appendChild(newPage2);
   }
 }
+// thay đổi trang tại ví trị i
 function changePage2(i) {
   thisPage2 = i;
   loadItem2();
 }
 
+//-----------------------------------đăng nhập, đăng xuất--------------------------------------------------------//
+
+// đóng mở login, signup
 function openlogin() {
   document.querySelector(".overlay").classList.add("show");
 }
@@ -224,6 +239,7 @@ function ShowHidePassword() {
 }
 ShowHidePassword();
 
+// kiểm tra đăng nhập
 function checkLogin() {
   let userLogin = JSON.parse(localStorage.getItem("userLogin"));
   if (userLogin) {
@@ -251,7 +267,7 @@ function checkLogin() {
     }
   }
 }
-
+// đăng xuất
 function logout() {
   localStorage.removeItem("userLogin");
   localStorage.removeItem("gioHang");
@@ -262,7 +278,7 @@ function logout() {
     </button>`;
   location.reload();
 }
-
+// tạo admin 
 function createAdmin() {
   var admin = {
     fullname: 'Hoàng Vũ',
@@ -292,6 +308,7 @@ function createAdmin() {
 }
 createAdmin();
 
+// đăng ký
 document.getElementById("signup-form").onsubmit = function (e) {
   e.preventDefault();
   var username = document.getElementById("sigus").value;
@@ -361,6 +378,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
   closeSignup();
 };
 
+// đăng nhập
 document.getElementById("login-form").onsubmit = function (e) {
   e.preventDefault();
 
@@ -386,6 +404,7 @@ document.getElementById("login-form").onsubmit = function (e) {
   noti("Đăng nhập thất bại", 1);
 };
 
+//-------------------------------thanh sidenav menu cho mobile-------------------------------//
 /*sideNavbar*/
 
 function open_sideNav() {
@@ -408,6 +427,7 @@ function close_productSide() {
   document.getElementById("sideNav__productSide").style.width = "0";
 }
 
+//---------------------------xem chi tiết sản phẩm và thêm giỏ hàng--------------------------------//
 function showProductInfor(id) {
   let p = document.getElementById("infor__Product");
   p.style.display = "block";
@@ -517,6 +537,7 @@ function checkGioHang(cardNAME, cardINTRODUCE) {
   return vitri;
 }
 
+// theme sản phẩm dô giỏ hàng
 let gioHang = [];
 if (localStorage.getItem("gioHang"))
   gioHang = JSON.parse(localStorage.getItem("gioHang"));
