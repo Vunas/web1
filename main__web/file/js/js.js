@@ -359,7 +359,7 @@ document.getElementById("signup-form").onsubmit = function (e) {
     document.getElementById("presigpas").innerHTML = "";
   }
 
-  if (phone.length != 10) {
+  if (phone.length != 10 || phone[0] != 0) {
     document.getElementById("pphone").innerHTML = "Số điện thoại không hợp lệ";
     signupFlag = false;
   } else {
