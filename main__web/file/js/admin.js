@@ -2,7 +2,7 @@ let DanhSachSanPham = JSON.parse(localStorage.getItem("product")) || [];
 function showArrayProduct() {
     let HTML = `<div class="card__items">
                 <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`;
-    let nodeContainerRightCard = document.querySelector(".container__right--card");
+    let nodeContainerRightCard = document.querySelector("#formProducts");
     for (let i = 0; i < DanhSachSanPham.length; i++) {
         let htmlSanPham = showProduct(DanhSachSanPham[i]);
         HTML = HTML + htmlSanPham;
@@ -70,25 +70,27 @@ function onloadAdmin() {
     soluongUser();
     soluongDoanhthu();
 }
-
+toMau();
 //show trang chủ
 function showpageMain() {
-    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formProducts").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector(".container__right--main").style.display = "block";
     document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formRevenue").style.display = "none";
     onloadAdmin();
+    toMau();
 }
 
 //show trang sản phẩm
 function showPageProduct() {
-    document.querySelector(".container__right--card").style.display = "block";
+    document.querySelector("#formProducts").style.display = "block";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formRevenue").style.display = "none";
     showArrayProduct();
+    toMau();
 }
 
 //-----------------------------------------------THÊM SẢN PHẨM----------------------------------------------
@@ -320,12 +322,13 @@ function saveChangeProduct(i) {
 //click vào đơn hàng mở ra trang đơn hàng
 function showPageBill() {
     document.querySelector(".container__right--main").style.display = "none";
-    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formProducts").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formBill").style.display = "block";
     document.querySelector("#formRevenue").style.display = "none";
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
     showArrayBill(DanhSachBill);
+    toMau();
 }
 
 //Đóng phần xem chi tiết đơn hàng
@@ -564,12 +567,13 @@ function logOutAdmin() {
 //Mở trang Khách hàng
 function showPageCustomer() {
     document.querySelector("#formCustomer").style.display = "block";
-    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formProducts").style.display = "none";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formRevenue").style.display = "none";
     let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
     showArrayCustomer(DanhSachKhachHang);
+    toMau();
 }
 
 // Hiển thị danh sách khách hàng
@@ -767,12 +771,12 @@ function closeInputEditCustomer() {
 function showPageRevenue() {
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
-    document.querySelector(".container__right--card").style.display = "none";
+    document.querySelector("#formProducts").style.display = "none";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formRevenue").style.display = "block";
     createFilterSta();
     loadStatistics();
-
+    toMau();
 }
 
 //load trang thống kê
@@ -1096,3 +1100,34 @@ function noti(s, n) {
   function closeNoti() {
     document.getElementById("noti").outerHTML = "";
   }
+
+  function toMau() {
+    let toMau = ["formProducts", "formCustomer", "formBill", "formRevenue"];
+    let page = ["PageProducts", "PageCustomer", "PageBill", "PageRevenue", "PageMain"];
+    let i = 0;
+
+    // Vòng lặp kiểm tra từ đầu đến cuối danh sách toMau
+    while (i < toMau.length) {
+        if (document.getElementById(toMau[i]).style.display == "block") {
+            document.getElementById(page[i]).style.backgroundColor = "#D2B48C"; 
+            break;
+        }
+        i++;
+    }
+
+    // Nếu không có phần tử nào hiển thị "block", đặt màu nền cho PageMain
+    if (i >= toMau.length) {
+        document.getElementById(page[4]).style.backgroundColor = "#D2B48C"; 
+    } else {
+        document.getElementById(page[4]).style.backgroundColor = "unset"; 
+    }
+    
+    // Vòng lặp kiểm tra từ cuối đến đầu danh sách toMau
+    i = 3;
+    while (i >= 0) {
+        if (document.getElementById(toMau[i]).style.display != "block") {
+            document.getElementById(page[i]).style.backgroundColor = "unset"; 
+        }
+        i--;
+    }
+}
