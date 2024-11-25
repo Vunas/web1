@@ -618,6 +618,7 @@ nav ul li .nav__item {
   text-align: center;
   background-size: 100% 100%;
   margin: 10px;
+  margin-top: 55px;
   box-shadow: 5px 5px 2px gray;
   animation: slider 30s step-end infinite ;
 }
