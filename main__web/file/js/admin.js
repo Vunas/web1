@@ -730,8 +730,16 @@ function showInputEditCustomer(index) {
             document.querySelector("#phoneEdit").value = DanhSachKhachHang[i].phone;
             document.querySelector("#save__edit").replaceWith(document.querySelector("#save__edit").cloneNode(true));
             document.querySelector("#save__edit").addEventListener("click", function () {
+                let newUsername = document.querySelector("#usernameEdit").value;
+                let isDuplicate = DanhSachKhachHang.some((customer, idx) => customer.username === newUsername && idx !== index);
+
+                if (isDuplicate) {
+                    customAlert("Tên người dùng đã tồn tại. Vui lòng chọn tên khác","warning");
+                    return false;
+                } else {
                 updateCustomer(index);
-            })
+            }
+        })
             return;
         }
     }
