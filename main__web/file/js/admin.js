@@ -592,7 +592,6 @@ function showArrayCustomer(arr) {
                     <th>Mật khẩu</th>
                     <th>Email</th>
                     <th>SĐT</th>
-                    <th>Địa chỉ</th>
                     <th>Chức năng</th>
                 </tr>
             </thead>
@@ -609,11 +608,6 @@ function showArrayCustomer(arr) {
 
 //tạo 1 khách hàng
 function showCustomer(customer, index) {
-    let diaChi= customer.location;
-    if(diaChi){
-        diaChi= customer.location.street + " " + customer.location.ward +" "+ customer.location.district +" " + customer.location.city;
-    }
-    else diaChi="";
     let html = '';
     html += `<tr>
         <td>KH`+ index + `</td>
@@ -621,7 +615,6 @@ function showCustomer(customer, index) {
         <td>`+ customer.password + `</td>
         <td>`+ customer.email + `</td>
         <td>`+ customer.phone + `</td>
-        <td>`+ diaChi + `</td>
         <td style="display:flex;justify-content: center;">
         <input type="hidden" value="`+ index + `">
         <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
@@ -670,7 +663,6 @@ function addCustomer() {
     let pswCustomer = document.querySelector("#passwordAdd");
     let emailCustomer = document.querySelector("#emailAdd");
     let phoneCustomer = document.querySelector("#phoneAdd");
-    let addressCustomer = document.querySelector("#addressAdd");
     if (Number(nameCustomer.value) || nameCustomer.value == "") {
         customAlert("Tên không hợp lệ!", "warning");
         return false;
@@ -683,12 +675,8 @@ function addCustomer() {
         customAlert("Email không hợp lệ!", "warning");
         return false;
     }
-    if (!Number(phoneCustomer.value) || (phoneCustomer.value).length < 10 || (phoneCustomer.value).length > 11) {
+    if (!Number(phoneCustomer.value) || (phoneCustomer.value).length != 10 || phoneCustomer.value[0] != 0) {
         customAlert("Số điện thoại không hợp lệ", "warning");
-        return false;
-    }
-    if (addressCustomer.value == "" || /^[0-9]+$/.test(addressCustomer.value) || /^[a-zA-Z]+$/.test(addressCustomer.value)) {
-        customAlert("Địa chỉ không hợp lệ", "warning");
         return false;
     }
     let usertemp = {
@@ -696,10 +684,9 @@ function addCustomer() {
         password: pswCustomer.value,
         email: emailCustomer.value,
         phone: phoneCustomer.value,
-        address: addressCustomer.value,
         isLocked: false,
     }
-    DanhSachKhachHang.unshift(usertemp);
+    DanhSachKhachHang.push(usertemp);
     localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
     showArrayCustomer(DanhSachKhachHang);
     customAlert("Thêm khách hàng thành công!", "success")
@@ -730,21 +717,14 @@ function showInputEditCustomer(index) {
     for (let i = 0; i < DanhSachKhachHang.length; i++) {
         if (index == i) {
             let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
-            let diaChi= DanhSachKhachHang[i].location;
-            if(diaChi){
-                diaChi= DanhSachKhachHang[i].location.street + " " + DanhSachKhachHang[i].location.ward +" "+ DanhSachKhachHang[i].location.district +" " + DanhSachKhachHang[i].location.city;
-            }
-            else diaChi="";
             
             document.querySelector("#usernameEdit").value = DanhSachKhachHang[i].username;
             document.querySelector("#passwordEdit").value = DanhSachKhachHang[i].password;
             document.querySelector("#emailEdit").value = DanhSachKhachHang[i].email;
             document.querySelector("#phoneEdit").value = DanhSachKhachHang[i].phone;
-            document.querySelector("#addressEdit").value = diaChi;
             document.querySelector("#save__edit").replaceWith(document.querySelector("#save__edit").cloneNode(true));
             document.querySelector("#save__edit").addEventListener("click", function () {
                 updateCustomer(index);
-                noti("lưu thành công",0);
             })
             return;
         }
@@ -757,9 +737,25 @@ function updateCustomer(index) {
     DanhSachKhachHang[index].password = document.querySelector("#passwordEdit").value;
     DanhSachKhachHang[index].email = document.querySelector("#emailEdit").value;
     DanhSachKhachHang[index].phone = document.querySelector("#phoneEdit").value;
-    DanhSachKhachHang[index].address = document.querySelector("#addressEdit").value;
+    if (Number(DanhSachKhachHang[index].username) || DanhSachKhachHang[index].username == "") {
+        customAlert("Tên không hợp lệ!", "warning");
+        return false;
+    }
+    if ((DanhSachKhachHang[index].password).length < 8) {
+        customAlert("Mật khẩu không đủ điều kiện!", "warning");
+        return false;
+    }
+    if (!DanhSachKhachHang[index].email.includes("@") || DanhSachKhachHang[index].email == "") {
+        customAlert("Email không hợp lệ!", "warning");
+        return false;
+    }
+    if (!Number(DanhSachKhachHang[index].phone) || (DanhSachKhachHang[index].phone).length != 10 || DanhSachKhachHang[index].phone[0] != 0) {
+        customAlert("Số điện thoại không hợp lệ", "warning");
+        return false;
+    }
     localStorage.setItem("users", JSON.stringify(DanhSachKhachHang));
     showArrayCustomer(DanhSachKhachHang);
+    noti("lưu thành công",0);
     closeInputEditCustomer();
 }
 
