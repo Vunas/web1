@@ -663,6 +663,12 @@ function addCustomer() {
     let pswCustomer = document.querySelector("#passwordAdd");
     let emailCustomer = document.querySelector("#emailAdd");
     let phoneCustomer = document.querySelector("#phoneAdd");
+    for (let i=0;i< DanhSachKhachHang.length; i++) {
+        if (nameCustomer.value === DanhSachKhachHang[i].username) {
+            customAlert("Tên đã được sử dụng!", "warning");
+            return false; // Tên người dùng trùng lặp
+        }
+    }
     if (Number(nameCustomer.value) || nameCustomer.value == "") {
         customAlert("Tên không hợp lệ!", "warning");
         return false;
