@@ -355,7 +355,7 @@ function showArrayBill(arr) {
                 <th>Chi tiết đơn hàng</th>
             </thead>
             <tbody id="tbodyBill">`;
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = arr.length-1; i >= 0; i--) {
             let HTMLbill = showBill(arr[i], i);
             html = html + HTMLbill;
         }
@@ -587,6 +587,7 @@ function showArrayCustomer(arr) {
         document.querySelector("#filterCustomer").innerHTML = `<button type="button" id="button__add--customer" onclick="showInputAddCustomer()">Thêm người dùng</button>`;
         html = ` <thead id="theadCustomer">
                 <tr>
+                    <th>Mã khách hàng</th>
                     <th>Tên</th>
                     <th>Mật khẩu</th>
                     <th>Email</th>
@@ -615,17 +616,18 @@ function showCustomer(customer, index) {
     else diaChi="";
     let html = '';
     html += `<tr>
-      <td>`+ customer.username + `</td>
-      <td>`+ customer.password + `</td>
-      <td>`+ customer.email + `</td>
-      <td>`+ customer.phone + `</td>
-      <td>`+ diaChi + `</td>
-      <td style="display:flex;justify-content: center;">
-      <input type="hidden" value="`+ index + `">
-      <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
-      <button onclick="deleteCustomer(`+ index + `)" type="button" class="button__delete--customer" ><i class="fa fa-trash" aria-hidden="true"></i></button>
-      <button onclick="${customer.isLocked ? 'unlockUser' : 'lockUser'}(${index})" type="button" class="button__lock--customer">${customer.isLocked ? '<i class="fa-solid fa-user-large-slash" ></i>' : '<i class="fa-solid fa-user-large" aria-hidden="true"></i>'}</button>
-      </td>
+        <td>KH`+ index + `</td>
+        <td>`+ customer.username + `</td>
+        <td>`+ customer.password + `</td>
+        <td>`+ customer.email + `</td>
+        <td>`+ customer.phone + `</td>
+        <td>`+ diaChi + `</td>
+        <td style="display:flex;justify-content: center;">
+        <input type="hidden" value="`+ index + `">
+        <button onclick="showInputEditCustomer(`+ index + `)" type="button" class="button__edit--customer" ><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
+        <button onclick="deleteCustomer(`+ index + `)" type="button" class="button__delete--customer" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button onclick="${customer.isLocked ? 'unlockUser' : 'lockUser'}(${index})" type="button" class="button__lock--customer">${customer.isLocked ? '<i class="fa-solid fa-user-large-slash" ></i>' : '<i class="fa-solid fa-user-large" aria-hidden="true"></i>'}</button>
+        </td>
     </tr>`
     return html;
 }
