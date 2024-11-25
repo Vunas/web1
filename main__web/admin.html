@@ -16,16 +16,16 @@
             </div>
             <div class="contain">
                 <ul class="nav1">
-                    <li onclick="showpageMain()"><i class="fa fa-house"></i>Tổng quan</li>
-                    <li onclick="showPageProduct()"><i class="fa fa-link" aria-hidden="true"></i>Sản phẩm</li>
-                    <li onclick="showPageCustomer()"><i class="fas fa-user"></i>Khách hàng</li>
-                    <li onclick="showPageBill()"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Đơn hàng</li>
-                    <li onclick="showPageRevenue()" ><i class="fa fa-bar-chart" aria-hidden="true"></i>Thống kê</li>
+                    <li id="PageMain" onclick="showpageMain()"><i class="fa fa-house"></i> Tổng quan</li>
+                    <li id="PageProducts" onclick="showPageProduct()"><i class="fa fa-link" aria-hidden="true"></i> Sản phẩm</li>
+                    <li id="PageCustomer" onclick="showPageCustomer()"><i class="fas fa-user"></i> Khách hàng</li>
+                    <li id="PageBill" onclick="showPageBill()"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Đơn hàng</li>
+                    <li id="PageRevenue" onclick="showPageRevenue()" ><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</li>
                 </ul>
                 <ul class="nav2">
-                    <li><a href="./main.html"><i class="fa fa-reply" aria-hidden="true"></i>Trang chủ</a></li>
+                    <li><a href="./main.html"><i class="fa fa-reply" aria-hidden="true"></i> Trang chủ</a></li>
                     <li><a onclick="logOutAdmin()" href="./main.html"><i class="fa fa-sign-in"
-                                aria-hidden="true"></i>Đăng xuất</a></li>
+                                aria-hidden="true"></i> Đăng xuất</a></li>
                 </ul>
             </div>
         </div>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="container__right--card">
+        <div id="formProducts">
 
         </div>
 
