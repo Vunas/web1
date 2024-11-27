@@ -10,6 +10,7 @@
     --primary--color4: rgb(250, 173, 31);
     --primary--color5: #D2B48C;
     --primary--color6: #ffba66;
+    --primary--color7: #31bb88;
 }
 
 body {
@@ -225,6 +226,8 @@ body {
     cursor: pointer;
     padding: 5px;
     border: 1px solid;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
 .button__viewBill:hover{
     background-color: var(--primary--color5);
@@ -341,10 +344,12 @@ body {
 #addP {
     all: unset;
     border: 0.1px solid;
-    font-size: 15px;
+    font-size: 18px;
     cursor: pointer;
     margin: 10px;
-    padding:5px 20px;
+    padding:10px;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
 
 #addP:hover{
@@ -384,9 +389,17 @@ body {
 .card__item--right button {
     all: unset;
     cursor: pointer;
-    padding: 10px;
+    padding: 6px;
+    margin: 0 10px;
     font-size: 20px;
+    border-radius: 10px;
+    background-color: burlywood;
 }
+
+.card__item--right button:nth-child(3){
+    background-color: #ff7b7b;
+}
+
 .card__item--right button:hover{
     background-color: #D2B48C;
 }
@@ -603,6 +616,7 @@ body {
     width:100%;
     min-width: 800px;
     border: 1.2px solid black;
+    box-shadow: 5px 2px 5px 1px;
 }
 #filterBill{
     width: 40%;
@@ -628,7 +642,7 @@ body {
     padding:10px 30px;
     margin:10px;
     border-radius: 10px;
-    background-color: #31bb88;
+    background-color: var(--primary--color7);
     cursor:pointer;
     transition: all 0.25s;
 }
@@ -662,6 +676,7 @@ body {
     width: 75%;
     margin: 50px auto;
     color: black;
+    border-radius: 15px;
     background-color: white;
 }
 #thead__viewDonHang{
@@ -673,6 +688,7 @@ body {
     height:85px;
 }
 #sumbill{
+
     height: 40px;
     text-align: center;
 }
@@ -680,7 +696,8 @@ body {
     text-align: center;
     height:40px;
     cursor: pointer;
-    background-color: #D2B48C;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
 #changeStt{
     width:100%;
@@ -754,6 +771,7 @@ body {
     min-width: 700px;
     width: 100%;
     border: 1.2px solid black;
+    box-shadow: 5px 2px 5px 1px;
 }
 #formCustomer table thead{
     background-color: #D2B48C;
@@ -809,7 +827,7 @@ body {
 
 #table__viewbills{
     width: 90%;
-    margin: 50px auto;
+    margin: 50px auto 50px 70px;
     color: black;
     background-color: white;
 }
@@ -829,6 +847,7 @@ body {
 
 #table__viewbills table{
     width: 100%;
+    box-shadow: 5px 2px 5px 1px;
 }
   
 #table__viewbills th{
@@ -844,6 +863,8 @@ body {
     padding: 3px;
     cursor: pointer;
     border: 0.1px solid ;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
 
 #table__viewbills table td button:hover{
@@ -906,6 +927,7 @@ body {
     text-align: center;
     border: 1px solid;
     border-radius: 10px;
+    box-shadow: 5px 2px 5px 1px;
 }
 #formRevenue table thead th {
     height: 40px;
@@ -933,6 +955,8 @@ body {
     cursor: pointer;
     padding: 5px;
     border: 0.1px solid;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
 
 #formRevenue table tbody td button:hover{
