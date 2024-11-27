@@ -324,7 +324,7 @@ function showPageBill() {
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formProducts").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
-    document.querySelector("#formBill").style.display = "block";
+    document.querySelector("#formBill").style.display = "flex";
     document.querySelector("#formRevenue").style.display = "none";
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
     showArrayBill(DanhSachBill);
@@ -442,68 +442,52 @@ function saveStatus(x) {
 
 //tạo ra filter lọc đơn hàng
 let statuss = ["tất cả", "chưa xử lý", "đã xác nhận", "giao hàng thành công", "đã hủy"];
-let day = ["tất cả", "một ngày", "một tuần", "nửa tháng", "một tháng"];
-let valueDay = ["tất cả", "1", "7", "15", "30"];
-let districts = [
-        "tất cả",
-        "Quận 1",
-        "Quận 2",
-        "Quận 3",
-        "Quận 4",
-        "Quận 5",
-        "Quận 6",
-        "Quận 7",
-        "Quận 8",
-        "Quận 9",
-        "Quận 10",
-        "Quận 11",
-        "Quận 12",
-        "Tân Bình",
-        "Tân Phú",
-        "Bình Thạnh",
-        "Gò Vấp",
-        "Phú Nhuận",
-        "Thủ Đức",
-        "Quận Ba Đình",
-        "Quận Hoàn Kiếm",
-        "Quận Đống Đa",
-        "Quận Hai Bà Trưng",
-        "Quận Thanh Xuân",
-        "Quận Tây Hồ",
-        "Quận Cầu Giấy",
-        "Quận Hoàng Mai",
-        "Quận Long Biên",
-        "Quận Nam Từ Liêm",
-        "Quận Bắc Từ Liêm",
-        "Huyện Gia Lâm",
-        "Huyện Đông Anh",
-        "Huyện Sóc Sơn",
-        "Huyện Thanh Trì",
-        "Huyện Thường Tín",
-        "Huyện Hoài Đức"
-    ];
 function createFilterBill() {
-    let html = `<div id="filter__status--B"><p id="title__ftstt" style="display:inline;padding:0px 20px;">Trạng thái</p>
-    <select style="height:40px;width:100px" id="filter__status--bill"  name="" onchange="filterStatusTimeDistrict()">`
+    let html=`<h2 style="text-align:center;">LỌC ĐƠN HÀNG</h2>`
+    html += `<div id="locBill"><span id="title__filterStatus" >Trạng thái</span>
+    <select style="height:40px;width:150px" id="filter__status--bill"  name="" >`
     for (let i = 0; i < statuss.length; i++) {
         html += `<option value="` + statuss[i] + `">` + statuss[i] + `</option>`
     }
-    html += `</select></div>`
-    html += `<div id="filter__time--B"><p id="title__fttime" style="display:inline;padding:0px 20px">Ngày</p>
-            <select style="height:40px;width:100px;" name="" id="filter__time--bill" onchange="filterStatusTimeDistrict()">`
-    for (let i = 0; i < day.length; i++) {
-        html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
+    html+=`</select></div>`
+    html+=`<div id=locBill>
+             <span>Thời gian</span>
+             <input type="date" id="dStart" placeholder="dd/mm/yy" style="width:100px;height:40px;" ">
+             <input type="date" id="dEnd" placeholder="dd/mm/yy" style="width:100px;height:40px;" ">
+          </div>`
+    html += `<div id="locBill"><span id="title__filterAddress">Tỉnh/ Thành</span>
+    <select onchange="createDistricts()" style="height:40px;width:150px;" name="" id="filter__city--bill">
+        <option value="tất cả"> tất cả </option>`
+    for (let i = 0; i < locations.length; i++) {
+        html += `<option value="` + locations[i].city + `">` + locations[i].city + `</option>`
     }
     html += `</select></div>`
-    html += `<div id="filter__district--B"><p id="title__ftdistrict" style="display:inline;padding:0px 20px">Quận</p>
-    <select style="height:40px;width:100px;" name="" id="filter__district--bill" onchange="filterStatusTimeDistrict()">`
-    for (let i = 0; i < districts.length; i++) {
-        html += `<option value="` + districts[i] + `">` + districts[i] + `</option>`
-    }
-    html += `</select></div>`
+    html += `<div id="locBill"><span id="title__filterAddress">Quận</span>
+    <select style="height:40px;width:150px;" name="" id="filter__district--bill">`
+    html += `</select></div>`;
+    html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
+    html+=`<button type="button" onclick="filterStatusTimeDistrict()" id="button__filterBill">TÌM</button>`;
     document.querySelector("#filterBill").innerHTML = html;
 }
 createFilterBill();
+
+function createDistricts(){
+    let city= document.getElementById("filter__city--bill").value || "";
+    let html = `<option value="tất cả">tất cả</option>`
+    for (let i = 0; i < locations.length; i++) {
+        if(locations[i].city == city){
+            for (let j = 0; j < locations[i].districts.length; j++) {
+                html += `<option value="` + locations[i].districts[j].district + `">` + locations[i].districts[j].district + `</option>`;
+            }
+            break;
+        }
+        
+    }
+    
+    document.getElementById("filter__district--bill").innerHTML = html;
+}
+
+
 
 
 //lọc đơn hàng theo trạng thái bill và theo thời gian
@@ -511,20 +495,20 @@ function filterStatusTimeDistrict() {
     let filterStt = document.querySelector("#filter__status--bill").value;
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let filterDis = document.querySelector("#filter__district--bill").value;
-    let filterD = document.querySelector("#filter__time--bill").value;
-
-    // Lọc theo trạng thái, quận và thời gian
-    let now = new Date();
-    let past = new Date();
-    if (filterD !== "tất cả") {
-        past.setDate(now.getDate() - parseInt(filterD));
-    }
+    let startD=(document.querySelector("#dStart").value);
+    let endD=(document.querySelector("#dEnd").value);
     let arrayBillOfSTTANDDIS = DanhSachBill.filter(bill => {
         let matchStatus = (filterStt === "tất cả" || bill.status === filterStt);
-        let matchDistrict = (filterDis === "tất cả" || 
-            (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
-        let matchTime = (filterD === "tất cả" || (new Date(bill.date) >= past && new Date(bill.date) <= now));
-        return matchStatus && matchDistrict && matchTime;
+        let matchDay=true;
+        if (startD && endD) {
+            matchDay = bill.date >= startD && bill.date <= endD;
+        } else if (startD) {
+            matchDay = bill.date >= startD;
+        } else if (endD) {
+            matchDay = bill.date <= endD;
+        }
+        let matchDistrict = (filterDis === "tất cả" || (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
+        return matchStatus && matchDay && matchDistrict ;
     });
 
     // Hiển thị kết quả
@@ -751,16 +735,28 @@ function updateCustomer(index) {
     DanhSachKhachHang[index].password = document.querySelector("#passwordEdit").value;
     DanhSachKhachHang[index].email = document.querySelector("#emailEdit").value;
     DanhSachKhachHang[index].phone = document.querySelector("#phoneEdit").value;
-    if (Number(DanhSachKhachHang[index].username) || DanhSachKhachHang[index].username == "") {
+    if (Number(DanhSachKhachHang[index].username) ) {
         customAlert("Tên không hợp lệ!", "warning");
         return false;
     }
-    if ((DanhSachKhachHang[index].password).length < 8) {
-        customAlert("Mật khẩu không đủ điều kiện!", "warning");
+    if(DanhSachKhachHang[index].username == ""){
+        customAlert("Bạn chưa nhập tên !", "warning");
         return false;
     }
-    if (!DanhSachKhachHang[index].email.includes("@") || DanhSachKhachHang[index].email == "") {
+    if ((DanhSachKhachHang[index].password).length < 5) {
+        customAlert("Mật khẩu yếu!", "warning");
+        return false;
+    }
+    if(DanhSachKhachHang[index].password==" "){
+        customAlert("Bạn chưa nhập mật khẩu","warning");
+        return false;
+    }
+    if (!DanhSachKhachHang[index].email.includes("@")) {
         customAlert("Email không hợp lệ!", "warning");
+        return false;
+    }
+    if(!DanhSachKhachHang[index].email==" "){
+        customAlert("Bạn chưa nhập email!", "warning");
         return false;
     }
     if (!Number(DanhSachKhachHang[index].phone) || (DanhSachKhachHang[index].phone).length != 10 || DanhSachKhachHang[index].phone[0] != 0) {
@@ -772,6 +768,7 @@ function updateCustomer(index) {
     noti("lưu thành công",0);
     closeInputEditCustomer();
 }
+
 
 //Đóng khung chỉnh sửa người dùng
 function closeInputEditCustomer() {
@@ -785,149 +782,158 @@ function showPageRevenue() {
     document.querySelector("#formCustomer").style.display = "none";
     document.querySelector("#formProducts").style.display = "none";
     document.querySelector(".container__right--main").style.display = "none";
-    document.querySelector("#formRevenue").style.display = "block";
-    createFilterSta();
+    document.querySelector("#formRevenue").style.display = "flex";
+    createFilterRevenue();
     loadStatistics();
     toMau();
+}
+
+//tạo lọc thống kê
+function createFilterRevenue() {
+    let html='';
+    html=`<h2>LỌC THỐNG KÊ</h2>`;
+    html += `<div id="locThongKe"><span id="sta__sta">Loại thống kê
+            <select style="height:40px" name="" id="sta__sta-option">
+            <option value="1">Mặt Hàng</option>
+            <option value="2">Khách Hàng</option>
+            </select></span></div>`
+    html += `<div id="locThongKe"><span id="sta__sell">Xếp hạng bán
+    <select style="height:40px" name="" id="sta__sell-option" >
+    <option value="1">Tất Cả</option>
+    <option value="2">Nhiều Nhất</option>
+    <option value="3">Ít nhất</option>  
+    </select></span></div>`;
+    html+=`<div id=locThongKe>
+             <span>Thời gian</span>
+             <input type="date" id="dStartT" style="width:100px;height:40px;" ">
+             <input type="date" id="dEndT" style="width:100px;height:40px;" ">
+          </div>`
+    html+=`<button onclick="loadStatistics()" type="button" id="button__filterRevenue">Tìm</button>`
+    html+=`<button onclick="resetLoadStatistics()" type="button" id="button__filterRevenue">Tải lại</button>`
+    document.getElementById("filterRevenue").innerHTML = html;
+}
+
+function resetLoadStatistics(){
+    createFilterRevenue();
+    loadStatistics();
+}
+
+// lọc thống kê theo thời gian
+function filStatisticsTime() {
+    let startD = document.getElementById("dStartT").value;
+    let endD = document.getElementById("dEndT").value ;
+    let ArrayBill=JSON.parse(localStorage.getItem("ArrayBill"));
+    let arrayTime = ArrayBill.filter(bill => {
+        let matchDay = true;
+        if (startD && endD)
+            matchDay = bill.date >= startD && bill.date <= endD;
+        else if (startD)
+            matchDay = bill.date >= startD;
+        else if (endD)
+            matchDay = bill.date <= endD;
+        return matchDay;
+    });
+    return arrayTime;
 }
 
 //load trang thống kê
 function loadStatistics(){
     let sta= document.getElementById("sta__sta-option").value;
-    if(sta == 1){
-        if(!document.getElementById("sta__sell")) createFilterSta();  
+    if(sta == 1){ 
         loadMatHang();
     }
-    else customer_statistics();
+    else{
+        loadKhachHang();
+    }
 }
 
-//  thống kê mặt hàng theo doanh thu
+// load thống kê theo sản phẩm (mặt hàng)
 function loadMatHang(){
     let array= filStatisticsTime();
-    let sortPro= [];
+    let arrayMatHang=[];
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array[i].cart.length; j++) {
             let k=0;
-            while(k < sortPro.length){
-
-                if(sortPro[k][2] == array[i].cart[j][2]){
-                    sortPro[k][4]+= array[i].cart[j][4];
+            while(k < arrayMatHang.length){
+                if(arrayMatHang[k][2] == array[i].cart[j][2]){
+                    arrayMatHang[k][4]+= array[i].cart[j][4];
                     break;
                 }
                 k++;
             }
-            if( k >= sortPro.length){
-                sortPro.push(array[i].cart[j]);
+            if( k >= arrayMatHang.length){
+                arrayMatHang.push(array[i].cart[j]);
             }
         }
     }
-    showMatHang_statistics(sortPro); 
+    let staMH = document.getElementById("sta__sell-option").value;
+    if (staMH == 2) {
+        arrayMatHang = arrayMatHang.sort((a, b) => b[4] - a[4]); // Sắp xếp giảm dần
+    } else if(staMH == 3){
+        arrayMatHang = arrayMatHang.sort((a, b) => a[4] - b[4]); // Sắp xếp tăng dần
+    }
+    showArrayMatHang(arrayMatHang);
+}            
+
+//show danh sách mặt hàng
+function showArrayMatHang(arr){
+    let DanhSachBill=JSON.parse(localStorage.getItem("ArrayBill"));
+    let html;
+    if(DanhSachBill.length==0||localStorage.getItem("ArrayBill")=="[]")
+        html=`<thead>
+              <th>Ảnh</th>
+              <th>Mặt Hàng</th>
+              <th>Giá</th>
+              <th>Số Lượng</th>
+              <th>Tổng giá</th>
+              </thead>
+              <tbody><tr><td colspan=5>Không có mặt hàng nào</td></tr></tbody>` 
+    else{
+        html=`<thead>
+              <th>Ảnh</th>
+              <th>Mặt Hàng</th>
+              <th>Giá</th>
+              <th>Số Lượng</th>
+              <th>Tổng giá</th>
+              <th> Chi tiết </th>
+              </thead><tbody>`
+        for(let i=0;i<arr.length;i++){
+            let HTML=showMatHang(arr[i]);
+            html=html+HTML;
+         }     
+    }
+    document.getElementById("tableRevenue").innerHTML=`</tbody>`+html;
 }
 
-// show thống ke mặt hàng
-function showMatHang_statistics(array){
-    let sell= document.getElementById("sta__sell-option").value;
-    if( sell == 1){
-        array.sort(function(a, b){
-            return b[4] - a[4];
-       });
-    }else{
-        array.sort(function(a, b){
-            return a[4] - b[4];
-       });
-    }
-    let html="";
-    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]"){
-        html = `<thead><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
-            <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
-    }
-    else {
-        html = `<thead><th>Ảnh</th>
-                <th>Mặt hàng</th>
-                <th>Giá</th>
-                <th>số lượng</th>
-                <th>Tổng giá</th>
-                <th>Xem chi tiet </th></thead><tbody>`
-
-        for (let i = 0; i < array.length; i++) {
-            html+=
-                `<tr>
-                    <td><img style="height:80px;width:80px"src="`+array[i][0]+`" alt=""></img></td>
-                    <td>`+array[i][2]+`</td>
-                    <td>`+(array[i][3]*1000).toLocaleString()+` VND</td>
-                    <td>`+array[i][4]+`</td>
-                    <td>`+(array[i][3]*array[i][4]*1000).toLocaleString()+` VND</td>
-                    <td><button onclick="showProductBills('` +array[i][2]+`')">`+"Chi tiết"+`</button></td>
-                </tr>` 
-        }
-        html+=`</tbody>`
-    }
-    document.getElementById("tableRevenue").innerHTML = html;
+//show mặt hàng
+function showMatHang(matHang){
+    let html=" ";
+    html=`<tr>
+    <td><img src="`+matHang[0]+`" alt=""></td>
+    <td>`+matHang[2]+`(`+matHang[1]+`)`+`</td>
+    <td>`+matHang[3]+`.000 VNĐ`+`</td>
+    <td>`+matHang[4]+`</td>
+    <td>`+(matHang[3]*matHang[4]*1000).toLocaleString()+`</td>
+    <td><button onclick="showBillMH('`+matHang[2]+`')"--> CHi tiết </button></td>
+        </tr>`
+    return html;
 }
 // show từng hóa đơn của từng măt hàng
-function showProductBills(name){
-    let array= filStatisticsTime();
-    let arrayDetail= [];
+function showBillMH(name){
+    let array = filStatisticsTime();
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array[i].cart.length; j++) {
-            if(array[i].cart[j][2] == name){
-                arrayDetail.push(array[i]);
+            if(array[i].cart[j][2] != name){
+                array.splice(i,1);
                 break;
             }
         }
-
     }
-    let html= `<div id="table__viewbills">
-                <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
-                <table>
-                    <thead>
-                        <th>Mã đơn hàng</th>
-                        <th>Tên tài khoản</th>
-                        <th>Tên người nhận</th>
-                        <th>Địa chỉ</th>
-                        <th>Số điện thoại</th>
-                        <th>Phương thức</th>
-                        <th>Ghi chú</th>
-                        <th>Thời Gian</th>
-                        <th>Tổng</th>
-                        <th>Chỉ tiết đơn hàng</th>
-                    </thead>
-                    <tbody>`;
-    for (let i = 0; i < arrayDetail.length; i++) {
-        let diaChi= arrayDetail[i].location[0];
-        if(diaChi){
-            diaChi= arrayDetail[i].location[0].street + " " + arrayDetail[i].location[0].ward +" "+ arrayDetail[i].location[0].district +" " + arrayDetail[i].location[0].city;
-        }
-        else diaChi="";
-        html+= `<tr>
-                        <td>`+"M"+arrayDetail[i].index+`</td>
-                        <td>`+arrayDetail[i].username+`</td>
-                        <td>`+arrayDetail[i].name+`</td>
-                        <td>`+diaChi+`</td>
-                        <td>`+arrayDetail[i].phone+`</td>
-                        <td>`+arrayDetail[i].method+`</td>
-                        <td>`+arrayDetail[i].note+`</td>
-                        <td>`+arrayDetail[i].date+`</td>
-                        <td>`+(arrayDetail[i].sum*1000).toLocaleString()+` VND</td>
-                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
-                </tr>`;
-    }
-    html+= `</tbody>
-                </table>
-            </div>`;
-    document.getElementById("modal__StatisticsBill").style.display="block";
-    document.getElementById("modal__StatisticsBill").innerHTML= html;
+    showBillStatistics(array);
 }
 
-// show từng hóa đơn của từng khách hàng
-function showDetailStatistic(name){
-    let array= filStatisticsTime();
-    let arrayDetail= [];
-    for (let i = 0; i < array.length; i++) {
-        if(array[i].username == name){
-            arrayDetail.push(array[i]);
-        }
-    }
+// show từng hóa đơn trong thống kê
+function showBillStatistics(array){
     let html= `<div id="table__viewbills">
                 <div id="closetb__vbls"><button onclick="closeDetailStatistic()">+</button></div>
                 <table>
@@ -944,23 +950,23 @@ function showDetailStatistic(name){
                         <th>Chỉ tiết đơn hàng</th>
                     </thead>
                     <tbody>`;
-    for (let i = 0; i < arrayDetail.length; i++) {
-        let diaChi= arrayDetail[i].location[0];
+    for (let i = 0; i < array.length; i++) {
+        let diaChi= array[i].location;
         if(diaChi){
-            diaChi= arrayDetail[i].location[0].street + " " + arrayDetail[i].location[0].ward +" "+ arrayDetail[i].location[0].district +" " + arrayDetail[i].location[0].city;
+            diaChi= array[i].location[0].street + " " + array[i].location[0].ward +" "+ array[i].location[0].district +" " + array[i].location[0].city;
         }
         else diaChi="";
         html+= `<tr>
-                        <td>`+"M"+arrayDetail[i].index+`</td>
-                        <td>`+arrayDetail[i].username+`</td>
-                        <td>`+arrayDetail[i].name+`</td>
+                        <td>`+"M"+array[i].index+`</td>
+                        <td>`+array[i].username+`</td>
+                        <td>`+array[i].name+`</td>
                         <td>`+diaChi+`</td>
-                        <td>`+arrayDetail[i].phone+`</td>
-                        <td>`+arrayDetail[i].method+`</td>
-                        <td>`+arrayDetail[i].note+`</td>
-                        <td>`+arrayDetail[i].date+`</td>
-                        <td>`+(arrayDetail[i].sum *1000).toLocaleString()+` VND</td>
-                        <td><button onclick="showDonHang(`+arrayDetail[i].index+`)">Xem chi tiết đơn hàng</button></td>
+                        <td>`+array[i].phone+`</td>
+                        <td>`+array[i].method+`</td>
+                        <td>`+array[i].note+`</td>
+                        <td>`+array[i].date+`</td>
+                        <td>`+(array[i].sum *1000).toLocaleString()+` VND</td>
+                        <td><button onclick="showDonHang(`+array[i].index+`)">Xem chi tiết đơn hàng</button></td>
                 </tr>`;
     }
     html+= `</tbody>
@@ -975,8 +981,39 @@ function closeDetailStatistic(){
     document.getElementById("modal__StatisticsBill").style.display="none";
 }
 
-// hàm show thống kê khác hàng 
-function showcustomer_statistics(arr) {
+// hàm lọc khách hàng 
+function loadKhachHang(){
+    let array= filStatisticsTime();
+    let arrayKhachHang= [];
+    let ArrayBill= array;
+    for (let i = 0; i < ArrayBill.length; i++) {
+        let j=0;
+        while(j < arrayKhachHang.length){
+            if(arrayKhachHang[j][0] == ArrayBill[i].username){
+                arrayKhachHang[j][1]+= ArrayBill[i].sum;
+                break;
+            }
+            j++;
+        }
+        if( j >= arrayKhachHang.length){
+            let f= [
+                ArrayBill[i].username,
+                ArrayBill[i].sum,
+            ];
+            arrayKhachHang.push(f);
+        }
+    }
+    let staMH = document.getElementById("sta__sell-option").value;
+    if (staMH == 2) {
+        arrayKhachHang   = arrayKhachHang .sort((a, b) => b.sum - a.sum); // Sắp xếp giảm dần
+    } else if(staMH == 3){
+        arrayKhachHang   = arrayKhachHang .sort((a, b) => a.sum - b.sum); // Sắp xếp tăng dần
+    };
+    showArrayKhachHang(arrayKhachHang);  
+}
+
+// hàm show thống kê khách hàng 
+function showArrayKhachHang(arr) {
     let html="";
     if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]"){
         html = `<thead><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
@@ -1008,91 +1045,27 @@ function showcustomer_statistics(arr) {
                     <td>`+user.email+`</td>
                     <td>`+user.phone+`</td>
                     <td>`+(arr[i][1]*1000).toLocaleString()+` VND</td>
-                    <td><button onclick="showDetailStatistic('` +arr[i][0]+`')">`+"Chi tiết"+`</button></td>
+                    <td><button onclick="showBillKH('` +arr[i][0]+`')">`+"Chi tiết"+`</button></td>
                 </tr>` 
         }
         html+=`</tbody>`
     }
     document.getElementById("tableRevenue").innerHTML = html;
 }
-// hàm lọc khách hàng có doanh thu nhiều nhất để show ra
-function customer_statistics(){
+
+//show hóa đơn của khách hàng
+function showBillKH(name){
     let array= filStatisticsTime();
-    if(document.getElementById("sta__sell"))
-        document.getElementById("sta__sell").outerHTML= "";
-    let sortCus= [];
-    let ArrayBill= array;
-    for (let i = 0; i < ArrayBill.length; i++) {
-        let j=0;
-        while(j < sortCus.length){
-            if(sortCus[j][0] == ArrayBill[i].username){
-                sortCus[j][1]+= ArrayBill[i].sum;
-                break;
-            }
-            j++;
-        }
-        if( j >= sortCus.length){
-            let f= [
-                ArrayBill[i].username,
-                ArrayBill[i].sum,
-            ];
-            sortCus.push(f);
-        }
-    }
-    sortCus.sort(function(a, b){
-         return b[1] - a[1];
-    });
-    showcustomer_statistics(sortCus);  
-}
-// tạo lọc thống kê 
-function createFilterSta() {
-    let html='';
-    html += `<span id="sta__sta">
-            <select style="height:40px;width:100px;" name="" id="sta__sta-option" onchange="loadStatistics()">
-            <option value="1">Mặt Hàng</option>
-            <option value="2">Khách Hàng</option>
-            </select></span>`;
-
-    html += `<span id="sta__sell">
-    <select style="height:40px;width:100px;" name="" id="sta__sell-option" onchange="loadMatHang()">
-    <option value="1">Bán Chạy Nhất</option>
-    <option value="2">Bán ế nhất</option>  
-    </select></span>`;
-
-    html += `<span id="sta__time">
-            <select style="height:40px;width:100px;" name="" id="sta__time-option" onchange="loadStatistics()">`
-    for (let i = 0; i < day.length; i++) {
-        html += `<option value="` + valueDay[i] + `">` + day[i] + `</option>`
-    }
-    html += `</select></span>`;
-    html += `<div id="totalStatistics"></div>`;
-    document.getElementById("filterStatistics").innerHTML = html;
-}
-
-// lọc thống kê theo thời gian
-function filStatisticsTime(){
-    let filter = document.getElementById("sta__time-option").value;
-    let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
-    let array = [];
-    if(filter == "tất cả") array= ArrayBill;
-    else{
-        let now = new Date();
-        let past = new Date();
-        past.setDate(past.getDate() - parseInt(filter));
-        for (let i = 0; i < ArrayBill.length; i++) {
-            let timeB = new Date(ArrayBill[i].date);
-            if (timeB >= past && timeB <= now){
-                array.push(ArrayBill[i]);
-            }
-        }
-    }
-    let sum= 0;
     for (let i = 0; i < array.length; i++) {
-        sum+= array[i].sum;
+        if(array[i].username != name){
+            array.splice(i,1);
+            i--;
+        }
     }
-    document.getElementById("totalStatistics").innerHTML=`<span>Tổng Giá `+(sum*1000).toLocaleString()+ ` VND</span>`;
-    return array;
+    showBillStatistics(array);
 }
+
+
 
 // hàm thông báo
 function noti(s, n) {
@@ -1120,7 +1093,7 @@ function noti(s, n) {
 
     // Vòng lặp kiểm tra từ đầu đến cuối danh sách toMau
     while (i < toMau.length) {
-        if (document.getElementById(toMau[i]).style.display == "block") {
+        if (document.getElementById(toMau[i]).style.display != "none") {
             document.getElementById(page[i]).style.backgroundColor = "#D2B48C"; 
             break;
         }
@@ -1137,7 +1110,7 @@ function noti(s, n) {
     // Vòng lặp kiểm tra từ cuối đến đầu danh sách toMau
     i = 3;
     while (i >= 0) {
-        if (document.getElementById(toMau[i]).style.display != "block") {
+        if (document.getElementById(toMau[i]).style.display == "none") {
             document.getElementById(page[i]).style.backgroundColor = "unset"; 
         }
         i--;
