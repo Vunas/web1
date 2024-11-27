@@ -24,50 +24,117 @@ body {
     flex-wrap: wrap;
 }
 
+ 
+
+
+
+
+/* Đặt khung container__left cố định */
 .container__left {
-    width: 15%;
-    overflow: hidden;
-    height: 120vh;
-    border-right: 1px solid gray;
-    transition: 0.3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%; /* Chiều cao full màn hình */
+    width: 60px; /* Chiều rộng ban đầu khi không hover */
+    background-color: #2c3e50; /* Màu nền */
+    overflow: hidden; /* Ẩn nội dung thừa */
+    transition: width 0.3s ease; /* Hiệu ứng mở rộng */
+    z-index: 1000; /* Đảm bảo khung luôn trên các thành phần khác */
 }
 
-.logo img {
-    max-width: 100%;
-    height: 170px;
+/* Mở rộng khi hover */
+.container__left:hover {
+    width: 200px; /* Chiều rộng khi hover */
 }
 
-.contain {
-    margin-top: 20px;
+/* Logo thu nhỏ */
+.container__left .logo img {
+    width: 40px; /* Logo nhỏ */
+    margin: 10px; /* Khoảng cách */
+    transition: width 0.3s ease; /* Hiệu ứng thay đổi kích thước */
 }
-.nav1 li {
-    margin: 20px;
+
+/* Mở rộng logo khi hover */
+.container__left:hover .logo img {
+    width: 100px; /* Logo lớn hơn khi hover */
+}
+
+/* Danh sách ul */
+.container__left ul {
     list-style: none;
-    font-size: 17px;
-    cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
-.nav2 li a{
+
+/* Các mục li */
+.container__left ul li {
+    color: white;
+    padding: 15px;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap; /* Tránh xuống dòng */
+    overflow: hidden; /* Ẩn nội dung thừa */
+    text-overflow: ellipsis; /* Thêm dấu "..." nếu bị cắt */
+    transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Icon và text li */
+.container__left ul li i {
+    margin-right: 10px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/* Hover trên li */
+.container__left ul li:hover {
+    background-color: #34495e; /* Màu khi hover */
+}
+
+/* Định dạng các liên kết trong nav2 */
+.container__left .nav2 li a {
+    color: white;
     text-decoration: none;
-    color: black;
-    cursor: pointer;
-    font-size: 17px;
 }
-.nav2 li{
-    margin: 20px;
-    list-style: none;
+
+.container__left .nav2 li a:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
 }
-.nav2{
-    margin-top:40px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .container__right--main {
-    width: 85%;
+    width: 100%;
+    margin-left: 60px;
 }
 
 .container__top {
     width: 100%;
     background-color: var(--primary--color5);
-    height: 50px;
-    border-radius: 50px;
     text-align: center;
     font-size: 25px;
     padding: 10px;
@@ -77,29 +144,45 @@ body {
 .container__bottom {
     height: 90%;
     display: flex;
+    flex-wrap: wrap;
     padding:40px;
 }
 
 .text__user,
 .text__product,
 .text__revenue {
-    width: 32%;
+    flex: 1 0 300px;
+    height: 500px;
     cursor: pointer;
     text-align: center;
-    margin: 0 auto;
+    margin: 15px;
     border-top: 0.5px solid gray;
     border-radius: 10px;
     transition: 0.5s all;
 }
 
-.text__revenue img,.text__product img,.text__user img{
+.text__revenue img,
+.text__product img,
+.text__user img {
     mix-blend-mode: multiply;
 }
-.text__user:hover ,.text__product:hover,.text__revenue:hover{
-    transform: scale(1.02);
+
+.text__user:hover p,
+.text__product:hover p,
+.text__revenue:hover p {
+    display: none;
+}
+
+.text__user:hover,
+.text__product:hover,
+.text__revenue:hover {
+    transform: scale(1.1);
     color: var(--primary--color3);
     background-color: var(--primary--color5);
+    font-size: 250px;
 }
+
+
 .text__user:hover #soluongUser,.text__product:hover #soluongProduct,.text__revenue:hover #soluongDoanhthu{
     color: var(--primary--color3);
 }
@@ -243,11 +326,13 @@ body {
     }
 }
 
+
 #formProducts {
-    width: 85%;
-    height: 120vh;
+    width: 100%;
+    margin-left: 60px;
     display: none;
     overflow-y: scroll;
+    background-color: rgb(244, 238, 238);
 }
 #formProducts::-webkit-scrollbar {
     display: none;
@@ -504,21 +589,32 @@ body {
 
 
 
-
-
-
-
-
 #formBill{
-    width:85%;
+    width:100%;
+    margin-left: 60px;
     display: none;
-    height: 100vh;
+    flex-wrap: wrap;
+    height: 120vh;
     overflow: auto;
+    background-color: rgb(244, 238, 238);
 }
 #tableBill{
+    margin-top: 10px;
     width:100%;
     min-width: 800px;
     border: 1.2px solid black;
+}
+#filterBill{
+    width: 40%;
+    background:var(--primary--color3);
+    height:260px;
+    justify-items: center;
+    box-shadow: 2px 1px 1px 1px;
+    margin:20px;
+}
+#locBill{
+    margin-top:20px;
+    font-size: 20px;
 }
 #theadBill{
     font-size: 17px;
@@ -526,9 +622,23 @@ body {
     height:30px;
     background-color: var(--primary--color5);
 }
+#button__filterBill,#button__filterRevenue{
+    all:unset;
+    border:0.5px solid;
+    padding:10px 30px;
+    margin:10px;
+    border-radius: 10px;
+    background-color: #31bb88;
+    cursor:pointer;
+    transition: all 0.25s;
+}
+#button__filterBill:hover,#button__filterRevenue:hover{
+    background-color: #D2B48C;
+}
 #tableBill tr td{
     text-align: center;
     height:50px;
+    background-color: var(--primary--color3);
 }
 .modal__viewDonHang{
     background: rgba(0, 0, 0, .8);
@@ -540,6 +650,7 @@ body {
     align-content: center;
     justify-items: center;
     overflow-y: scroll;
+    z-index: 1;
 } 
 #formBill::-webkit-scrollbar{
     display: none;
@@ -578,10 +689,7 @@ body {
     text-align: center;
     cursor: pointer;
 }
-#filterBill{
-    display: flex;
-    justify-content: space-between;
-}
+
 
 
 
@@ -610,8 +718,11 @@ body {
 .contain__add--customer h3,.contain__add--customer input,.contain__edit--customer h3,.contain__edit--customer input{
     display: block;
     width: 90%;
-    margin:20px;
-    padding: 5px;
+    padding:10px;
+    margin:0px 10px 10px 10px;
+}
+.contain__add--customer label,.contain__edit--customer label{
+    margin-left: 15px;
 }
 .contain__add--customer button,.contain__edit--customer button{
     all: unset;
@@ -626,9 +737,18 @@ body {
 .contain__add--customer button:hover,.contain__edit--customer button:hover{
     background-color: var(--primary--color5);
 }
+
+
+
+
+
 #formCustomer{
-    width: 85%;
+    width: 100%;
+    margin-left: 60px;
     display: none;
+    background-color: rgb(244, 238, 238);
+    height: 120vh;
+    overflow: auto;
 }
 #formCustomer table{
     min-width: 700px;
@@ -640,10 +760,11 @@ body {
     height:30px;
     font-size: 17px;
 }
-#formCustomer table tbody tr td{
+#formCustomer table tbody td{
     justify-content: center;
     text-align: center;
     height:50px;
+    background-color: var(--primary--color3);
 }
 #button__add--customer{
     all: unset;
@@ -668,6 +789,9 @@ body {
     cursor: pointer;
     margin:5px;
 }
+
+
+
 
 /*thong ke*/
 #modal__StatisticsBill {
@@ -727,16 +851,53 @@ body {
 }
 
 
+
+
+/* css của ahuy */
 #formRevenue {
-    width: 85%;
+    width:100%;
+    margin-left: 60px;
+    display: none;
+    flex-wrap: wrap;
+    overflow: auto;
+    background-color: rgb(244, 238, 238);
+}
+#formRevenue::-webkit-scrollbar{
+    display: none;
 }
 
-#filterStatistics{
-    text-align: center;
-    margin: 5px;
+#filterBill,
+#filterRevenue{
+    flex: 1 0 30%;
+    min-width: 300px;
+    background:var(--primary--color3);
+    height:330px;
+    justify-items: center;
+    box-shadow: 2px 1px 1px 1px;
+    padding: 10px;
+    margin:20px;
+    border-radius: 10px;
+}
+#locThongKe{
+    margin-top:15px;
+}
+#locThongKe select{
+    width: 170px;
 }
 #filterStatistics span{
     margin: 5px;
+}
+
+.div__bill,
+.table__Revenue{
+    flex: 1 0 65%;
+    min-width: 500px;
+    overflow: auto;
+}
+
+.div__bill::-webkit-scrollbar,
+.table__Revenue::-webkit-scrollbar{
+    display: none;
 }
 
 #formRevenue table{
@@ -744,15 +905,27 @@ body {
     min-width: 700px;
     text-align: center;
     border: 1px solid;
+    border-radius: 10px;
 }
-
 #formRevenue table thead th {
     height: 40px;
+    font-size: 15px;
     background-color: var(--primary--color5);
+    border-radius: 10px;
 }
 
 #formRevenue table tbody td {
     height: 40px;
+    background-color: var(--primary--color3);
+}
+
+#formRevenue table tbody td:first-child{
+    height:85px;
+    width:100px;
+}
+#formRevenue table tbody td:first-child img{
+    width: 100%;
+    height:100%;
 }
 
 #formRevenue table tbody td button{
@@ -765,6 +938,13 @@ body {
 #formRevenue table tbody td button:hover{
     background-color: var(--primary--color5);
 }
+
+@media (max-width:1024px) {
+    .table__Revenue{
+        width: 100%;
+    }
+}
+
 
 #totalStatistics{
     width: 100%;
