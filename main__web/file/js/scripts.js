@@ -1,3 +1,410 @@
+const locations = [
+    {
+        city: "Hà Nội",
+        districts: [
+            {
+                district: "Quận Ba Đình",
+                wards: ["Cống Vị", "Điện Biên", "Đội Cấn", "Giảng Võ", "Kim Mã", "Liễu Giai", "Ngọc Hà", "Ngọc Khánh", "Nguyễn Trung Trực", "Phúc Xá", "Quán Thánh", "Thành Công", "Trúc Bạch", "Vĩnh Phúc"]
+            },
+            {
+                district: "Quận Hoàn Kiếm",
+                wards: ["Chương Dương Độ", "Cửa Đông", "Cửa Nam", "Đồng Xuân", "Hàng Bạc", "Hàng Bài", "Hàng Bồ", "Hàng Bông", "Hàng Buồm", "Hàng Đào", "Hàng Gai", "Hàng Mã", "Hàng Trống", "Lý Thái Tổ", "Phan Chu Trinh", "Phúc Tân", "Tràng Tiền", "Trần Hưng Đạo"]
+            },
+            {
+                district: "Quận Đống Đa",
+                wards: ["Cát Linh", "Giảng Võ", "Hàng Bột", "Khâm Thiên", "Khương Thượng", "Kim Liên", "Láng Hạ", "Láng Thượng", "Nam Đồng", "Ngã Tư Sở", "Ô Chợ Dừa", "Phương Liên", "Phương Mai", "Quang Trung", "Quốc Tử Giám", "Thịnh Quang", "Thổ Quan", "Trung Liệt", "Trung Phụng", "Trung Tự", "Văn Chương", "Văn Miếu"]
+            },
+            {
+                district: "Quận Hai Bà Trưng",
+                wards: ["Bạch Đằng", "Bách Khoa", "Bạch Mai", "Cầu Dền", "Đống Mác", "Đồng Nhân", "Đồng Tâm", "Đồng Xuân", "Lê Đại Hành", "Minh Khai", "Nguyễn Du", "Phạm Đình Hổ", "Phố Huế", "Quỳnh Lôi", "Quỳnh Mai", "Thanh Lương", "Thanh Nhàn", "Trương Định", "Vĩnh Tuy"]
+            },
+            {
+                district: "Quận Thanh Xuân",
+                wards: ["Hạ Đình", "Khương Đình", "Khương Mai", "Khương Trung", "Nhân Chính", "Phương Liệt", "Thanh Xuân Bắc", "Thanh Xuân Nam", "Thanh Xuân Trung", "Thượng Đình"]
+            },
+            {
+                district: "Quận Tây Hồ",
+                wards: ["Bưởi", "Nhật Tân", "Phú Thượng", "Quảng An", "Thụy Khuê", "Tứ Liên", "Xuân La", "Yên Phụ"]
+            },
+            {
+                district: "Quận Cầu Giấy",
+                wards: ["Dịch Vọng", "Dịch Vọng Hậu", "Mai Dịch", "Nghĩa Đô", "Nghĩa Tân", "Quan Hoa", "Trung Hòa", "Yên Hòa"]
+            },
+            {
+                district: "Quận Hoàng Mai",
+                wards: ["Đại Kim", "Định Công", "Giáp Bát", "Hoàng Liệt", "Hoàng Văn Thụ", "Lĩnh Nam", "Mai Động", "Tân Mai", "Thanh Trì", "Thịnh Liệt", "Trần Phú", "Tương Mai", "Vĩnh Hưng", "Yên Sở"]
+            },
+            {
+                district: "Quận Long Biên",
+                wards: ["Bồ Đề", "Cự Khối", "Đức Giang", "Gia Thụy", "Giang Biên", "Long Biên", "Ngọc Lâm", "Ngọc Thụy", "Phúc Đồng", "Phúc Lợi", "Sài Đồng", "Thạch Bàn", "Thượng Thanh", "Việt Hưng"]
+            },
+            {
+                district: "Quận Nam Từ Liêm",
+                wards: ["Cầu Diễn", "Đại Mỗ", "Mễ Trì", "Mỹ Đình 1", "Mỹ Đình 2", "Phú Đô", "Phương Canh", "Tây Mỗ", "Trung Văn", "Xuân Phương"]
+            },
+            {
+                district: "Quận Bắc Từ Liêm",
+                wards: ["Cổ Nhuế 1", "Cổ Nhuế 2", "Đông Ngạc", "Đức Thắng", "Liên Mạc", "Minh Khai", "Phú Diễn", "Phúc Diễn", "Tây Tựu", "Thượng Cát", "Thụy Phương", "Xuân Đỉnh", "Xuân Tảo"]
+            },
+            {
+                district: "Huyện Gia Lâm",
+                wards: ["Cát Quế", "Đặng Xá", "Đa Tốn", "Đình Xuyên", "Dương Hà", "Dương Quang", "Dương Xá", "Kim Lan", "Kim Sơn", "Lệ Chi", "Ninh Hiệp", "Phù Đổng", "Phú Thị", "Trâu Quỳ", "Yên Thường", "Yên Viên"]
+            },
+            {
+                district: "Huyện Đông Anh",
+                wards: ["Bắc Hồng", "Cổ Loa", "Dục Tú", "Đại Mạch", "Đông Hội", "Hải Bối", "Kim Chung", "Kim Nỗ", "Liên Hà", "Mai Lâm", "Nguyên Khê", "Tàm Xá", "Thụy Lâm", "Tiên Dương", "Uy Nỗ", "Vân Hà", "Vân Nội", "Việt Hùng", "Vĩnh Ngọc", "Võng La", "Xuân Canh", "Xuân Nộn"]
+            },
+            {
+                district: "Huyện Sóc Sơn",
+                wards: ["Bắc Sơn", "Đông Xuân", "Hiền Ninh", "Hồng Kỳ", "Kim Lũ", "Mai Đình", "Minh Phú", "Minh Trí", "Nam Sơn", "Phù Linh", "Phú Cường", "Phú Minh", "Phủ Lỗ", "Quang Tiến", "Tân Dân", "Tân Hưng", "Thụy Hương", "Tiên Dược", "Trung Giã", "Việt Long", "Xuân Giang", "Xuân Thu"]
+            },
+            {
+                district: "Huyện Thanh Trì",
+                wards: ["Đại Áng", "Đông Mỹ", "Duyên Hà", "Hữu Hòa", "Liên Ninh", "Ngọc Hồi", "Tả Thanh Oai", "Tam Hiệp", "Tân Triều", "Thanh Liệt", "Tứ Hiệp", "Vạn Phúc", "Vĩnh Quỳnh", "Yên Mỹ"]
+            },
+            {
+                district: "Huyện Thường Tín",
+                wards: ["Dũng Tiến", "Hà Hồi", "Hiền Giang", "Hòa Bình", "Hồng Vân", "Khánh Hà", "Liên Phương", "Minh Cường", "Nghiêm Xuyên", "Nguyễn Trãi", "Nhị Khê", "Ninh Sở", "Quất Động", "Thắng Lợi", "Thống Nhất", "Thư Phú", "Tô Hiệu", "Tự Nhiên", "Vạn Điểm", "Vân Tảo", "Văn Bình", "Văn Phú", "Văn Tự", "Vân Tử", "Vũ Lăng", "Xà Cầu", "Duyên Thái"]
+            },
+        ]
+    },
+    {
+        
+        city: "Hồ Chí Minh",
+        districts: [
+            {
+                district: "Quận 1",
+                wards: ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang", "Nguyễn Thái Bình", "Phạm Ngũ Lão"]
+            },
+            {
+                district: "Quận 2",
+                wards: ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi"]
+            },
+            {
+                district: "Quận 3",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
+            },
+            {
+                district: "Quận 4",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 8", "Phường 9"]
+            },
+            {
+                district: "Quận 5",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Quận 6",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Quận 7",
+                wards: ["Tân Thuận Đông", "Tân Thuận Tây", "Tân Kiểng", "Tân Hưng", "Bình Thuận", "Phú Mỹ", "Tân Phong", "Tân Quy"]
+            },
+            {
+                district: "Quận 8",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Quận 9",
+                wards: ["Long Bình", "Long Phước", "Long Thạnh Mỹ", "Long Trường", "Phước Bình", "Phước Long A", "Phước Long B"]
+            },
+            {
+                district: "Quận 10",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Quận 11",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Quận 12",
+                wards: ["Thạnh Xuân", "Thạnh Lộc", "Thới An", "Tân Chánh Hiệp", "An Phú Đông", "Tân Thới Hiệp", "Tân Hưng Thuận"]
+            },
+            {
+                district: "Tân Bình",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Tân Phú",
+                wards: ["Hiệp Tân", "Hòa Thạnh", "Phú Thọ Hòa", "Phú Thạnh", "Phú Trung", "Sơn Kỳ", "Tân Qúy", "Tân Sơn Nhì"]
+            },
+            {
+                district: "Bình Thạnh",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Gò Vấp",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Phú Nhuận",
+                wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
+            },
+            {
+                district: "Thủ Đức",
+                wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
+            }
+        ]
+    },
+    
+    {
+        city: "Đà Nẵng",
+        districts: [
+            {
+                district: "Quận Hải Châu",
+                wards: ["Bình Hiên", "Bình Thuận", "Hải Châu 1", "Hải Châu 2", "Hòa Cường Bắc", "Hòa Cường Nam", "Hòa Thuận Đông", "Hòa Thuận Tây", "Nam Dương", "Phước Ninh", "Thạch Thang", "Thanh Bình", "Thuận Phước"]
+            },
+            {
+                district: "Quận Thanh Khê",
+                wards: ["An Khê", "Chính Gián", "Hòa Khê", "Tam Thuận", "Tân Chính", "Thạc Gián", "Thanh Khê Đông", "Thanh Khê Tây", "Vĩnh Trung", "Xuân Hà"]
+            },
+            {
+                district: "Quận Sơn Trà",
+                wards: ["An Hải Bắc", "An Hải Đông", "An Hải Tây", "Mân Thái", "Nại Hiên Đông", "Phước Mỹ", "Thọ Quang"]
+            },
+            {
+                district: "Quận Ngũ Hành Sơn",
+                wards: ["Hòa Hải", "Hòa Quý", "Khuê Mỹ", "Mỹ An"]
+            },
+            {
+                district: "Quận Liên Chiểu",
+                wards: ["Hòa Hiệp Bắc", "Hòa Hiệp Nam", "Hòa Khánh Bắc", "Hòa Khánh Nam", "Hòa Minh"]
+            },
+            {
+                district: "Quận Cẩm Lệ",
+                wards: ["Hòa An", "Hòa Phát", "Hòa Thọ Đông", "Hòa Thọ Tây", "Hòa Xuân", "Khuê Trung"]
+            },
+            {
+                district: "Huyện Hòa Vang",
+                wards: ["Hòa Bắc", "Hòa Châu", "Hòa Khương", "Hòa Liên", "Hòa Nhơn", "Hòa Ninh", "Hòa Phong", "Hòa Phú", "Hòa Phước", "Hòa Sơn", "Hòa Tiến"]
+            }
+        ]
+    },
+    {
+        city: "Quảng Ninh",
+        districts: [
+            {
+                district: "Thành phố Hạ Long",
+                wards: ["Bãi Cháy", "Hà Khánh", "Hà Lầm", "Hà Phong", "Hà Trung", "Hà Tu", "Hồng Hải", "Hồng Hà", "Hồng Gai", "Yết Kiêu", "Giếng Đáy", "Trần Hưng Đạo"]
+            },
+            {
+                district: "Thành phố Cẩm Phả",
+                wards: ["Cẩm Bình", "Cẩm Đông", "Cẩm Phú", "Cẩm Sơn", "Cẩm Thạch", "Cẩm Thành", "Cẩm Thủy", "Cẩm Trung", "Cửa Ông", "Mông Dương", "Quang Hanh"]
+            },
+            {
+                district: "Thành phố Uông Bí",
+                wards: ["Bắc Sơn", "Nam Khê", "Phương Đông", "Phương Nam", "Quang Trung", "Thanh Sơn", "Trưng Vương", "Vàng Danh", "Yên Thanh"]
+            },
+            {
+                district: "Thành phố Móng Cái",
+                wards: ["Bình Ngọc", "Hải Đông", "Hải Hòa", "Hải Lạc", "Hải Xuân", "Hòa Lạc", "Ka Long", "Ninh Dương", "Trà Cổ"]
+            }
+        ]
+    },
+    {
+        city: "Bình Dương",
+        districts: [
+            {
+                district: "Thành phố Thủ Dầu Một",
+                wards: ["Chánh Mỹ", "Hiệp Thành", "Hòa Phú", "Phú Cường", "Phú Hòa", "Phú Lợi", "Phú Mỹ", "Phú Tân", "Phú Thọ", "Tân An", "Tân Bình", "Tân Đông Hiệp", "Tân Phước Khánh"]
+            },
+            {
+                district: "Thành phố Dĩ An",
+                wards: ["An Bình", "Bình An", "Bình Thắng", "Dĩ An", "Đông Hòa", "Tân Bình", "Tân Đông Hiệp"]
+            },
+            {
+                district: "Thành phố Thuận An",
+                wards: ["An Phú", "An Thạnh", "Bình Chuẩn", "Bình Hòa", "Bình Nhâm", "Hưng Định", "Lái Thiêu", "Thuận Giao", "Vĩnh Phú"]
+            }
+        ]
+    },
+    {
+    city: "Khánh Hòa",
+    districts: [
+        {
+            district: "Thành phố Nha Trang",
+            wards: ["Lộc Thọ", "Ngọc Hiệp", "Phước Long", "Phước Tân", "Phước Tiến", "Phương Sơn", "Tân Lập", "Vạn Thắng", "Vĩnh Hải", "Vĩnh Hòa", "Vĩnh Ngọc", "Vĩnh Phước", "Vĩnh Thọ", "Vĩnh Trường", "Vĩnh Trung"]
+        },
+        {
+            district: "Thành phố Cam Ranh",
+            wards: ["Ba Ngòi", "Cam Lộc", "Cam Lợi", "Cam Nghĩa", "Cam Phú", "Cam Phúc Bắc", "Cam Phúc Nam", "Cam Thuận"]
+        },
+        {
+            district: "Thị xã Ninh Hòa",
+            wards: ["Ninh Bình", "Ninh Diêm", "Ninh Giang", "Ninh Hà", "Ninh Hiệp", "Ninh Hải", "Ninh Hòa", "Ninh Lộc", "Ninh Phú", "Ninh Sim", "Ninh Thủy", "Ninh Tây", "Ninh Thọ", "Ninh Trung"]
+        },
+        {
+            district: "Huyện Diên Khánh",
+            wards: ["Diên An", "Diên Điền", "Diên Đồng", "Diên Hòa", "Diên Lạc", "Diên Phú", "Diên Sơn", "Diên Thạnh", "Diên Toàn", "Diên Xuân"]
+        },
+        {
+            district: "Huyện Khánh Vĩnh",
+            wards: ["Cầu Bà", "Diên Thọ", "Khánh Bình", "Khánh Đông", "Khánh Hiệp", "Khánh Nam", "Khánh Phú", "Khánh Thành", "Khánh Thượng", "Sông Cầu", "Sông Hiệp", "Sông Quang"]
+        }
+        ]
+    },
+    {
+        city: "Đồng Nai",
+        districts: [
+            {
+                district: "Thành phố Biên Hòa",
+                wards: ["An Bình", "An Hòa", "Bình Đa", "Bửu Hòa", "Bửu Long", "Hiệp Hòa", "Hóa An", "Hòa Bình", "Long Bình", "Long Bình Tân", "Quyết Thắng", "Tam Hiệp", "Tam Hòa", "Tam Phước", "Tân Biên", "Tân Hạnh", "Tân Mai", "Tân Phong", "Tân Tiến", "Tân Vạn", "Thống Nhất", "Trảng Dài", "Trung Dũng"]
+            },
+            {
+                district: "Thành phố Long Khánh",
+                wards: ["Bảo Vinh", "Bảo Quang", "Bàu Sen", "Bình Lộc", "Hàng Gòn", "Suối Tre", "Xuân An", "Xuân Bình", "Xuân Hòa", "Xuân Lập", "Xuân Tân", "Xuân Thanh"]
+            },
+            {
+                district: "Huyện Trảng Bom",
+                wards: ["An Viễn", "Bàu Hàm", "Bình Minh", "Cây Gáo", "Đồi 61", "Đông Hòa", "Giang Điền", "Hố Nai 3", "Hưng Thịnh", "Quảng Tiến", "Sông Thao", "Sông Trầu", "Tây Hòa", "Thanh Bình", "Trung Hòa"]
+            },
+            {
+                district: "Huyện Vĩnh Cửu",
+                wards: ["Bình Hòa", "Bình Lợi", "Mã Đà", "Phú Lý", "Tân An", "Tân Bình", "Thạnh Phú", "Thiện Tân", "Trị An", "Vĩnh An"]
+            },
+            {
+                district: "Huyện Định Quán",
+                wards: ["Gia Canh", "La Ngà", "Ngọc Định", "Phú Cường", "Phú Hòa", "Phú Lợi", "Phú Ngọc", "Phú Tân", "Phú Túc", "Suối Nho", "Thanh Sơn"]
+            }
+        ]
+    },
+    {
+        city: "Bình Thuận",
+        districts: [
+            {
+                district: "Thành phố Phan Thiết",
+                wards: ["Bình Hưng", "Đức Long", "Hàm Tiến", "Hưng Long", "Lạc Đạo", "Mũi Né", "Phú Hài", "Phú Tài", "Phú Thủy", "Phú Trinh", "Thanh Hải"]
+            },
+            {
+                district: "Thị xã La Gi",
+                wards: ["Bình Tân", "Phước Hội", "Phước Lộc", "Tân An", "Tân Thiện", "Tân Bình"]
+            },
+            {
+                district: "Huyện Tuy Phong",
+                wards: ["Chí Công", "Hòa Minh", "Hòa Phú", "Liên Hương", "Phú Lạc", "Phước Thể", "Vĩnh Hảo"]
+            }
+        ]
+    },
+    {
+        city: "Quảng Nam",
+        districts: [
+            {
+                district: "Thành phố Tam Kỳ",
+                wards: ["An Mỹ", "An Phú", "An Sơn", "An Xuân", "Hòa Hương", "Hòa Thuận", "Phước Hòa", "Tam Ngọc", "Tam Phú", "Tam Thăng", "Tân Thạnh"]
+            },
+            {
+                district: "Thành phố Hội An",
+                wards: ["Cẩm An", "Cẩm Châu", "Cẩm Hà", "Cẩm Kim", "Cẩm Nam", "Cẩm Phô", "Cẩm Thanh", "Minh An", "Sơn Phong", "Tân An"]
+            },
+            {
+                district: "Thị xã Điện Bàn",
+                wards: ["Điện An", "Điện Dương", "Điện Hòa", "Điện Hồng", "Điện Nam Bắc", "Điện Nam Đông", "Điện Nam Trung", "Điện Ngọc", "Điện Phong", "Điện Phước", "Điện Thắng Bắc", "Điện Thắng Nam", "Điện Thắng Trung", "Điện Thọ", "Điện Tiến"]
+            }
+        ]
+    },
+    {
+        city: "Nghệ An",
+        districts: [
+            {
+                district: "Thành phố Vinh",
+                wards: ["Bến Thủy", "Cửa Nam", "Đội Cung", "Đồng Vĩnh", "Hưng Bình", "Hưng Dũng", "Hưng Đông", "Hưng Lộc", "Hưng Phúc", "Hưng Thịnh", "Lê Lợi", "Lê Mao", "Nghi An", "Nghi Kim", "Nghi Liên", "Nghi Phú", "Quán Bàu", "Trung Đô"]
+            },
+            {
+                district: "Thị xã Cửa Lò",
+                wards: ["Bình Minh", "Nghi Hải", "Nghi Hòa", "Nghi Hương", "Nghi Thu", "Nghi Tân"]
+            },
+            {
+                district: "Thị xã Hoàng Mai",
+                wards: ["Quỳnh Dị", "Quỳnh Lộc", "Quỳnh Lập", "Quỳnh Phương", "Quỳnh Thiện"]
+            }
+        ]
+    },
+    {
+        city: "Hà Tĩnh",
+        districts: [
+            {
+                district: "Thành phố Hà Tĩnh",
+                wards: ["Bắc Hà", "Đại Nài", "Nam Hà", "Nguyễn Du", "Tân Giang", "Thạch Linh", "Thạch Quý", "Thạch Trung", "Văn Yên"]
+            },
+            {
+                district: "Thị xã Hồng Lĩnh",
+                wards: ["Bắc Hồng", "Đậu Liêu", "Đức Thuận", "Nam Hồng", "Trung Lương"]
+            },
+            {
+                district: "Thị xã Kỳ Anh",
+                wards: ["Kỳ Anh", "Kỳ Long", "Kỳ Ninh", "Kỳ Phương", "Kỳ Thịnh", "Kỳ Trinh"]
+            }
+        ]
+    },
+    {
+        city: "Thừa Thiên Huế",
+        districts: [
+            {
+                district: "Thành phố Huế",
+                wards: ["An Cựu", "An Đông", "An Hòa", "An Tây", "Hương Long", "Hương Sơ", "Kim Long", "Phú Hậu", "Phú Hiệp", "Phú Hội", "Phú Nhuận", "Phú Thượng", "Phước Vĩnh", "Phường Đúc", "Thủy Biều", "Thuận An", "Thuận Hòa", "Thuận Lộc", "Thuận Thành", "Trường An", "Vĩnh Ninh", "Vỹ Dạ", "Xuân Phú"]
+            },
+            {
+                district: "Thị xã Hương Thủy",
+                wards: ["Phú Bài", "Thủy Châu", "Thủy Dương", "Thủy Lương", "Thủy Phù", "Thủy Thanh", "Thủy Vân"]
+            },
+            {
+                district: "Thị xã Hương Trà",
+                wards: ["Hương An", "Hương Bình", "Hương Chữ", "Hương Hồ", "Hương Phong", "Hương Toàn", "Hương Văn"]
+            }
+        ]
+    },
+    {
+        city: "Quảng Bình",
+        districts: [
+            {
+                district: "Thành phố Đồng Hới",
+                wards: ["Bắc Lý", "Bắc Nghĩa", "Đức Ninh Đông", "Đồng Phú", "Đồng Sơn", "Đồng Mỹ", "Hải Thành", "Nam Lý", "Phú Hải", "Thuận Đức"]
+            },
+            {
+                district: "Thị xã Ba Đồn",
+                wards: ["Ba Đồn", "Quảng Long", "Quảng Phong", "Quảng Phúc", "Quảng Thọ", "Quảng Thuận"]
+            },
+            {
+                district: "Huyện Bố Trạch",
+                wards: ["Hoàn Lão", "Hưng Trạch", "Lý Trạch", "Nam Trạch", "Nhân Trạch", "Phong Nha", "Quy Đạt", "Sơn Trạch", "Trạch Lộc"]
+            }
+        ]
+    },
+    {
+        city: "Hà Nam",
+        districts: [
+            {
+                district: "Thành phố Phủ Lý",
+                wards: ["Châu Sơn", "Hai Bà Trưng", "Lê Hồng Phong", "Liêm Chính", "Liêm Chung", "Liêm Tiết", "Lê Lợi", "Minh Khai", "Nguyễn Hữu Tiến", "Phú Văn", "Phúc Tiến", "Trần Hưng Đạo", "Yên Bắc"]
+            },
+            {
+                district: "Thị xã Duy Tiên",
+                wards: ["Bạch Thượng", "Châu Giang", "Đồng Văn", "Duy Minh", "Duy Hải", "Duy Ninh", "Hòa Mạc", "Mộc Bắc", "Tiên Nội", "Yên Bắc"]
+            },
+            {
+                district: "Huyện Kim Bảng",
+                wards: ["Ba Sao", "Đồng Hóa", "Hùng Tiến", "Kim Bình", "Kim Bảng", "Lê Hồ", "Liên Sơn", "Ngọc Sơn", "Nhật Tân", "Thi Sơn"]
+            }
+        ]
+    },
+    {
+        city: "Nam Định",
+        districts: [
+            {
+                district: "Thành phố Nam Định",
+                wards: ["Bà Triệu", "Cửa Bắc", "Cửa Nam", "Hạ Long", "Hải Hậu", "Lộc Hòa", "Mỹ Xá", "Nam Phong", "Nam Vân", "Nguyễn Du", "Phan Đình Phùng", "Quang Trung", "Trần Hưng Đạo", "Trần Tế Xương", "Trần Thánh Tông", "Trường Thi", "Văn Miếu"]
+            },
+            {
+                district: "Thị xã Giao Thủy",
+                wards: ["Bạch Long", "Giao An", "Giao Châu", "Giao Hải", "Giao Hòa", "Giao Tiến", "Giao Trung", "Giao Xuân", "Hoành Sơn"]
+            },
+            {
+                district: "Huyện Hải Hậu",
+                wards: ["Hải Đông", "Hải Hà", "Hải Hậu", "Hải Hòa", "Hải Lộc", "Hải Nam", "Hải Ninh", "Hải Phong", "Hải Phúc", "Hải Phương", "Hải Tân"]
+            }
+        ]
+    },
+];
 function Transaction__payment() {
     const contentDiv = document.getElementById('content');
     const prevButton = document.getElementById('prev');
@@ -21,7 +428,7 @@ function Transaction__payment() {
         address: userLogin.address,
         phone: userLogin.phone,
         status: "chưa xử lý",
-        date: new Date().toDateString(),
+        date: new Date().toISOString().split('T')[0],
         cart: cart,
         sum: sum,
         location: []
@@ -251,156 +658,6 @@ function Transaction__payment() {
 
     // Địa chỉ choices
     function handleLocationChange() {
-        const locations = [
-            {
-                city: "Hà Nội",
-                districts: [
-                    {
-                        district: "Quận Ba Đình",
-                        wards: ["Cống Vị", "Điện Biên", "Đội Cấn", "Giảng Võ", "Kim Mã", "Liễu Giai", "Ngọc Hà", "Ngọc Khánh", "Nguyễn Trung Trực", "Phúc Xá", "Quán Thánh", "Thành Công", "Trúc Bạch", "Vĩnh Phúc"]
-                    },
-                    {
-                        district: "Quận Hoàn Kiếm",
-                        wards: ["Chương Dương Độ", "Cửa Đông", "Cửa Nam", "Đồng Xuân", "Hàng Bạc", "Hàng Bài", "Hàng Bồ", "Hàng Bông", "Hàng Buồm", "Hàng Đào", "Hàng Gai", "Hàng Mã", "Hàng Trống", "Lý Thái Tổ", "Phan Chu Trinh", "Phúc Tân", "Tràng Tiền", "Trần Hưng Đạo"]
-                    },
-                    {
-                        district: "Quận Đống Đa",
-                        wards: ["Cát Linh", "Giảng Võ", "Hàng Bột", "Khâm Thiên", "Khương Thượng", "Kim Liên", "Láng Hạ", "Láng Thượng", "Nam Đồng", "Ngã Tư Sở", "Ô Chợ Dừa", "Phương Liên", "Phương Mai", "Quang Trung", "Quốc Tử Giám", "Thịnh Quang", "Thổ Quan", "Trung Liệt", "Trung Phụng", "Trung Tự", "Văn Chương", "Văn Miếu"]
-                    },
-                    {
-                        district: "Quận Hai Bà Trưng",
-                        wards: ["Bạch Đằng", "Bách Khoa", "Bạch Mai", "Cầu Dền", "Đống Mác", "Đồng Nhân", "Đồng Tâm", "Đồng Xuân", "Lê Đại Hành", "Minh Khai", "Nguyễn Du", "Phạm Đình Hổ", "Phố Huế", "Quỳnh Lôi", "Quỳnh Mai", "Thanh Lương", "Thanh Nhàn", "Trương Định", "Vĩnh Tuy"]
-                    },
-                    {
-                        district: "Quận Thanh Xuân",
-                        wards: ["Hạ Đình", "Khương Đình", "Khương Mai", "Khương Trung", "Nhân Chính", "Phương Liệt", "Thanh Xuân Bắc", "Thanh Xuân Nam", "Thanh Xuân Trung", "Thượng Đình"]
-                    },
-                    {
-                        district: "Quận Tây Hồ",
-                        wards: ["Bưởi", "Nhật Tân", "Phú Thượng", "Quảng An", "Thụy Khuê", "Tứ Liên", "Xuân La", "Yên Phụ"]
-                    },
-                    {
-                        district: "Quận Cầu Giấy",
-                        wards: ["Dịch Vọng", "Dịch Vọng Hậu", "Mai Dịch", "Nghĩa Đô", "Nghĩa Tân", "Quan Hoa", "Trung Hòa", "Yên Hòa"]
-                    },
-                    {
-                        district: "Quận Hoàng Mai",
-                        wards: ["Đại Kim", "Định Công", "Giáp Bát", "Hoàng Liệt", "Hoàng Văn Thụ", "Lĩnh Nam", "Mai Động", "Tân Mai", "Thanh Trì", "Thịnh Liệt", "Trần Phú", "Tương Mai", "Vĩnh Hưng", "Yên Sở"]
-                    },
-                    {
-                        district: "Quận Long Biên",
-                        wards: ["Bồ Đề", "Cự Khối", "Đức Giang", "Gia Thụy", "Giang Biên", "Long Biên", "Ngọc Lâm", "Ngọc Thụy", "Phúc Đồng", "Phúc Lợi", "Sài Đồng", "Thạch Bàn", "Thượng Thanh", "Việt Hưng"]
-                    },
-                    {
-                        district: "Quận Nam Từ Liêm",
-                        wards: ["Cầu Diễn", "Đại Mỗ", "Mễ Trì", "Mỹ Đình 1", "Mỹ Đình 2", "Phú Đô", "Phương Canh", "Tây Mỗ", "Trung Văn", "Xuân Phương"]
-                    },
-                    {
-                        district: "Quận Bắc Từ Liêm",
-                        wards: ["Cổ Nhuế 1", "Cổ Nhuế 2", "Đông Ngạc", "Đức Thắng", "Liên Mạc", "Minh Khai", "Phú Diễn", "Phúc Diễn", "Tây Tựu", "Thượng Cát", "Thụy Phương", "Xuân Đỉnh", "Xuân Tảo"]
-                    },
-                    {
-                        district: "Huyện Gia Lâm",
-                        wards: ["Cát Quế", "Đặng Xá", "Đa Tốn", "Đình Xuyên", "Dương Hà", "Dương Quang", "Dương Xá", "Kim Lan", "Kim Sơn", "Lệ Chi", "Ninh Hiệp", "Phù Đổng", "Phú Thị", "Trâu Quỳ", "Yên Thường", "Yên Viên"]
-                    },
-                    {
-                        district: "Huyện Đông Anh",
-                        wards: ["Bắc Hồng", "Cổ Loa", "Dục Tú", "Đại Mạch", "Đông Hội", "Hải Bối", "Kim Chung", "Kim Nỗ", "Liên Hà", "Mai Lâm", "Nguyên Khê", "Tàm Xá", "Thụy Lâm", "Tiên Dương", "Uy Nỗ", "Vân Hà", "Vân Nội", "Việt Hùng", "Vĩnh Ngọc", "Võng La", "Xuân Canh", "Xuân Nộn"]
-                    },
-                    {
-                        district: "Huyện Sóc Sơn",
-                        wards: ["Bắc Sơn", "Đông Xuân", "Hiền Ninh", "Hồng Kỳ", "Kim Lũ", "Mai Đình", "Minh Phú", "Minh Trí", "Nam Sơn", "Phù Linh", "Phú Cường", "Phú Minh", "Phủ Lỗ", "Quang Tiến", "Tân Dân", "Tân Hưng", "Thụy Hương", "Tiên Dược", "Trung Giã", "Việt Long", "Xuân Giang", "Xuân Thu"]
-                    },
-                    {
-                        district: "Huyện Thanh Trì",
-                        wards: ["Đại Áng", "Đông Mỹ", "Duyên Hà", "Hữu Hòa", "Liên Ninh", "Ngọc Hồi", "Tả Thanh Oai", "Tam Hiệp", "Tân Triều", "Thanh Liệt", "Tứ Hiệp", "Vạn Phúc", "Vĩnh Quỳnh", "Yên Mỹ"]
-                    },
-                    {
-                        district: "Huyện Thường Tín",
-                        wards: ["Dũng Tiến", "Hà Hồi", "Hiền Giang", "Hòa Bình", "Hồng Vân", "Khánh Hà", "Liên Phương", "Minh Cường", "Nghiêm Xuyên", "Nguyễn Trãi", "Nhị Khê", "Ninh Sở", "Quất Động", "Thắng Lợi", "Thống Nhất", "Thư Phú", "Tô Hiệu", "Tự Nhiên", "Vạn Điểm", "Vân Tảo", "Văn Bình", "Văn Phú", "Văn Tự", "Vân Tử", "Vũ Lăng", "Xà Cầu", "Duyên Thái"]
-                    },
-                ]
-            },
-            {
-                
-                city: "Hồ Chí Minh",
-                districts: [
-                    {
-                        district: "Quận 1",
-                        wards: ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang", "Nguyễn Thái Bình", "Phạm Ngũ Lão"]
-                    },
-                    {
-                        district: "Quận 2",
-                        wards: ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi"]
-                    },
-                    {
-                        district: "Quận 3",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
-                    },
-                    {
-                        district: "Quận 4",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 8", "Phường 9"]
-                    },
-                    {
-                        district: "Quận 5",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Quận 6",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Quận 7",
-                        wards: ["Tân Thuận Đông", "Tân Thuận Tây", "Tân Kiểng", "Tân Hưng", "Bình Thuận", "Phú Mỹ", "Tân Phong", "Tân Quy"]
-                    },
-                    {
-                        district: "Quận 8",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Quận 9",
-                        wards: ["Long Bình", "Long Phước", "Long Thạnh Mỹ", "Long Trường", "Phước Bình", "Phước Long A", "Phước Long B"]
-                    },
-                    {
-                        district: "Quận 10",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Quận 11",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Quận 12",
-                        wards: ["Thạnh Xuân", "Thạnh Lộc", "Thới An", "Tân Chánh Hiệp", "An Phú Đông", "Tân Thới Hiệp", "Tân Hưng Thuận"]
-                    },
-                    {
-                        district: "Tân Bình",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Tân Phú",
-                        wards: ["Hiệp Tân", "Hòa Thạnh", "Phú Thọ Hòa", "Phú Thạnh", "Phú Trung", "Sơn Kỳ", "Tân Qúy", "Tân Sơn Nhì"]
-                    },
-                    {
-                        district: "Bình Thạnh",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Gò Vấp",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Phú Nhuận",
-                        wards: ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8"]
-                    },
-                    {
-                        district: "Thủ Đức",
-                        wards: ["Bình Chiểu", "Bình Thọ", "Hiệp Bình Chánh", "Hiệp Bình Phước", "Linh Chiểu", "Linh Đông", "Linh Tây", "Linh Trung"]
-                    }
-                ]
-            }   
-        ];
-
         const citySelector = document.getElementById('city');
         const districtSelector = document.getElementById('district');
         const wardSelector = document.getElementById('ward');
