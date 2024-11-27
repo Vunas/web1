@@ -31,7 +31,7 @@
         </div>
         <div class="container__right--main">
             <div class="container__top">
-                TRANG TỔNG QUÁT CỦA CỬA HÀNG GUNDAM SHOP
+                TRANG CHỦ ADMIN
             </div>
             <div class="container__bottom">
                 <div onclick="showPageCustomer()" class="text__user">
@@ -165,9 +165,13 @@
          <div class="container__add--customer">
             <div class="contain__add--customer">
                 <h3>Thêm người dùng mới</h3>
+                <label for="">Tên khách hàng</label>
                 <input type="text" id="usernameAdd" placeholder="Username" required>
+                <label for="">Mật khẩu</label>
                 <input type="password" id="passwordAdd" placeholder="Password" required>
+                <label for="">Email</label>
                 <input type="email" id="emailAdd" placeholder="Email" required>
+                <label for="">Số điện thoại</label>
                 <input type="text" id="phoneAdd" placeholder="Số điện thoại" required>
                 <div class="button__save--add">
                     <button onclick="addCustomer()">Thêm</button>
@@ -180,9 +184,13 @@
         <div class="container__edit--customer">
             <div class="contain__edit--customer">
                 <h3>Chỉnh sửa thông tin người dùng</h3>
+                <label for="">Tên người dùng</label>
                 <input type="text" id="usernameEdit" placeholder="Username">
+                <label for="">Mật khẩu</label>
                 <input type="password" id="passwordEdit" placeholder="Password">
+                <label for="">Email</label>
                 <input type="email" id="emailEdit" placeholder="Email"> <!-- Thêm trường email -->
+                <label for="">Số điện thoại</label>
                 <input type="text" id="phoneEdit" placeholder="Số điện thoại"> <!-- Thêm trường số điện thoại -->
                 <div class="button__save--edit">
                     <button id="save__edit">Lưu</button>
@@ -193,12 +201,14 @@
 
         <!-- Đơn hàng -->
         <div id="formBill" action="">
+            <div class="div__bill">
+                <table id="tableBill">
+
+                </table>
+            </div>
             <div id="filterBill">
 
             </div>
-            <table id="tableBill">
-
-            </table>
         </div>
 
 
@@ -210,18 +220,6 @@
             <table id="tableCustomer">
 
             </table>
-        </div>
-
-
-        <!-- Thống kê -->
-        <div id="formRevenue">
-            <div id="filterStatistics"></div>
-            <table id="tableRevenue">
-
-            </table>
-        </div>
-
-        <div id="modal__StatisticsBill">
         </div>
 
         <!-- Xem chi tiết đơn hàng -->
@@ -251,13 +249,33 @@
             </table>
         </div>
 
+
+        <!-- Thống kê -->
+        <div id="formRevenue">
+            <div class="table__Revenue">
+                <table id="tableRevenue">
+
+                </table>
+            </div>
+            <div id="filterRevenue">
+
+            </div>
+        </div>
+
+        <div id="modal__StatisticsBill">
+        </div>
+
+
+        <!-- Khung thông báo customAlert -->
         <div class="customAlert">
             <div class="containAlert">
             </div>
         </div>
         <div id="footer"></div>
     </div>
+    <script src="./file/js/scripts.js"></script>
     <script src="./file/js/admin.js"></script>
+    
 </body>
 
 </html>
