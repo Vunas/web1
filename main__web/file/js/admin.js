@@ -397,7 +397,7 @@ function showDonHang(vitri) {
             while (j < DanhSachBill[i].cart.length) {
                 sum += (parseInt(DanhSachBill[i].cart[j][3])) * (parseInt(DanhSachBill[i].cart[j][4])) * 1000;
                 html += `<tr>
-                <td id="info" style="display: flex;align-items: center;"><img style="width:80px;height:80px;" src="`+ DanhSachBill[i].cart[j][0] + `" alt="">` + DanhSachBill[i].cart[j][1] + `</td>
+                <td id="info" style="display: flex;align-items: center;"><img style="width:80px;height:80px;" src="`+ DanhSachBill[i].cart[j][0] + `" alt=""> ` + DanhSachBill[i].cart[j][1] + `</td>
                 <td id="info">`+ DanhSachBill[i].cart[j][2] + `</td>
                 <td id="info">`+ DanhSachBill[i].cart[j][4] + `</td>
                 <td id="info">`+ ((DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4]) * 1000).toLocaleString() + `</td>
@@ -405,14 +405,23 @@ function showDonHang(vitri) {
                 if (j == DanhSachBill[i].cart.length)
                     html += `<tr id="twoChoose">
                            <input type="hidden" value="`+ i + `">
-                            <td id="close" onclick="closeViewDonHang()" colspan="1">CLOSE</td>
-                            <td id="savestt" onclick="saveStatus(this)" colspan="1">LƯU TRẠNG THÁI</td>
+                            <td id="close" onclick="closeViewDonHang()" >CLOSE</td>
+                            <td id="savestt" onclick="saveStatus(this)" >LƯU TRẠNG THÁI</td>
                             <td id="sumbill" colspan="2">TỔNG TIỀN : <span>` + sum.toLocaleString() + `</span><sup>VNĐ</sup></td>
                         </tr>`
             }
         }
     }
     document.querySelector("#tbody__viewDonHang").innerHTML = html;
+    let changeSTT = document.getElementById("changeStt");
+    let saveSTT= document.getElementById("savestt");
+    if(document.getElementById("formBill").style.display == "none"){
+        changeSTT.style.display= "none";
+        saveSTT.innerHTML="";
+    }else {
+        changeSTT.style.display= "unset";
+        saveSTT.innerHTML="Lưu trạng thái";
+    }
 }
 
 
@@ -445,25 +454,25 @@ let statuss = ["tất cả", "chưa xử lý", "đã xác nhận", "giao hàng t
 function createFilterBill() {
     let html=`<h2 style="text-align:center;">LỌC ĐƠN HÀNG</h2>`
     html += `<div id="locBill"><span id="title__filterStatus" >Trạng thái</span>
-    <select style="height:40px;width:150px" id="filter__status--bill"  name="" >`
+    <select style="height:40px;width:160px" id="filter__status--bill"  name="" >`
     for (let i = 0; i < statuss.length; i++) {
         html += `<option value="` + statuss[i] + `">` + statuss[i] + `</option>`
     }
     html+=`</select></div>`
     html+=`<div id=locBill>
              <span>Thời gian</span>
-             <input type="date" id="dStart" placeholder="dd/mm/yy" style="width:100px;height:40px;" ">
-             <input type="date" id="dEnd" placeholder="dd/mm/yy" style="width:100px;height:40px;" ">
+             <input type="date" id="dStart" placeholder="dd/mm/yy" style="width:80px;height:40px;" ">
+             <input type="date" id="dEnd" placeholder="dd/mm/yy" style="width:80px;height:40px;" ">
           </div>`
     html += `<div id="locBill"><span id="title__filterAddress">Tỉnh/ Thành</span>
-    <select onchange="createDistricts()" style="height:40px;width:150px;" name="" id="filter__city--bill">
+    <select onchange="createDistricts()" style="height:40px;width:140px;" name="" id="filter__city--bill">
         <option value="tất cả"> tất cả </option>`
     for (let i = 0; i < locations.length; i++) {
         html += `<option value="` + locations[i].city + `">` + locations[i].city + `</option>`
     }
     html += `</select></div>`
     html += `<div id="locBill"><span id="title__filterAddress">Quận</span>
-    <select style="height:40px;width:150px;" name="" id="filter__district--bill">
+    <select style="height:40px;width:200px;" name="" id="filter__district--bill">
         <option value="tất cả"> tất cả </option>`;
     html += `</select></div>`;
     html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
