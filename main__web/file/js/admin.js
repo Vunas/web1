@@ -463,7 +463,8 @@ function createFilterBill() {
     }
     html += `</select></div>`
     html += `<div id="locBill"><span id="title__filterAddress">Quận</span>
-    <select style="height:40px;width:150px;" name="" id="filter__district--bill">`
+    <select style="height:40px;width:150px;" name="" id="filter__district--bill">
+        <option value="tất cả"> tất cả </option>`;
     html += `</select></div>`;
     html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
     html+=`<button type="button" onclick="filterStatusTimeDistrict()" id="button__filterBill">TÌM</button>`;
@@ -494,6 +495,7 @@ function createDistricts(){
 function filterStatusTimeDistrict() {
     let filterStt = document.querySelector("#filter__status--bill").value;
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
+    let filterCity= document.querySelector("#filter__city--bill").value;
     let filterDis = document.querySelector("#filter__district--bill").value;
     let startD=(document.querySelector("#dStart").value);
     let endD=(document.querySelector("#dEnd").value);
@@ -507,8 +509,9 @@ function filterStatusTimeDistrict() {
         } else if (endD) {
             matchDay = bill.date <= endD;
         }
+        let matchCitys = (filterCity === "tất cả" || (Array.isArray(bill.location) && bill.location.some(city => city.city === filterCity)));
         let matchDistrict = (filterDis === "tất cả" || (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
-        return matchStatus && matchDay && matchDistrict ;
+        return matchStatus && matchDay && matchCitys && matchDistrict ;
     });
 
     // Hiển thị kết quả
