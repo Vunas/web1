@@ -1,4 +1,4 @@
-//---------------------------onload trang giỏ hàng----------------------------//
+//---------------------------onload trang ----------------------------//
 function loadData() {
   showMenu();
   checkLogin();
@@ -137,6 +137,7 @@ function convertSearch(array) {
   for (let i = 0; i < array.length; i++) {
     kq += ConvertHTMLSearch(array[i]);
   }
+  if(array.length == 0) kq=`<img src="./file/image/img__home/img5.jpg" alt="" style="width:50%; margin-left:20vw">`;
   item.innerHTML = kq + "</div>";
 }
 
