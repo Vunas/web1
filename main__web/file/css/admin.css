@@ -1033,7 +1033,8 @@ padding: 20px;
 padding-right: 30px;
 overflow: hidden;
 z-index: 102;
-animation: noti 3s;
+border-radius: 10px;
+animation: noti 4s;
 }
 
 #noti span{
@@ -1072,10 +1073,10 @@ from{
   left: -200px;
 }
 15%{
-  left: 0;
+  left: 60px;
 }
 85%{
-  left: 0;
+  left: 60px;
 }
 to{
   left: -600px;
