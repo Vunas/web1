@@ -26,7 +26,9 @@ body {
 }
 
  
-
+#PageMain{
+    background-color: var(--primary--color5);
+}
 
 
 
@@ -100,15 +102,6 @@ body {
 .container__left .nav2 li a:hover {
     text-decoration: underline; /* Gạch chân khi hover */
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -416,7 +409,17 @@ body {
 
 
 
-
+#searchP{
+    display: inline-block;
+    padding:5px;
+    width:300px;
+    background-color: var(--primary--color3);
+}
+#searchP input{
+    all: unset;
+    padding:5px;
+    width:90% ; 
+}
 
 .container__addP--products {
     background: rgba(0, 0, 0, .8);
@@ -933,7 +936,7 @@ body {
 #tableBill,
 .table__Revenue{
     flex: 1 0 65%;
-    min-width: 500px;
+    min-width: 700px;
     overflow: auto;
 }
 
