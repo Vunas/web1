@@ -1,7 +1,8 @@
 let DanhSachSanPham = JSON.parse(localStorage.getItem("product")) || [];
 function showArrayProduct() {
     let HTML = `<div class="card__items">
-                <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`;
+                <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>
+                <div id=searchP ><i class="fa-solid fa-magnifying-glass"></i><input id="searchInp" oninput="findP()" type="text" placeholder="Tìm kiếm sản phẩm"></div>`;
     let nodeContainerRightCard = document.querySelector("#formProducts");
     for (let i = 0; i < DanhSachSanPham.length; i++) {
         let htmlSanPham = showProduct(DanhSachSanPham[i]);
@@ -29,6 +30,22 @@ function showProduct(sanPham) {
      </div>`
     return html;
 }
+
+//tìm kiếm sản phẩm trong formProducts
+function findP(){
+    let allPrd=document.querySelectorAll(".card__item");
+    let searchInput=document.getElementById("searchInp").value.trim().toLowerCase();
+    console.log(searchInput);
+    allPrd.forEach(item=>{
+        if((item.innerText).toLowerCase().includes(searchInput)){
+            item.style.display="block";
+            item.style.display="flex";
+        }
+        else 
+            item.style.display="none";
+    })
+}
+
 
 function soluongProduct() {
     if(!localStorage.getItem("product")||localStorage.getItem("product")=="[]"){
@@ -70,7 +87,6 @@ function onloadAdmin() {
     soluongUser();
     soluongDoanhthu();
 }
-toMau();
 //show trang chủ
 function showpageMain() {
     document.querySelector("#formProducts").style.display = "none";
@@ -534,7 +550,10 @@ function filterStatusTimeDistrict() {
                 <th>Trạng thái</th>
                 <th>Chi tiết giỏ hàng</th>
         </thead>
-        <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có đơn hàng nào</td></tr></tbody>`;
+        <tbody>
+            <tr><td colspan="6"><img src="./file/image/img_admin/img5.jpg" alt="" style="max-width:100%"></td></tr>
+            <tr><td style="text-align:center;font-size:20px;" colspan="6">Không có đơn hàng nào</td></tr>
+        </tbody>`;
     } else {
         showArrayBill(arrayBillOfSTTANDDIS);
     }
@@ -917,7 +936,7 @@ function loadMatHang(){
 function showArrayMatHang(arr){
     let DanhSachBill=JSON.parse(localStorage.getItem("ArrayBill"));
     let html;
-    if(DanhSachBill.length==0||localStorage.getItem("ArrayBill")=="[]")
+    if(DanhSachBill.length==0||localStorage.getItem("ArrayBill")=="[]" || arr.length == 0)
         html=`<thead>
               <th>Ảnh</th>
               <th>Mặt Hàng</th>
@@ -925,7 +944,10 @@ function showArrayMatHang(arr){
               <th>Số Lượng</th>
               <th>Tổng giá</th>
               </thead>
-              <tbody><tr><td colspan=5>Không có mặt hàng nào</td></tr></tbody>` 
+              <tbody>
+                <tr><td colspan=5><img src="./file/image/img_admin/img5.jpg" alt="" style="width:auto; height: 400px"></td></tr>
+                <tr><td colspan=5><h1>Không có mặt hàng nào<h1></td></tr>
+              </tbody>` 
     else{
         html=`<thead>
               <th>Ảnh</th>
@@ -1054,9 +1076,12 @@ function loadKhachHang(){
 // hàm show thống kê khách hàng 
 function showArrayKhachHang(arr) {
     let html="";
-    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]"){
+    if (!localStorage.getItem("ArrayBill")||localStorage.getItem("ArrayBill")=="[]" || arr.length == 0){
         html = `<thead><th>STT</th><th>Tên khách hàng</th><th>Địa chỉ</th><th>Thời gian</th><th>Trạng thái</th><th>Chi tiết giỏ hàng</th></thead>
-            <tbody><tr><td style="text-align:center;font-size:20px;" colspan="6">Không có khách hàng nào !</td></tr></tbody>`;
+            <tbody>
+                <tr><td style="text-align:center;font-size:20px;" colspan="6"><img src="./file/image/img_admin/img6.jpg" alt="" style="max-width:100%; height:600px"></img></td></tr>
+                <tr><td style="text-align:center;font-size:20px;" colspan="6"><h1>Không có khách hàng nào !</h1></td></tr>
+            </tbody>`;
     }
     else {
         html = `<thead><th>Mã khách hàng</th>
