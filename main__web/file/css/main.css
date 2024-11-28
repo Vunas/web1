@@ -914,6 +914,7 @@ tbody tr {
   color: black;
   font-size: 16px;
   padding: 10px;
+  border-radius: 10px;
 }
 .gioHang {
   text-align: right;
@@ -1051,7 +1052,9 @@ tbody tr {
   cursor: pointer;
   border: 1px solid;
   width: 170px;
+  margin-top: 10px;
   padding: 5px;
+  border-radius: 10px;
 }
 
 .view__input button:hover,
@@ -1250,6 +1253,7 @@ footer .footer__bot{
   padding-right: 30px;
   overflow: hidden;
   z-index: 102;
+  border-radius: 10pxa;
   animation: noti 3s;
 }
 
