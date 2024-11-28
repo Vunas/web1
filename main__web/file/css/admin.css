@@ -387,11 +387,6 @@ body {
     margin: 0 10px;
     font-size: 20px;
     border-radius: 10px;
-    background-color: burlywood;
-}
-
-.card__item--right button:nth-child(3){
-    background-color: #ff7b7b;
 }
 
 .card__item--right button:hover{
@@ -732,12 +727,19 @@ body {
 .contain__add--customer,.contain__edit--customer{
     width: 70%;
     background: var(--primary--color3);
+    border-radius: 15px;
 }
 .contain__add--customer h3,.contain__add--customer input,.contain__edit--customer h3,.contain__edit--customer input{
     display: block;
     width: 90%;
     padding:10px;
     margin:0px 10px 10px 10px;
+}
+.contain__add--customer h3,.contain__edit--customer h3{
+    text-align: center;
+    font-size: 25px;
+    margin: auto;
+    border-bottom: 5px solid var(--primary--color5);
 }
 .contain__add--customer label,.contain__edit--customer label{
     margin-left: 15px;
@@ -751,6 +753,11 @@ body {
 .button__save--add,.button__save--edit{
     text-align: center;
     padding:10px;
+}
+.button__save--add button,.button__save--edit button{
+    margin: 0 10px;
+    height: 30px;
+    border-radius: 10px;
 }
 .contain__add--customer button:hover,.contain__edit--customer button:hover{
     background-color: var(--primary--color5);
@@ -773,11 +780,15 @@ body {
     width: 100%;
     border: 1.2px solid black;
     box-shadow: 5px 2px 5px 1px;
+    border-radius: 10px;
 }
 #formCustomer table thead{
     background-color: #D2B48C;
     height:30px;
     font-size: 17px;
+}
+#formCustomer table thead th{
+    border-radius: 10px;
 }
 #formCustomer table tbody td{
     justify-content: center;
@@ -785,28 +796,29 @@ body {
     height:50px;
     background-color: var(--primary--color3);
 }
+#formCustomer table tbody td button:hover{
+    background-color: var(--primary--color5);
+}
 #button__add--customer{
     all: unset;
-    padding: 5px 20px;
+    font-size: 16px;
     border: 1px solid;
     cursor: pointer;
-    margin:10px;
+    margin: 10px 30px ;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: var(--primary--color7);
 }
-.button__edit--customer,.button__delete--customer{
+.button__edit--customer,.button__delete--customer,.button__lock--customer{
     all: unset;
     padding: 5px 10px;
     cursor: pointer;
     margin:5px;
+    border-radius: 10px;
 }
 #button__add--customer:hover{
     background-color: #D2B48C;
-}
-
-.button__lock--customer{
-    all: unset;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin:5px;
 }
 
 
@@ -933,11 +945,17 @@ body {
 }
 
 .div__bill,
-#tableBill,
 .table__Revenue{
     flex: 1 0 65%;
     min-width: 700px;
     overflow: auto;
+}
+
+#table
+
+#tableBill{
+    width: 100%;
+    min-height: 600px;
 }
 
 .div__bill::-webkit-scrollbar,
@@ -948,6 +966,7 @@ body {
 #formRevenue table{
     width: 100%;
     min-width: 700px;
+    min-height: 700px;
     text-align: center;
     border: 1px solid;
     border-radius: 10px;
