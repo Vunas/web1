@@ -381,7 +381,7 @@ function showBill(bill, soThuTu) {
         <td>`+ bill.date + `</td>  
         <td>`+ bill.note + `</td> 
         <td>`+ bill.status + `</td>
-        <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Xem chi tiết đơn hàng</button></td>
+        <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Chi tiết đơn hàng</button></td>
             </tr>`
     return html;
 }
@@ -825,6 +825,8 @@ function createFilterRevenue() {
     document.getElementById("filterRevenue").innerHTML = html;
 }
 
+
+
 function resetLoadStatistics(){
     createFilterRevenue();
     loadStatistics();
@@ -845,7 +847,30 @@ function filStatisticsTime() {
             matchDay = bill.date <= endD;
         return matchDay;
     });
+    createTotalRvenue(arrayTime);
     return arrayTime;
+}
+
+function createTotalRvenue(array){
+    let dStartT=document.getElementById("dStartT").value || "tất cả";
+    let dEndT= document.getElementById("dEndT").value || "hiện tại";
+    let sum= [0,0,0];
+    for (let i = 0; i < array.length; i++) {
+        sum[0]+= array[i].sum;
+        for (let j = 0; j < array[i].cart.length; j++) {
+            sum[2]+= array[i].cart[j][4];
+            
+        }
+    }
+    let html= `<h2>THỐNG KÊ</h2>
+        <h3>Từ: `+dStartT+`</h3>
+        <h3>Đến: `+dEndT+`</h3>
+        <h3 id="sum__Revenue">Tổng doanh thu: `+(sum[0]* 1000).toLocaleString()+` VND </h3>
+        <h3 id="sum__Revenue">Tổng đơn hàng : `+array.length+` </h3>
+        <h3 id="sum__Products"></h3>
+        <h3 id="sum__numbers">Tổng số lượng sản phẩm đã bán: `+sum[2]+` </h3>
+        <img src="./file/image/img_admin/img4.jpg" alt="" style="height:140px; width:100%">`
+    document.getElementById("total__Revenue").innerHTML= html;
 }
 
 //load trang thống kê
@@ -884,6 +909,7 @@ function loadMatHang(){
     } else if(staMH == 3){
         arrayMatHang = arrayMatHang.sort((a, b) => a[4] - b[4]); // Sắp xếp tăng dần
     }
+    document.getElementById("sum__Products").innerHTML= `Tổng mặt hàng đã bán: `+arrayMatHang.length+` `; 
     showArrayMatHang(arrayMatHang);
 }            
 
@@ -978,7 +1004,7 @@ function showBillStatistics(array){
                         <td>`+array[i].note+`</td>
                         <td>`+array[i].date+`</td>
                         <td>`+(array[i].sum *1000).toLocaleString()+` VND</td>
-                        <td><button onclick="showDonHang(`+array[i].index+`)">Xem chi tiết đơn hàng</button></td>
+                        <td><button onclick="showDonHang(`+array[i].index+`)">Chi tiết đơn hàng</button></td>
                 </tr>`;
     }
     html+= `</tbody>
@@ -1021,6 +1047,7 @@ function loadKhachHang(){
     } else if(staMH == 3){
         arrayKhachHang   = arrayKhachHang .sort((a, b) => a.sum - b.sum); // Sắp xếp tăng dần
     };
+    document.getElementById("sum__Products").innerHTML= `Tổng khách hàng đã mua : `+arrayKhachHang.length+` `; 
     showArrayKhachHang(arrayKhachHang);  
 }
 
