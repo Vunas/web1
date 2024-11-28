@@ -786,7 +786,7 @@ function updateCustomer(index) {
         customAlert("Email không hợp lệ!", "warning");
         return false;
     }
-    if(!DanhSachKhachHang[index].email==" "){
+    if(DanhSachKhachHang[index].email==" "){
         customAlert("Bạn chưa nhập email!", "warning");
         return false;
     }
