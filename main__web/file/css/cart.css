@@ -32,6 +32,7 @@ body{
 }
 #MenuCart .activem a{
     background-color: var(--main--color);
+    border-radius: 10px;
 }
 .contain{
     overflow-x: auto;
@@ -127,7 +128,6 @@ table th{
     padding:20px;
 }
 .agree__order{
-    /* padding: 0 50px; */
     width: 100%;
     text-align: right;
     margin-bottom: 5px;
@@ -138,6 +138,7 @@ table th{
     padding: 10px 20px;
     cursor: pointer;
     background-color: var(--main--color);
+    border-radius: 10px;
 }
 .agree__order button:hover,
 .agree__order button:active{
