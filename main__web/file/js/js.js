@@ -1,11 +1,11 @@
-//---------------------------onload trang ----------------------------//
+//---------------------------onload trang ------------------------------------------------------------------------------//
 function loadData() {
   showMenu();
   checkLogin();
 }
 
 var menuList = [
-  "ALL",
+  "tất cả",
   "GUNDAM",
   "MÔ HÌNH TĨNH",
   "FIGURE-RISE",
@@ -100,7 +100,7 @@ function filtersearch() {
   }
   //lọc theo loại
   let fil = document.getElementById("type__option-search").value.toLowerCase();
-  if (fil == "all") {
+  if (fil == "tất cả") {
   } else {
     for (let i = 0; i < array.length; i++) {
       if (!array[i].name.toLowerCase().includes(fil)) {
