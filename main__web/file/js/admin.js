@@ -1,14 +1,81 @@
+//-------------------------------------------------------------------------------------------------------------------------//
+//-----------------------------------------Trang ADMIN-----------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------------------//
+
+
+
+//-------------------------------Trang sản phẩm---------------------------------------------------------------------------//
 let DanhSachSanPham = JSON.parse(localStorage.getItem("product")) || [];
+var menuList = ["tất cả","GUNDAM","MÔ HÌNH TĨNH","FIGURE-RISE","DỤNG CỤ","DRAGON BALL","FIGURE",];
+// tạo lọc sản phẩm
+function createFilterProducts() {
+    let html='';
+    html=`<h2>TÌM KIẾM SẢN PHẨM</h2>`;
+    html += `   <div id=searchP ><i class="fa-solid fa-magnifying-glass"></i><input id="searchInp" type="text" placeholder="Tìm kiếm sản phẩm"></div>
+                <div id="locSanPham"><span id="sta__sta">Loại sản phẩm
+                <select style="height:40px" name="" id="type__product-option">`
+    for (let i = 0; i < menuList.length; i++) {
+        html += `<option>`+menuList[i]+`</option>`  
+    }
+    html += `</select></span></div>
+            <div class="Price__Products">
+            <h3>Giá </h3>
+            <input id="min__search" placeholder="Từ" type="number" />
+            <h3> -</h3>
+            <input id="max__search" placeholder="Đến" type="number" />
+            <h3>nghìn</h3>
+            </div>`;
+    html+=`<button type="button" onclick="filterProducts()" id="button__filterBill">TÌM</button>`;
+    html+=`<button type="button" onclick="showPageProduct()" id="button__filterBill">Tải lại</button>`;
+    document.getElementById("filter__Products").innerHTML = html;
+}
+// lọc sản phẩm
+function filterProducts(){
+    let s = document.getElementById("searchInp").value.toLowerCase();
+    let type = document.getElementById("type__product-option").value.toLowerCase();
+    let min = document.getElementById("min__search").value;
+    min = min === "" ? 0 : parseFloat(min);
+    let max = document.getElementById("max__search").value;
+    max = max === "" ? 100000 : parseFloat(max);
+    let array = [];
+    let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
+    for (let i = 0; i < DanhSachSanPham.length; i++) {
+        if (DanhSachSanPham[i].introduce.toLowerCase().includes(s)) {
+          array.push(DanhSachSanPham[i]);
+        }
+    }
+    if (type != "tất cả") {
+      for (let i = 0; i < array.length; i++) {
+        if (!array[i].name.toLowerCase().includes(type) || array[i].price < min || array[i].price > max) {
+          array.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    showArrayProductFil(array);
+}
+// show sản phẩm vừa lọc
+function showArrayProductFil(array) {
+    let HTML = `<button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`
+                
+    let nodeContainerRightCard = document.querySelector(".card__items");
+    for (let i = 0; i < array.length; i++) {
+        let htmlSanPham = showProduct(array[i]);
+        HTML = HTML + htmlSanPham;
+    }
+    if(array.length == 0) HTML=`<img src="./file/image/img__home/img5.jpg" alt="" style="width:400px; margin:150px">`;
+    nodeContainerRightCard.innerHTML = HTML;
+}
+ // show trang sản phẩm
 function showArrayProduct() {
-    let HTML = `<div class="card__items">
-                <button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>
-                <div id=searchP ><i class="fa-solid fa-magnifying-glass"></i><input id="searchInp" oninput="findP()" type="text" placeholder="Tìm kiếm sản phẩm"></div>`;
-    let nodeContainerRightCard = document.querySelector("#formProducts");
+    createFilterProducts()
+    let HTML = `<button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`
+                
+    let nodeContainerRightCard = document.querySelector(".card__items");
     for (let i = 0; i < DanhSachSanPham.length; i++) {
         let htmlSanPham = showProduct(DanhSachSanPham[i]);
         HTML = HTML + htmlSanPham;
     }
-    HTML = HTML + '</div>'
     nodeContainerRightCard.innerHTML = HTML;
 }
 function showProduct(sanPham) {
@@ -30,22 +97,6 @@ function showProduct(sanPham) {
      </div>`
     return html;
 }
-
-//tìm kiếm sản phẩm trong formProducts
-function findP(){
-    let allPrd=document.querySelectorAll(".card__item");
-    let searchInput=document.getElementById("searchInp").value.trim().toLowerCase();
-    console.log(searchInput);
-    allPrd.forEach(item=>{
-        if((item.innerText).toLowerCase().includes(searchInput)){
-            item.style.display="block";
-            item.style.display="flex";
-        }
-        else 
-            item.style.display="none";
-    })
-}
-
 
 function soluongProduct() {
     if(!localStorage.getItem("product")||localStorage.getItem("product")=="[]"){
@@ -100,7 +151,7 @@ function showpageMain() {
 
 //show trang sản phẩm
 function showPageProduct() {
-    document.querySelector("#formProducts").style.display = "block";
+    document.querySelector("#formProducts").style.display = "flex";
     document.querySelector(".container__right--main").style.display = "none";
     document.querySelector("#formBill").style.display = "none";
     document.querySelector("#formCustomer").style.display = "none";
@@ -855,7 +906,7 @@ function resetLoadStatistics(){
 function filStatisticsTime() {
     let startD = document.getElementById("dStartT").value;
     let endD = document.getElementById("dEndT").value ;
-    let ArrayBill=JSON.parse(localStorage.getItem("ArrayBill"));
+    let ArrayBill=JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let arrayTime = ArrayBill.filter(bill => {
         let matchDay = true;
         if (startD && endD)
@@ -934,7 +985,7 @@ function loadMatHang(){
 
 //show danh sách mặt hàng
 function showArrayMatHang(arr){
-    let DanhSachBill=JSON.parse(localStorage.getItem("ArrayBill"));
+    let DanhSachBill=JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let html;
     if(DanhSachBill.length==0||localStorage.getItem("ArrayBill")=="[]" || arr.length == 0)
         html=`<thead>
