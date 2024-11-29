@@ -1231,3 +1231,37 @@ function noti(s, n) {
         i--;
     }
 }
+
+//KHACH HANG
+let DanhSachKhachHang = JSON.parse(localStorage.getItem("users")) || [];
+
+// Hiển thị danh sách khách hàng
+function showArrayCustomer() {
+    let HTML = `<table id="tableCustomer">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Passowrd</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+    
+    for (let i = 0; i < DanhSachKhachHang.length; i++) {
+        HTML += `<tr>
+                    <td>${DanhSachKhachHang[i].username}</td>
+                    <td>${DanhSachKhachHang[i].password}</td>
+                 </tr>`;
+    }
+    
+    HTML += `</tbody></table>`;
+    
+    document.querySelector(".container__right--card").innerHTML = HTML;
+}
+
+// Hiển thị trang khách hàng
+function showPageCustomer() {
+    document.querySelector(".container__right--card").style.display = "block";
+    document.querySelector(".container__right--main").style.display = "none";
+    document.querySelector("#formBill").style.display = "none";
+    showArrayCustomer(); // Gọi hàm hiển thị danh sách khách hàng
+}
