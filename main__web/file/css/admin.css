@@ -356,7 +356,6 @@ body {
 
 .card__items{
   flex: 1 0 62%;
-  min-width: 200px;
 }
 
 .card__item {
@@ -364,11 +363,31 @@ body {
   border: 1px solid gray;
   margin: 5px;
   box-shadow: 0.5px 0.5px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px 0;
+  animation: appearance linear 0.3s;
 }
+
+@keyframes appearance {
+  from {
+    margin-top: 500px;
+    opacity: 0.5;
+    filter: blur(1px);
+    scale: (1.5);
+  }
+  to {
+    margin: 5px;
+    opacity: 1;
+    filter: blur(0);
+    scale: (1);
+  }
+}
+
 
 .card__item--left img {
   width: 110px;
   height: 100px;
+  border-radius: 15px;
 }
 
 .card__item--middle {
@@ -653,6 +672,7 @@ body {
 #button__filterBill:hover,
 #button__filterRevenue:hover {
   background-color: #d2b48c;
+  scale: 1.1;
 }
 #tableBill tr td {
   text-align: center;
@@ -782,7 +802,7 @@ body {
   overflow: auto;
 }
 #formCustomer table {
-  min-width: 700px;
+  min-width: 500px;
   width: 100%;
   border: 1.2px solid black;
   box-shadow: 5px 2px 5px 1px;
@@ -804,6 +824,7 @@ body {
 }
 #formCustomer table tbody td button:hover {
   background-color: var(--primary--color5);
+  scale: 1.2;
 }
 #button__add--customer {
   all: unset;
@@ -926,6 +947,7 @@ body {
   margin: 20px 20px 40px 20px;
   border-radius: 10px;
   overflow: hidden;
+  animation: appearance linear 0.3s;
 }
 
 #filterBill,#filter__Products {
@@ -958,8 +980,8 @@ body {
 
 .div__bill,
 .table__Revenue {
-  flex: 1 0 65%;
-  min-width: 700px;
+  flex: 1 0 62%;
+  min-width: 500px;
   overflow: auto;
 }
 
@@ -975,7 +997,7 @@ body {
 
 #formRevenue table {
   width: 100%;
-  min-width: 700px;
+  min-width: 500px;
   min-height: 700px;
   text-align: center;
   border: 1px solid;
@@ -1089,5 +1111,18 @@ body {
   }
   to {
     left: -600px;
+  }
+}
+
+@media (max-width: 954px) {
+  #filter__Products,
+  #filterBill,
+  .section__Revenue{
+    order: 1;
+  }
+  .table__Revenue,
+  .div__bill,
+  .card__items{
+    order: 2;
   }
 }
