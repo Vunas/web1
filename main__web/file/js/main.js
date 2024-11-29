@@ -1,6 +1,6 @@
 //Tạo sản phẩm và lưu vào localStorage
 var menuList = [
-  "ALL",
+  "tất cả",
   "GUNDAM",
   "Mô hình tĩnh",
   "FIGURE-RISE",
@@ -523,7 +523,7 @@ function showProduct() {
   }
   var array = [];
   let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
-  if (!tmp[1] || name == "all") {
+  if (!tmp[1] || decodeURIComponent(name) == "tất cả") {
     array = DanhSachSanPham;
   } else {
     name = decodeURIComponent(name);
@@ -581,7 +581,7 @@ function filter() {
   let search = document.getElementById("type__option").value.toLowerCase();
   let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
   var array = [];
-  if (search == "all") {
+  if (search == "tất cả") {
     array = DanhSachSanPham;
   } else {
     for (let i = 0; i < DanhSachSanPham.length; i++) {
