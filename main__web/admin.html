@@ -1,284 +1,1127 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./file/css/admin.css">
-    <link rel="stylesheet" href="./file/css/fontawesome-free-6.6.0-web/css/all.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Quản Lý Cửa Hàng</title>
-</head>
-<body onload="onloadAdmin()">
-    <div class="container">
-        <div class="container__left">
-            <div class="logo">
-                <img src="./file/image/img_brand/logo2.png" alt="">
-            </div>
-            <div class="contain">
-                <ul class="nav1">
-                    <li id="PageMain" onclick="showpageMain()"><i class="fa fa-house"></i> Trang chủ</li>
-                    <li id="PageProducts" onclick="showPageProduct()"><i class="fa fa-link" aria-hidden="true"></i> Sản phẩm</li>
-                    <li id="PageCustomer" onclick="showPageCustomer()"><i class="fas fa-user"></i> Khách hàng</li>
-                    <li id="PageBill" onclick="showPageBill()"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Đơn hàng</li>
-                    <li id="PageRevenue" onclick="showPageRevenue()" ><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê</li>
-                </ul>
-                <ul class="nav2">
-                    <li><a href="./main.html"><i class="fa fa-reply" aria-hidden="true"></i> Trang chủ</a></li>
-                    <li><a onclick="logOutAdmin()" href="./main.html"><i class="fa fa-sign-in"
-                                aria-hidden="true"></i> Đăng xuất</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="container__right--main">
-            <div class="container__top">
-                TRANG CHỦ ADMIN
-            </div>
-            <div class="container__bottom">
-                <div onclick="showPageCustomer()" class="text__user">
-                    <div class="text__user--top">
-                        <img src="./file/image/img_admin/img1.jpg" alt="">
-                        <div id="soluongUser" ></div>
-                    </div>
-                    <div class="text__user--bottom">
-                        <h3>Khách hàng</h3>
-                        <p class="text__infor">Khách hàng là cá nhân, tổ chức hoặc doanh nghiệp mua hoặc sử dụng sản phẩm và dịch vụ mà một
-                            công ty cung cấp.
-                            Khách hàng là một yếu tố quan trọng đối với bất kỳ doanh nghiệp nào,
-                            vì họ chính là nguồn doanh thu và quyết định sự thành công của một tổ chức trên thị trường.
-                        </p>
-                    </div>
-                </div>
-                <div class="text__product">
-                    <div onclick="showPageProduct()" class="text__product--top">
-                        <img src="./file/image/img_admin/img2.jpg" alt="">
-                        <div id="soluongProduct"></div>
-                    </div>
-                    <div class="text__product--bottom">
-                        <h3>Sản phẩm</h3>
-                        <p class="text__infor">Sản phẩm là bất kỳ thứ gì được tạo ra hoặc cung cấp để đáp ứng nhu cầu hoặc mong muốn của con
-                            người.
-                            Sản phẩm có thể ở dạng hữu hình (vật chất) hoặc vô hình (dịch vụ, ý tưởng).</p>
-                    </div>
-                </div>
-                <div class="text__revenue">
-                    <div onclick="showPageRevenue()" class="text__revenue--top">
-                        <img src="./file/image/img_admin/img3.jpg" alt="">
-                        <div id="soluongDoanhthu"></div>
-                    </div>
-                    <div class="text__revenue--bottom">
-                        <h3>Doanh thu</h3>
-                        <p class="text__infor">Doanh thu (revenue) là tổng giá trị các lợi ích kinh tế mà doanh nghiệp thu được trong kỳ kế toán,
-                            phát sinh từ các hoạt động sản xuất, kinh doanh thông thường của doanh nghiệp, góp phần làm tăng vốn chủ sở hữu</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="formProducts">
-            <div class="card__items"></div>
-            <div id="filter__Products"></div>
-        </div>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        <!-- Thêm sản phẩm -->
-        <div class="container__addP--products">
-            <div class="contain__addP--products">
-                <i class="far fa-window-close"></i>
-                <div class="input__addP--img">
-                    <div class="background__addP--img1">
-                        <img id="imgPreview1__addP" src="" alt="">
-                        <input type="file" name="" id="myFileInput__addP" onchange="chooseFileimg1(this)">
-                    </div>
-                    <div class="background__addP--img2">
-                        <img id="imgPreview2__addP" src="" alt="">
-                        <input type="file" name="" id="myFileInput__addP" onchange="chooseFileimg2(this)">
-                    </div>
-                </div>
-                <div class="info__products">
-                    <div class="input__addP--name">
-                        <p>Tên sản phẩm</p>
-                        <input type="text" name="" id="name__addP" placeholder="Nhập tên sản phẩm">
-                    </div>
-                    <div class="input__addP--introduce">
-                        <p>Giới thiệu sản phẩm</p>
-                        <input type="text" name="" id="introduce__addP" placeholder="Nhập giới thiệu sản phẩm">
-                    </div>
-                    <div class="input__addP--price">
-                        <p>Giá sản phẩm</p>
-                        <input type="text" name="" id="price__addP" placeholder="Nhập giá sản phẩm">
-                    </div>
-                    <div class="input__addP--detail">
-                        <p>Thông tin sản phẩm</p>
-                        <input type="text" name="" id="detail1__addP" placeholder="Nhập vào thông tin 1 của sản phẩm">
-                        <input type="text" name="" id="detail2__addP" placeholder="Nhập vào thông tin 2 của sản phẩm">
-                        <input type="text" name="" id="detail3__addP" placeholder="Nhập vào thông tin 3 của sản phẩm">
-                        <input type="text" name="" id="detail4__addP" placeholder="Nhập vào thông tin 4 của sản phẩm">
-                    </div>
-                    <button onclick="addProduct()" class="button__addP">
-                        Tạo sản phẩm
-                    </button>
-                </div>
-            </div>
-        </div>
+:root {
+  --primary--color2: #e3f1b6;
+  --primary--color3: #ffffff;
+  --primary--color4: rgb(250, 173, 31);
+  --primary--color5: #d2b48c;
+  --primary--color6: #ffba66;
+  --primary--color7: #31bb88;
+}
 
-        <!-- Sửa sản phẩm -->
-        <div class="container__changeP--products">
-            <div class="contain__changeP--products">
-                <i onclick="closeshowInputChangeProduct()" class="far fa-window-close"></i>
-                <div class="input__changeP--img">
-                    <div class="background__changeP--img1">
-                        <button class="button__changeIMG1">Bỏ ảnh</button>
-                        <img id="imgPreview1__changeP" src="" alt="">
-                        <input type="file" name="" id="myFileInput__changeP" onchange="chooseFile1(this)">
-                    </div>
-                    <div class="background__changeP--img2">
-                        <button class="button__changeIMG2">Bỏ ảnh</button>
-                        <img id="imgPreview2__changeP" src="" alt="">
-                        <input type="file" name="" id="myFileInput__changeP" onchange="chooseFile2(this)">
-                    </div>
-                </div>
-                <div class="contain__products">
-                    <div class="input__changeP--name">
-                        <p>Tên sản phẩm</p>
-                        <input type="text" name="" id="name__changeP" placeholder="Nhập tên sản phẩm">
-                    </div>
-                    <div class="input__changeP--introduce">
-                        <p>Giới thiệu sản phẩm</p>
-                        <input type="text" name="" id="introduce__changeP" placeholder="Nhập giới thiệu sản phẩm">
-                    </div>
-                    <div class="input__changeP--price">
-                        <p>Giá sản phẩm</p>
-                        <input type="text" name="" id="price__changeP" placeholder="Nhập giá sản phẩm">
-                    </div>
-                    <div class="input__changeP--detail">
-                        <p>Thông tin sản phẩm</p>
-                        <input type="text" name="" id="detail1__changeP" placeholder="Nhập vào thông tin 1 của sản phẩm">
-                        <input type="text" name="" id="detail2__changeP" placeholder="Nhập vào thông tin 2 của sản phẩm">
-                        <input type="text" name="" id="detail3__changeP" placeholder="Nhập vào thông tin 3 của sản phẩm">
-                        <input type="text" name="" id="detail4__changeP" placeholder="Nhập vào thông tin 4 của sản phẩm">
-                    </div>
-                    <button class="button__changeP">
-                        LƯU
-                    </button>
-                </div>
-            </div>
-        </div>
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary--color3);
+  font-size: 14px;
+  height: 100vh;
+}
 
-         <!-- Modal thêm người dùng -->
-         <div class="container__add--customer">
-            <div class="contain__add--customer">
-                <h3>Thêm người dùng mới</h3>
-                <label for="">Tên khách hàng</label>
-                <input type="text" id="usernameAdd" placeholder="Username" required>
-                <label for="">Mật khẩu</label>
-                <input type="password" id="passwordAdd" placeholder="Password" required>
-                <label for="">Email</label>
-                <input type="email" id="emailAdd" placeholder="Email" required>
-                <label for="">Số điện thoại</label>
-                <input type="text" id="phoneAdd" placeholder="Số điện thoại" required>
-                <div class="button__save--add">
-                    <button onclick="addCustomer()">Thêm</button>
-                    <button onclick="closeInputAddCustomer()">Hủy</button>
-                </div>
-            </div>
-        </div>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-        <!-- Modal chỉnh sửa người dùng -->
-        <div class="container__edit--customer">
-            <div class="contain__edit--customer">
-                <h3>Chỉnh sửa thông tin người dùng</h3>
-                <label for="">Tên người dùng</label>
-                <input type="text" id="usernameEdit" placeholder="Username">
-                <label for="">Mật khẩu</label>
-                <input type="password" id="passwordEdit" placeholder="Password">
-                <label for="">Email</label>
-                <input type="email" id="emailEdit" placeholder="Email"> <!-- Thêm trường email -->
-                <label for="">Số điện thoại</label>
-                <input type="text" id="phoneEdit" placeholder="Số điện thoại"> <!-- Thêm trường số điện thoại -->
-                <div class="button__save--edit">
-                    <button id="save__edit">Lưu</button>
-                    <button onclick="closeInputEditCustomer()">Hủy</button>
-                </div>
-            </div>
-        </div>
+#PageMain {
+  background-color: var(--primary--color5);
+}
 
-        <!-- Đơn hàng -->
-        <div id="formBill" action="">
-            <div class="div__bill">
-                <table id="tableBill">
+/* Đặt khung container__left cố định */
+.container__left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%; /* Chiều cao full màn hình */
+  width: 60px; /* Chiều rộng ban đầu khi không hover */
+  background-color: #2c3e50; /* Màu nền */
+  overflow: hidden; /* Ẩn nội dung thừa */
+  transition: width 0.3s ease; /* Hiệu ứng mở rộng */
+  z-index: 1000; /* Đảm bảo khung luôn trên các thành phần khác */
+}
 
-                </table>
-            </div>
-            <div id="filterBill">
+/* Mở rộng khi hover */
+.container__left:hover {
+  width: 200px; /* Chiều rộng khi hover */
+}
 
-            </div>
-        </div>
+/* Logo thu nhỏ */
+.container__left .logo img {
+  width: 40px; /* Logo nhỏ */
+  margin: 10px; /* Khoảng cách */
+  transition: width 0.3s ease; /* Hiệu ứng thay đổi kích thước */
+}
+
+/* Mở rộng logo khi hover */
+.container__left:hover .logo img {
+  width: 100px; /* Logo lớn hơn khi hover */
+}
+
+/* Danh sách ul */
+.container__left ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Các mục li */
+.container__left ul li {
+  color: white;
+  padding: 15px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap; /* Tránh xuống dòng */
+  overflow: hidden; /* Ẩn nội dung thừa */
+  text-overflow: ellipsis; /* Thêm dấu "..." nếu bị cắt */
+  transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Icon và text li */
+.container__left ul li i {
+  margin-right: 10px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+/* Hover trên li */
+.container__left ul li:hover {
+  background-color: #34495e; /* Màu khi hover */
+}
+
+/* Định dạng các liên kết trong nav2 */
+.container__left .nav2 li a {
+  color: white;
+  text-decoration: none;
+}
+
+.container__left .nav2 li a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.container__right--main {
+  width: 100%;
+  margin-left: 60px;
+}
+
+.container__top {
+  width: 100%;
+  background-color: var(--primary--color5);
+  text-align: center;
+  font-size: 25px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.container__bottom {
+  height: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+}
+
+.text__user,
+.text__product,
+.text__revenue {
+  flex: 1 0 300px;
+  max-width: 100%;
+  height: 500px;
+  cursor: pointer;
+  text-align: center;
+  margin: 15px;
+  border-top: 0.5px solid gray;
+  border-radius: 10px;
+  transition: 0.5s all;
+}
+
+.text__revenue img,
+.text__product img,
+.text__user img {
+  mix-blend-mode: multiply;
+}
+
+.text__user:hover p,
+.text__product:hover p,
+.text__revenue:hover p {
+  display: none;
+}
+
+.text__user:hover,
+.text__product:hover,
+.text__revenue:hover {
+  transform: scale(1.1);
+  color: var(--primary--color3);
+  background-color: var(--primary--color5);
+  font-size: 250px;
+}
+
+.text__user:hover #soluongUser,
+.text__product:hover #soluongProduct,
+.text__revenue:hover #soluongDoanhthu {
+  color: var(--primary--color3);
+}
+
+.text__user h3,
+.text__product h3,
+.text__revenue h3 {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.text__user--top,
+.text__product--top,
+.text__revenue--top {
+  position: relative;
+  padding: 30px 0px 0px 0px;
+}
+#soluongUser,
+#soluongProduct,
+#soluongDoanhthu {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  color: black;
+  text-align: center;
+  align-content: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.text__user--top img,
+.text__product--top img,
+.text__revenue--top img {
+  width: 100%;
+  height: 300px;
+}
+
+.text__infor {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.button__viewBill {
+  all: unset;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+.button__viewBill:hover {
+  background-color: var(--primary--color5);
+}
+
+.nav1 li,
+.nav2 li {
+  transition: all 0.5s;
+  padding: 10px 0;
+}
+.nav1 li:hover,
+.nav2 li:hover {
+  background-color: var(--primary--color5);
+  border-radius: 10px;
+}
+
+@media (min-width: 755px) and (max-width: 1024px) {
+  .container__left .contain .nav1 li {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 755px) {
+  .container__top {
+    font-size: 20px;
+    padding-top: 12px;
+  }
+  .text__infor {
+    font-size: 13.5px;
+  }
+  .text__user--bottom h3,
+  .text__product--bottom h3,
+  .text__revenue--bottom h3 {
+    font-size: 16px;
+  }
+  .text__user--top img,
+  .text__product--top img,
+  .text__revenue--top img {
+    height: 135px;
+  }
+  .container__left .contain .nav1 li {
+    font-size: 15px;
+  }
+  .logo img {
+    height: 200px;
+  }
+  .container__left {
+    height: 120vh;
+  }
+  .nav1 li,
+  .nav2 li,
+  .nav2 li a {
+    font-size: 15px;
+    margin: 20px 0px;
+  }
+  .button__viewBill {
+    min-height: 100%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 600px) {
+  .container__top {
+    font-size: 15px;
+    padding-top: 15px;
+  }
+  .text__infor {
+    font-size: 12.5px;
+  }
+  .text__user--bottom h3,
+  .text__product--bottom h3,
+  .text__revenue--bottom h3 {
+    font-size: 15px;
+  }
+  .text__user,
+  .text__product,
+  .text__revenue {
+    width: 40%;
+  }
+  .text__user--top img,
+  .text__product--top img,
+  .text__revenue--top img {
+    height: 140px;
+  }
+  .text__user--top #soluongUser,
+  .text__product--top #soluongProduct,
+  .text__revenue--top #soluongDoanhthu {
+    font-size: 15px;
+  }
+
+  .nav1 li,
+  .nav2 li a {
+    font-size: 15px;
+    margin: 20px 0px;
+  }
+
+  .logo img {
+    height: 130px;
+  }
+  #table__viewDonHang {
+    min-width: 100%;
+  }
+  .contain__changeP--products,
+  .contain__addP--products {
+    min-width: 100%;
+  }
+  .button__viewBill {
+    min-height: 80px;
+  }
+  #filterBill {
+    flex-wrap: wrap;
+  }
+  .contain__add--customer,
+  .contain__edit--customer {
+    min-width: 100%;
+  }
+  #formCustomer {
+    overflow-x: scroll;
+  }
+}
+
+#formProducts {
+  width: 100%;
+  margin-left: 60px;
+  display: none;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  background-color: rgb(244, 238, 238);
+}
+#formProducts::-webkit-scrollbar {
+  display: none;
+}
+
+#addP {
+  all: unset;
+  border: 0.1px solid;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+
+#addP:hover {
+  background-color: var(--primary--color5);
+}
+
+.card__items{
+  flex: 1 0 62%;
+}
+
+.card__item {
+  display: flex;
+  border: 1px solid gray;
+  margin: 5px;
+  box-shadow: 0.5px 0.5px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px 0;
+}
+
+.card__item--left img {
+  width: 110px;
+  height: 100px;
+  border-radius: 15px;
+}
+
+.card__item--middle {
+  width: 60%;
+}
+
+.card__name,
+.card__introduce {
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.card__item--right {
+  width: 30%;
+  text-align: right;
+}
+.card__item--right p {
+  font-size: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+.card__item--right button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px;
+  margin: 0 10px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.card__item--right button:hover {
+  background-color: #d2b48c;
+}
+
+.Price__Products{
+  display: flex;
+}
+.Price__Products h3{
+  margin: 10px;
+}
+.Price__Products input{
+  height: 40px;
+  width: 60px;
+}
+
+#searchP {
+  display: inline-block;
+  padding: 5px;
+  width: 300px;
+  background-color: var(--primary--color3);
+}
+#searchP input {
+  all: unset;
+  padding: 5px;
+  width: 90%;
+}
 
 
-        <!-- Khách hàng -->
-        <div id="formCustomer" action="">
-            <div id="filterCustomer">
+.container__addP--products {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  inset: unset;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  align-content: center;
+  justify-items: center;
+  overflow-y: scroll;
+}
 
-            </div>
-            <table id="tableCustomer">
+.container__addP--products::-webkit-scrollbar {
+  display: none;
+}
 
-            </table>
-        </div>
+.activeContainerAddProducts {
+  display: block;
+}
 
-        <!-- Xem chi tiết đơn hàng -->
-        <div class="modal__viewDonHang">
-            <table id="table__viewDonHang">
-                <thead id="thead">
-                    <th>Products</th>
-                    <th>Introduce</th>
-                    <th>Number</th>
-                    <th>Price</th>
-                </thead>
-                <tbody id="tbody__viewDonHang">
+.contain__addP--products {
+  border: 1.5px solid gray;
+  width: 75%;
+  height: 90vh;
+  background-color: var(--primary--color3);
+  position: relative;
+  display: flex;
+  padding: 10px;
+  min-height: 450px;
+}
 
-                </tbody>
-                <tfoot id="tfoot__viewDonHang">
-                    <tr>
-                        <td colspan="4">
-                            <select name="" id="changeStt" onchange="changeStatus()">
-                                <option selected value="chưa xử lí">chưa xử lí</option>
-                                <option value="đã xác nhận">đã xác nhận</option>
-                                <option value="giao hàng thành công">giao hàng thành công</option>
-                                <option value="đã hủy">đã hủy</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+.fa-window-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.input__addP--img,
+.info__products {
+  width: 50%;
+}
+.background__addP--img1,
+.background__addP--img2 {
+  width: 85%;
+  height: 50%;
+}
+#imgPreview1__addP,
+#imgPreview2__addP {
+  width: 100%;
+  height: 85%;
+}
+.input__addP--img,
+.input__addP--name,
+.input__addP--introduce,
+.input__addP--price,
+.input__addP--detail {
+  margin: 20px 0px;
+}
+.input__addP--img input,
+.input__addP--name input,
+.input__addP--introduce input,
+.input__addP--price input,
+.input__addP--detail input {
+  width: 85%;
+  height: 30px;
+}
 
+.container__changeP--products {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  inset: unset;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  align-content: center;
+  justify-items: center;
+  overflow-y: scroll;
+}
+.container__changeP--products::-webkit-scrollbar {
+  display: none;
+}
+.contain__changeP--products {
+  display: flex;
+  width: 70%;
+  height: 90vh;
+  min-height: 600px;
+  background-color: var(--primary--color3);
+  padding: 10px;
+  position: relative;
+}
+.fa-window-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.input__changeP--img,
+.contain__products {
+  width: 50%;
+}
+.background__changeP--img1,
+.background__changeP--img2 {
+  width: 85%;
+  height: 45%;
+  margin: 15px 0px;
+}
+#imgPreview1__changeP,
+#imgPreview2__changeP {
+  width: 100%;
+  height: 85%;
+}
+.input__changeP--name,
+.input__changeP--introduce,
+.input__changeP--price,
+.input__changeP--detail {
+  margin: 20px 0px;
+}
+.input__changeP--name input,
+.input__changeP--introduce input,
+.input__changeP--price input,
+.input__changeP--detail input {
+  width: 85%;
+  height: 30px;
+}
+.button__addP,
+.button__changeP {
+  all: unset;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid;
+  width: 85%;
+  height: 30px;
+}
+.button__addP:hover,
+.button__changeP:hover {
+  background-color: #d2b48c;
+}
+.button__changeIMG1,
+.button__changeIMG2 {
+  width: 100%;
+  cursor: pointer;
+  height: 30px;
+  font-size: 15px;
+}
 
-        <!-- Thống kê -->
-        <div id="formRevenue">
-            <div class="table__Revenue">
-                <table id="tableRevenue">
+.customAlert {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  justify-items: center;
+  align-content: center;
+}
+.containAlert {
+  width: 40%;
+  height: 150px;
+  background-color: var(--primary--color3);
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+  font-size: 25px;
+  align-content: center;
+  position: relative;
+}
+#button__Alert {
+  all: unset;
+  cursor: pointer;
+  border: 0.5px solid;
+  padding: 0px 15px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  background-color: var(--primary--color2);
+}
+#button__Alert:hover {
+  background-color: var(--primary--color2);
+}
 
-                </table>
-            </div>
-            <div class="section__Revenue">
-                <div id="filterRevenue"></div>
-                <div id="total__Revenue"></div>
-            </div>
-        </div>
+#formBill {
+  width: 100%;
+  margin-left: 60px;
+  display: none;
+  flex-wrap: wrap;
+  height: 120vh;
+  overflow: auto;
+  background-color: rgb(244, 238, 238);
+}
 
-        <div id="modal__StatisticsBill">
-        </div>
-        
+#filterBill {
+  width: 40%;
+  background: var(--primary--color3);
+  height: 260px;
+  justify-items: center;
+  box-shadow: 2px 1px 1px 1px;
+  margin: 20px;
+}
+#locBill {
+  margin-top: 20px;
+  font-size: 20px;
+}
+#theadBill {
+  font-size: 17px;
+  text-align: center;
+  height: 30px;
+  background-color: var(--primary--color5);
+}
+#theadBill th {
+  border-radius: 10px;
+}
+#button__filterBill,
+#button__filterRevenue {
+  all: unset;
+  border: 0.5px solid;
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+#button__filterBill:hover,
+#button__filterRevenue:hover {
+  background-color: #d2b48c;
+  scale: 1.1;
+}
+#tableBill tr td {
+  text-align: center;
+  height: 50px;
+  background-color: var(--primary--color3);
+}
+.modal__viewDonHang {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  inset: unset;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  align-content: center;
+  justify-items: center;
+  overflow-y: scroll;
+  z-index: 1;
+}
+#formBill::-webkit-scrollbar {
+  display: none;
+}
+.modal__viewDonHang::-webkit-scrollbar {
+  display: none;
+}
+#table__viewDonHang {
+  width: 75%;
+  margin: 50px auto;
+  color: black;
+  border-radius: 15px;
+  background-color: white;
+}
+#thead__viewDonHang {
+  font-size: 17px;
+  height: 30px;
+}
+#info {
+  text-align: center;
+  height: 85px;
+}
+#sumbill {
+  height: 40px;
+  text-align: center;
+}
+#close,
+#savestt {
+  text-align: center;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+#changeStt {
+  width: 100%;
+  height: 30px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+}
 
+.container__add--customer,
+.container__edit--customer {
+  position: fixed;
+  inset: unset;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+  width: 100%;
+  display: none;
+  align-content: center;
+  justify-items: center;
+  overflow-y: scroll;
+}
+.contain__add--customer,
+.contain__edit--customer {
+  width: 70%;
+  background: var(--primary--color3);
+  border-radius: 15px;
+}
+.contain__add--customer h3,
+.contain__add--customer input,
+.contain__edit--customer h3,
+.contain__edit--customer input {
+  display: block;
+  width: 90%;
+  padding: 10px;
+  margin: 0px 10px 10px 10px;
+}
+.contain__add--customer h3,
+.contain__edit--customer h3 {
+  text-align: center;
+  font-size: 25px;
+  margin: auto;
+  border-bottom: 5px solid var(--primary--color5);
+}
+.contain__add--customer label,
+.contain__edit--customer label {
+  margin-left: 15px;
+}
+.contain__add--customer button,
+.contain__edit--customer button {
+  all: unset;
+  border: 1px solid;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+.button__save--add,
+.button__save--edit {
+  text-align: center;
+  padding: 10px;
+}
+.button__save--add button,
+.button__save--edit button {
+  margin: 0 10px;
+  height: 30px;
+  border-radius: 10px;
+}
+.contain__add--customer button:hover,
+.contain__edit--customer button:hover {
+  background-color: var(--primary--color5);
+}
 
-        <!-- Khung thông báo customAlert -->
-        <div class="customAlert">
-            <div class="containAlert">
-            </div>
-        </div>
-        <div id="footer"></div>
-    </div>
-    <script src="./file/js/scripts.js"></script>
-    <script src="./file/js/admin.js"></script>
-    
-</body>
+#formCustomer {
+  width: 100%;
+  margin-left: 60px;
+  display: none;
+  background-color: rgb(244, 238, 238);
+  height: 120vh;
+  overflow: auto;
+}
+#formCustomer table {
+  min-width: 500px;
+  width: 100%;
+  border: 1.2px solid black;
+  box-shadow: 5px 2px 5px 1px;
+  border-radius: 10px;
+}
+#formCustomer table thead {
+  background-color: #d2b48c;
+  height: 30px;
+  font-size: 17px;
+}
+#formCustomer table thead th {
+  border-radius: 10px;
+}
+#formCustomer table tbody td {
+  justify-content: center;
+  text-align: center;
+  height: 50px;
+  background-color: var(--primary--color3);
+}
+#formCustomer table tbody td button:hover {
+  background-color: var(--primary--color5);
+  scale: 1.2;
+}
+#button__add--customer {
+  all: unset;
+  font-size: 16px;
+  border: 1px solid;
+  cursor: pointer;
+  margin: 10px 30px;
+  padding: 10px;
+  font-weight: 500;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+.button__edit--customer,
+.button__delete--customer,
+.button__lock--customer {
+  all: unset;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 10px;
+}
+#button__add--customer:hover {
+  background-color: #d2b48c;
+}
 
-</html>
+/*thong ke*/
+#modal__StatisticsBill {
+  /* z-index: 1; */
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  justify-items: center;
+  background-color: rgba(200, 200, 200, 0.5);
+  overflow-x: scroll;
+  display: none;
+}
+
+#table__viewbills {
+  width: 90%;
+  margin: 50px auto 50px 70px;
+  color: black;
+  background-color: white;
+}
+
+#closetb__vbls {
+  width: 100%;
+  text-align: end;
+}
+
+#closetb__vbls button {
+  all: unset;
+  cursor: pointer;
+  margin: 10px;
+  rotate: 45deg;
+  font-size: 20px;
+}
+
+#table__viewbills table {
+  width: 100%;
+  box-shadow: 5px 2px 5px 1px;
+}
+
+#table__viewbills th {
+  height: 40px;
+  background-color: var(--primary--color5);
+}
+#table__viewbills td {
+  text-align: center;
+  height: 50px;
+}
+#table__viewbills table td button {
+  all: unset;
+  padding: 3px;
+  cursor: pointer;
+  border: 0.1px solid;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+
+#table__viewbills table td button:hover {
+  background-color: var(--primary--color5);
+}
+
+/* css của ahuy */
+#formRevenue {
+  width: 100%;
+  margin-left: 60px;
+  display: none;
+  flex-wrap: wrap;
+  overflow: auto;
+  background-color: rgb(244, 238, 238);
+}
+#formRevenue::-webkit-scrollbar {
+  display: none;
+}
+
+.section__Revenue {
+  flex: 1 0 30%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#filter__Products,
+#filterBill,
+#total__Revenue,
+#filterRevenue {
+  background: linear-gradient(
+    to bottom,
+    var(--primary--color2),
+    var(--primary--color3)
+  );
+  flex: 1 0 40%;
+  min-width: 300px;
+  height: 330px;
+  justify-items: center;
+  box-shadow: 2px 1px 1px 1px;
+  padding: 10px;
+  margin: 20px 20px 40px 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  animation: filters linear 0.5s;
+}
+
+@keyframes filters {
+  from {
+    position: relative;
+    left: 90px;
+    opacity: 0.5;
+    filter: blur(1px);
+    scale: (1.5);
+  }
+  to {
+    left: 0;
+    opacity: 1;
+    filter: blur(0);
+    scale: (1);
+  }
+}
+
+#filterBill,#filter__Products {
+  flex: 1 0 25%;
+}
+
+#filter__Products div{
+  margin-top: 20px;
+  padding: 10px 5px;
+}
+
+#total__Revenue h3 {
+  padding: 3px 0;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+#total__Revenue img {
+  mix-blend-mode: multiply;
+}
+#locThongKe {
+  margin-top: 15px;
+}
+#locThongKe select {
+  width: 170px;
+}
+#filterStatistics span {
+  margin: 5px;
+}
+
+.div__bill,
+.table__Revenue {
+  flex: 1 0 62%;
+  min-width: 500px;
+  overflow: auto;
+}
+
+#table #tableBill {
+  width: 100%;
+  min-height: 600px;
+}
+
+.div__bill::-webkit-scrollbar,
+.table__Revenue::-webkit-scrollbar {
+  display: none;
+}
+
+#formRevenue table {
+  width: 100%;
+  min-width: 500px;
+  min-height: 700px;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 5px 2px 5px 1px;
+}
+#formRevenue table thead th {
+  height: 40px;
+  font-size: 15px;
+  background-color: var(--primary--color5);
+  border-radius: 10px;
+}
+
+#formRevenue table tbody td {
+  height: 40px;
+  background-color: var(--primary--color3);
+}
+
+#formRevenue table tbody td:first-child {
+  height: 85px;
+  width: 100px;
+}
+#formRevenue table tbody td:first-child img {
+  width: 100%;
+  height: 100%;
+}
+
+#formRevenue table tbody td button {
+  all: unset;
+  cursor: pointer;
+  padding: 5px;
+  border: 0.1px solid;
+  border-radius: 10px;
+  background-color: var(--primary--color7);
+}
+
+#formRevenue table tbody td button:hover {
+  background-color: var(--primary--color5);
+}
+
+@media (max-width: 1024px) {
+  .table__Revenue {
+    width: 100%;
+  }
+}
+
+#totalStatistics {
+  width: 100%;
+  padding: 10px;
+}
+
+#anhTk {
+  width: 40px;
+}
+
+#noti {
+  position: fixed;
+  top: 50px;
+  left: -600px;
+  height: 60px;
+  width: auto;
+  min-width: 300px;
+  padding: 20px;
+  padding-right: 30px;
+  overflow: hidden;
+  z-index: 102;
+  border-radius: 10px;
+  animation: noti 4s;
+}
+
+#noti span {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 25px;
+  rotate: 45deg;
+  cursor: pointer;
+}
+
+#noti span:hover {
+  color: black;
+}
+
+.success {
+  background-color: rgba(7, 222, 97, 0.8);
+  border-left: 5px solid #04aa6d;
+  color: rgb(228, 241, 228);
+}
+
+.warning {
+  background-color: rgb(255, 208, 2);
+  border-left: 5px solid #ff9800;
+  color: rgb(30, 30, 29);
+}
+
+.error {
+  background-color: rgb(235, 143, 143);
+  border-left: 5px solid #ed0d0d;
+  color: rgb(73, 8, 8);
+}
+
+@keyframes noti {
+  from {
+    left: -200px;
+  }
+  15% {
+    left: 60px;
+  }
+  85% {
+    left: 60px;
+  }
+  to {
+    left: -600px;
+  }
+}
+
+@media (max-width: 954px) {
+  #filter__Products,
+  #filterBill,
+  .section__Revenue{
+    order: 1;
+  }
+  .table__Revenue,
+  .div__bill,
+  .card__items{
+    order: 2;
+  }
+}
