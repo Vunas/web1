@@ -76,6 +76,7 @@ function showArrayProduct() {
         let htmlSanPham = showProduct(DanhSachSanPham[i]);
         HTML = HTML + htmlSanPham;
     }
+    if(DanhSachSanPham.length == 0) HTML=`<img src="./file/image/img__home/img5.jpg" alt="" style="width:400px; margin:150px">`;
     nodeContainerRightCard.innerHTML = HTML;
 }
 function showProduct(sanPham) {
@@ -417,7 +418,6 @@ function showArrayBill(arr) {
                 <th>Địa chỉ</th>
                 <th>Phương thức</th>
                 <th>Thời gian</th>
-                <th>Ghi chú</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết đơn hàng</th>
             </thead>
@@ -433,9 +433,9 @@ function showArrayBill(arr) {
 
 //Show ra tất cả đơn hàng
 function showBill(bill, soThuTu) {
-    let diaChi= bill.location[0];
+    let diaChi= bill.location;
     if(diaChi){
-        diaChi= bill.location[0].street + " " + bill.location[0].ward +" "+ bill.location[0].district +" " + bill.location[0].city;
+        diaChi= bill.location.street + " " + bill.location.ward +" "+ bill.location.district +" " + bill.location.city;
     }
     else diaChi="";
     let html = '';
@@ -446,7 +446,6 @@ function showBill(bill, soThuTu) {
         <td>`+ diaChi + `</td>
         <td>`+ bill.method + `</td>  
         <td>`+ bill.date + `</td>  
-        <td>`+ bill.note + `</td> 
         <td>`+ bill.status + `</td>
         <td style="text-align:center;"><button class="button__viewBill" type="button" style="cursor:pointer;height:30px;" onclick="showDonHang(`+ soThuTu + `)">Chi tiết đơn hàng</button></td>
             </tr>`
@@ -571,13 +570,15 @@ function createDistricts(){
 function filterStatusTimeDistrict() {
     let filterStt = document.querySelector("#filter__status--bill").value;
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
-    let filterCity= document.querySelector("#filter__city--bill").value;
+    let filterCity = document.querySelector("#filter__city--bill").value;
     let filterDis = document.querySelector("#filter__district--bill").value;
-    let startD=(document.querySelector("#dStart").value);
-    let endD=(document.querySelector("#dEnd").value);
+    let startD = document.querySelector("#dStart").value;
+    let endD = document.querySelector("#dEnd").value;
+
     let arrayBillOfSTTANDDIS = DanhSachBill.filter(bill => {
         let matchStatus = (filterStt === "tất cả" || bill.status === filterStt);
-        let matchDay=true;
+
+        let matchDay = true;
         if (startD && endD) {
             matchDay = bill.date >= startD && bill.date <= endD;
         } else if (startD) {
@@ -585,9 +586,11 @@ function filterStatusTimeDistrict() {
         } else if (endD) {
             matchDay = bill.date <= endD;
         }
-        let matchCitys = (filterCity === "tất cả" || (Array.isArray(bill.location) && bill.location.some(city => city.city === filterCity)));
-        let matchDistrict = (filterDis === "tất cả" || (Array.isArray(bill.location) && bill.location.some(district => district.district === filterDis)));
-        return matchStatus && matchDay && matchCitys && matchDistrict ;
+
+        let matchCity = (filterCity === "tất cả" || (bill.location && bill.location.city === filterCity));
+        let matchDistrict = (filterDis === "tất cả" || (bill.location && bill.location.district === filterDis));
+
+        return matchStatus && matchDay && matchCity && matchDistrict;
     });
 
     // Hiển thị kết quả
@@ -1055,7 +1058,6 @@ function showBillStatistics(array){
                         <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
                         <th>Phương thức</th>
-                        <th>Ghi chú</th>
                         <th>Thời Gian</th>
                         <th>Tổng</th>
                         <th>Chỉ tiết đơn hàng</th>
@@ -1064,7 +1066,7 @@ function showBillStatistics(array){
     for (let i = 0; i < array.length; i++) {
         let diaChi= array[i].location;
         if(diaChi){
-            diaChi= array[i].location[0].street + " " + array[i].location[0].ward +" "+ array[i].location[0].district +" " + array[i].location[0].city;
+            diaChi= array[i].location.street + " " + array[i].location.ward +" "+ array[i].location.district +" " + array[i].location.city;
         }
         else diaChi="";
         html+= `<tr>
@@ -1074,7 +1076,6 @@ function showBillStatistics(array){
                         <td>`+diaChi+`</td>
                         <td>`+array[i].phone+`</td>
                         <td>`+array[i].method+`</td>
-                        <td>`+array[i].note+`</td>
                         <td>`+array[i].date+`</td>
                         <td>`+(array[i].sum *1000).toLocaleString()+` VND</td>
                         <td><button onclick="showDonHang(`+array[i].index+`)">Chi tiết đơn hàng</button></td>
