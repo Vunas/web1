@@ -27,6 +27,7 @@ body {
     z-index: 2;
 }
 #contain__pay, #contain__showin4 {
+    position: relative;
     width: 500px;
     max-width: 90%;
     max-height: 600px;
@@ -36,7 +37,18 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: deta 0.5s ease;
 }
+@keyframes deta{
+    from{
+        opacity: 0;
+        top: -20%;
+    }
+    to{
+        opacity: 1;
+        top: 0;
+    }
+  }
 #contain__showin4 {
     height: 100vh;
 }
@@ -135,6 +147,7 @@ body {
     font-weight: bold;
     position: relative;
     color: var(--text-color);
+    margin-bottom: 15px;
 }
 
 #title__showin4 h2::before,
