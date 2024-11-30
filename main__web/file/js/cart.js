@@ -42,7 +42,6 @@ function pay() {
         case__payment.style.display = "block";
         if (localStorage.getItem("gioHang"))
             Transaction__payment();
-        showCart();
     } else {
         noti("ban phai dang nhap moi mua duoc hang", 1);
     }
@@ -143,45 +142,29 @@ function showCart() {
   if (localStorage.getItem("gioHang"))
     gioHang = JSON.parse(localStorage.getItem("gioHang"));
   let html = " ";
-  if (
-    localStorage.getItem("gioHang") == null ||
-    localStorage.getItem("gioHang") == "[]"
-  ) {
-    html += `<tr><td colspan="6" style="height:60px;">Không có sản phẩm nào trong giỏ hàng</td></tr>`;
+  if (localStorage.getItem("gioHang") == null ||localStorage.getItem("gioHang") == "[]") {
+    html += `<tr><td colspan="6" style="height:60px;font-size:15px;">Không có sản phẩm nào trong giỏ hàng</td></tr>`;
+    document.getElementById("pay").innerHTML=`<div class="agree__order">
+        <a id="backToMain" href="./main.html">Quay lại cửa hàng <--</a>
+      </div>`;
   }
   else {
     let sum = 0;
     for (let i = 0; i < gioHang.length; i++) {
       sum += gioHang[i][3] * gioHang[i][4];
-      html +=
-        `<tr>
-            <td style="display: flex;align-items: center;"><img src="` +
-        gioHang[i][0] +
-        `" alt="">` +
-        gioHang[i][1] +
-        `</td>
-            <td><p><span class="introduce_product">` +
-        gioHang[i][2] +
-        `</span></p></td>
-            <td><p><span>` +
-        gioHang[i][3] +
-        ".000" +
-        `</span><sup>VNĐ</sup></p></td>
-            <td>
-            <input id="inputHidden" type="hidden" value="` +
-        i +
-        `">
-            <button onclick="quantityDown(this)" class="upQuantity"><i class="fa fa-minus"></i></button>
-            <input onchange="totalItem(this)" type="text" id="inputCart" value="` +
-        gioHang[i][4] +
-        `" min="0">
-            <button onclick="quantityUp(this)" class="downQuantity"><i class="fa fa-plus"></i></button>
-            </td>
-            <td class="totalTr">` +
-        (gioHang[i][3] * gioHang[i][4] * 1000).toLocaleString() +
-        `</td>
-            <td><span onclick="deleteItemCart(this)">Xóa</span></td>
-            </tr>`;
+      html +=`<tr>
+        <td style="display: flex;align-items: center;"><img src="` +gioHang[i][0] +`" alt="">` +gioHang[i][1] +`</td>
+        <td><p><span class="introduce_product">` +gioHang[i][2] +`</span></p></td>
+        <td><p><span>` +gioHang[i][3] +".000" +`</span><sup>VNĐ</sup></p></td>
+        <td>
+        <input id="inputHidden" type="hidden" value="` +i +`">
+        <button onclick="quantityDown(this)" class="upQuantity"><i class="fa fa-minus"></i></button>
+        <input onchange="totalItem(this)" type="text" value="` +gioHang[i][4] +`" min="0">
+        <button onclick="quantityUp(this)" class="downQuantity"><i class="fa fa-plus"></i></button>
+        </td>
+        <td class="totalTr">` +(gioHang[i][3] * gioHang[i][4] * 1000).toLocaleString() +`</td>
+        <td><span onclick="deleteItemCart(this)">Xóa</span></td>
+        </tr>`;
       if (i == gioHang.length - 1)
         html +=
           `<tr style="height:40px;font-size:14px;"><td colspan="6">THÀNH TIỀN:<span class="totalPrice">` +
@@ -207,14 +190,13 @@ function showHoaDon() {
   let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
   document.getElementById("myhead").innerHTML = `<tr>
           <th>Mã hóa đơn</th>
-          <th>ngày</th>
+          <th>Ngày</th>
           <th>Tên người nhận</th>
           <th>Tên tài khoản</th>
           <th>Địa chỉ</th>
           <th>Số điện thoại</th>
-          <th>Ghi chú</th>
           <th>Tổng giá</th>
-          <th>trạng thái</th>
+          <th>Trạng thái</th>
           <th>xem chi tiết</th>
         </tr>`;
 
@@ -222,46 +204,25 @@ function showHoaDon() {
     if (ArrayBill[i].username == userLogin.username) {
       let diaChi= ArrayBill[i].location[0];
       if(diaChi){
-          diaChi= ArrayBill[i].location[0].street + " " + ArrayBill[i].location[0].ward +" "+ ArrayBill[i].location[0].district +" " + ArrayBill[i].location[0].city;
+          diaChi= ArrayBill[i].location[0].street + ", " + ArrayBill[i].location[0].ward +", "+ ArrayBill[i].location[0].district +", " + ArrayBill[i].location[0].city;
       }
       else diaChi="";
       let note= ArrayBill[i].note;
-      if(!note) note= "Không có ghi chú";
-      kq +=
-        `<tr>
-            <td>M` +
-        ArrayBill[i].index +
-        `</td>
-            <td>` +
-        ArrayBill[i].date +
-        `</td>
-            <td>` +
-        ArrayBill[i].name +
-        `</td>
-        <td>` +
-        ArrayBill[i].username +
-        `</td>
-        <td>` +
-        diaChi +
-        `</td>
-        <td>` +
-        ArrayBill[i].phone +
-        `</td>
-        <td>` +
-        note +
-        `</td>
-         <td>` +
-        (ArrayBill[i].sum*1000).toLocaleString() +
-        ` VND</td>
-         <td>` +
-        ArrayBill[i].status +
-        `</td>
+      kq +=`<tr>
+            <td>M` +ArrayBill[i].index +`</td>
+            <td>` +ArrayBill[i].date +`</td>
+            <td>` +ArrayBill[i].name +`</td>
+            <td>` +ArrayBill[i].username +`</td>
+            <td>` +diaChi +`</td>
+            <td>` +ArrayBill[i].phone +`</td>
+            <td>` +(ArrayBill[i].sum*1000).toLocaleString() +` VND</td>
+            <td>` +ArrayBill[i].status +`</td>
             <td><button style="width: unset" onclick="detail(`+ i + `)">Chi tiết</button></td>
           </tr>`;
     }
   }
   if(kq == ""){
-    kq = `<tr><td style="height:60px" colspan="10"> Không có hóa đơn nào </td></tr>`;
+    kq = `<tr><td style="height:60px;font-size:15px;" colspan="10"> Không có hóa đơn nào </td></tr>`;
   }
   document.getElementById("myCart").innerHTML = kq;
 }
@@ -368,7 +329,7 @@ function showHistoryCart() {
     }
   }
   if(kq == ""){
-    kq = `<tr><td style="height:60px" colspan="7"> Không có sản phẩm nào </td></tr>`;
+    kq = `<tr><td style="height:60px;font-size:15px;" colspan="7"> Không có sản phẩm nào </td></tr>`;
   }
   document.getElementById("myCart").innerHTML = kq;
 }
