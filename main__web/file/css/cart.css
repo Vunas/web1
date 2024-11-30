@@ -81,10 +81,6 @@ tbody tr td button{
     border-radius: 10px;
 }
 
-tbody tr td button:hover{
-    scale: 1.2;
-}
-
 tbody tr td:nth-child(4){
     text-wrap: nowrap;
 }
@@ -93,14 +89,17 @@ tbody tr td:nth-child(6) span{
     border: 0.1px solid;
     padding: 5px;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 tbody tr td span:hover{
     background-color: var(--main--color);
+    scale: 1.5;
 }
 
 tbody tr td button:hover{
     background-color: var(--main--color);
+    scale: 1.2;
 }
 
 tbody tr td input{
