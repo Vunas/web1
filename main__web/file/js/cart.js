@@ -167,7 +167,7 @@ function showCart() {
         </tr>`;
       if (i == gioHang.length - 1)
         html +=
-          `<tr style="height:40px;font-size:14px;"><td colspan="6">THÀNH TIỀN:<span class="totalPrice">` +
+          `<tr style="height:40px;font-size:14px;"><td colspan="6">THÀNH TIỀN:<span id="total__Price" class="totalPrice">` +
           (sum * 1000).toLocaleString() +
           `</span></td></tr>`;
     }
