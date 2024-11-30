@@ -459,14 +459,6 @@ body {
   padding: 10px;
   min-height: 450px;
 }
-
-.fa-window-close {
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
 .input__addP--img,
 .info__products {
   width: 50%;
@@ -526,6 +518,11 @@ body {
   right: 8px;
   cursor: pointer;
   font-size: 1.5rem;
+}
+.fa-window-close:hover{
+  scale: 1.5;
+  rotate: 180deg;
+  transition: 0.5s;
 }
 .input__changeP--img,
 .contain__products {
@@ -999,8 +996,6 @@ body {
   min-width: 500px;
   min-height: 700px;
   text-align: center;
-  border: 1px solid;
-  border-radius: 10px;
   box-shadow: 5px 2px 5px 1px;
 }
 #formRevenue table thead th {
