@@ -378,7 +378,6 @@ document.getElementById("signup-form").onsubmit = function (e) {
     phone: phone,
     email: email,
     isLocked: false,
-    location: {}
   };
 
   userArray.push(newUser);
