@@ -67,6 +67,10 @@ nav ul li .nav__item {
   margin: auto;
 }
 
+nav ul li .nav__item:hover{
+  scale: 1.2;
+}
+
 .nav__item-bars {
   margin-top: 5px;
   display: none;
@@ -1134,6 +1138,12 @@ tbody tr {
   cursor: pointer;
 }
 
+.close__infor:hover{
+  transition: 0.3s;
+  scale: 1.5;
+  rotate: 405deg;
+}
+
 .view__item--left {
   width: 50%;
   align-self: center;
@@ -1159,6 +1169,7 @@ tbody tr {
 }
 
 footer {
+  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
@@ -1177,7 +1188,7 @@ footer div ul {
 }
 
 footer div ul li {
-  font-size: 16px;
+  font-size: 14px;
   padding: 5px 0;
   list-style-type: none;
 }
