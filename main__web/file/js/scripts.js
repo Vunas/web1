@@ -935,24 +935,40 @@ const locations = [
 ];
 function Transaction__payment() {
     document.getElementById("modal__pay").style.display = "block";
-    let htmlIforaddress = `<label>Địa chỉ : <input id="pay__street" placeholder="Nhập số nhà, tên đường"></span>`
+    let htmlIforaddress = `<label>Địa chỉ : <input type="text" id="pay__street" placeholder="Nhập số nhà, tên đường"></label>`
     htmlIforaddress += `<label>Tỉnh/Thành Phố : <select id="pay__city" onchange="updateDistrict();updateWard()">
               <option value="Chọn tỉnh/thành phố">Chọn tỉnh/thành phố</option>`
-    for (let i = 0; i < locations.length; i++) {
+    for (let i = 0; i < locations.length; i++)
         htmlIforaddress += `<option value="` + locations[i].city + `">` + locations[i].city + `</option>`
-    }
     htmlIforaddress += `</select></label>`
     htmlIforaddress += `<label>Quận/Huyện : <select onchange="updateWard()" id="pay__district">
                    <option value="Chọn quận/huyện">Chọn quận/huyện</option>
                    </select></label>`
-    htmlIforaddress += `<span>Phường/Xã : <select  id="pay__ward">
+    htmlIforaddress += `<label>Phường/Xã : <select  id="pay__ward">
                    <option value="Chọn phường/xã">Chọn phường/xã</option>
                    </select></label>`
+    htmlIforaddress+=`<label>Bạn có muốn dùng địa chỉ tài khoản<input onclick="addressApperance()" id="useAccountAddress" type="radio" ></label>`
     document.getElementById("address__pay").innerHTML = htmlIforaddress;
     let i = 1;
     let htmlInforoption = `<button onclick="closePay(` + i + `)" id="back__pay">Quay lại</button>
                          <button onclick="showInforPay(`+ i + `)" id="next__pay">Tiếp tục</button>`
     document.getElementById("option__pay").innerHTML = htmlInforoption;
+}
+
+function addressApperance(){
+    let userLogin=JSON.parse(localStorage.getItem("userLogin"));
+    if(!userLogin.location){
+        noti("Bạn chưa có địa chỉ tài khoản !",1);
+        return false;
+    }
+    else{
+        document.getElementById("pay__street").value=userLogin.location.street;
+        document.getElementById("pay__city").value=userLogin.location.city;
+        updateDistrict();
+        document.getElementById("pay__district").value=userLogin.location.district;
+        updateWard(); 
+        document.getElementById("pay__ward").value=userLogin.location.ward;
+    }
 }
 
 function paymentApperance(){
@@ -964,8 +980,7 @@ function paymentApperance(){
 
 
 function closePay(i) {
-    if (i == 1)
-        document.getElementById("modal__pay").style.display = "none";
+     document.getElementById("modal__pay").style.display = "none";
 }
 
 
@@ -1033,7 +1048,6 @@ function showInforPay(i) {
                          <label>Phương thức thanh toán: Momo</label>
                          <label>Mã pin: `+ momoInfo.maPin + `</label>
                          <label>Địa chỉ giao hàng: `+ momoInfo.street + "," + momoInfo.ward + "," + momoInfo.district + "," + momoInfo.city + `</label>`
-            document.getElementById("detail__showin4").innerHTML = htmlshowin4;
         }
         if (document.getElementById("tienmat__input").checked) {
             tienmatInfo = checkPayment(payarr[1]);
@@ -1044,7 +1058,6 @@ function showInforPay(i) {
                          <label>Số điện thoại liên hệ nhận hàng: `+ tienmatInfo.sdtLienHe + `</label>
                          <label>Phương thức thanh toán: Tiền mặt</label>
                           <label>Địa chỉ giao hàng: `+ tienmatInfo.street + "," + tienmatInfo.ward + "," + tienmatInfo.district + "," + tienmatInfo.city + `</label>`
-            document.getElementById("detail__showin4").innerHTML = htmlshowin4;
         }
         if (document.getElementById("atm__input").checked){
             atmInfo = checkPayment(payarr[2]);
@@ -1057,8 +1070,10 @@ function showInforPay(i) {
                          <label>Số thẻ ATM :`+ atmInfo.soThe + `</label>
                          <label>Mã pin: `+ atmInfo.maPin + `</label>
                          <label>Địa chỉ giao hàng: `+ atmInfo.street + "," + atmInfo.ward + "," + atmInfo.district + "," + atmInfo.city + `</label>`
-            document.getElementById("detail__showin4").innerHTML = htmlshowin4;
+            
         }
+        htmlshowin4 += `<label>Tổng tiền thanh toán: `+ document.getElementById("total__Price").innerHTML + ` VND</label>`
+        document.getElementById("detail__showin4").innerHTML = htmlshowin4;
     }
     i++;
     document.getElementById("option__showin4").innerHTML = `<button onclick="closeShowin4(` + i + `)">Quay lại</button>
@@ -1083,14 +1098,14 @@ function thanhtoan(i) {
             mth="ATM";
         else
             mth="Tiền mặt";
-        let address = {
+        let address = {street:street, ward: ward,district: district,city: city,};
+        let location;
+        location={
+            city: city,
+            district: district,
             street: street,
             ward: ward,
-            district: district,
-            city: city,
-        }
-        let location=[];
-        location.push(address);
+        };
         let sum = 0;
         for (let i = 0; i < cart.length; i++)
             sum += cart[i][3] * cart[i][4];
@@ -1108,6 +1123,8 @@ function thanhtoan(i) {
         }
         ArrayBill.push(Bill);
         localStorage.setItem("ArrayBill",JSON.stringify(ArrayBill));
+        userLogin.location=location;
+        localStorage.setItem("userLogin",JSON.stringify(userLogin));
         document.getElementById("modal__showin4").style.display="none";
         document.getElementById("modal__pay").style.display="none";
         localStorage.removeItem("gioHang");
