@@ -40,13 +40,13 @@ function filterProducts(){
     let array = [];
     let DanhSachSanPham = JSON.parse(localStorage.getItem("product"));
     for (let i = 0; i < DanhSachSanPham.length; i++) {
-        if (DanhSachSanPham[i].introduce.toLowerCase().includes(s)) {
+        if (DanhSachSanPham[i].introduce.toLowerCase().includes(s) &&   DanhSachSanPham[i].price >= min && DanhSachSanPham[i].price <= max) {
           array.push(DanhSachSanPham[i]);
         }
     }
     if (type != "tất cả") {
       for (let i = 0; i < array.length; i++) {
-        if (!array[i].name.toLowerCase().includes(type) || array[i].price < min || array[i].price > max) {
+        if (!array[i].name.toLowerCase().includes(type)) {
           array.splice(i, 1);
           i--;
         }
