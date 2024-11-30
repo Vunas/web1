@@ -365,24 +365,7 @@ body {
   box-shadow: 0.5px 0.5px;
   border-radius: 15px;
   box-shadow: 2px 2px 5px 0;
-  animation: appearance linear 0.3s;
 }
-
-@keyframes appearance {
-  from {
-    margin-top: 500px;
-    opacity: 0.5;
-    filter: blur(1px);
-    scale: (1.5);
-  }
-  to {
-    margin: 5px;
-    opacity: 1;
-    filter: blur(0);
-    scale: (1);
-  }
-}
-
 
 .card__item--left img {
   width: 110px;
@@ -947,7 +930,23 @@ body {
   margin: 20px 20px 40px 20px;
   border-radius: 10px;
   overflow: hidden;
-  animation: appearance linear 0.3s;
+  animation: filters linear 0.5s;
+}
+
+@keyframes filters {
+  from {
+    position: relative;
+    left: 90px;
+    opacity: 0.5;
+    filter: blur(1px);
+    scale: (1.5);
+  }
+  to {
+    left: 0;
+    opacity: 1;
+    filter: blur(0);
+    scale: (1);
+  }
 }
 
 #filterBill,#filter__Products {
