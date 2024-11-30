@@ -640,6 +640,7 @@ nav ul li .nav__item:hover{
   font-size: 20px;
   text-align: center;
   padding: 10px;
+  max-width: 100%;
   background-color: var(--primary--color4);
 }
 .infor__product h3 {
@@ -1115,6 +1116,7 @@ tbody tr {
   display: flex;
   background-color: white;
   animation:  infor__child 0.25s ease;
+  flex-wrap: wrap;
 }
 @keyframes infor__child{
   from{
