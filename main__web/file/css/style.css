@@ -29,6 +29,7 @@ body {
 #contain__pay, #contain__showin4 {
     width: 500px;
     max-width: 90%;
+    max-height: 600px;
     height: auto;
     background-color: var(--secondary-color);
     overflow-y: auto;
@@ -70,7 +71,6 @@ body {
     margin: 15px 0;
     font-size: 15px;
 }
-
 #address__pay label input,
 #address__pay label select {
     cursor: pointer;
@@ -82,6 +82,12 @@ body {
     outline: none;
     transition: border 0.3s ease;
 }
+#address__pay label input[type="radio"] {
+    border: 1px solid red;
+    width: auto; /* Loại bỏ giới hạn width mặc định của input radio */
+    margin-left: 10px; 
+}
+
 
 #address__pay label input:focus,
 #address__pay label select:focus {
