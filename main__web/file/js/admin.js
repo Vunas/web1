@@ -395,6 +395,7 @@ function showPageBill() {
     document.querySelector("#formBill").style.display = "flex";
     document.querySelector("#formRevenue").style.display = "none";
     let DanhSachBill = JSON.parse(localStorage.getItem("ArrayBill"));
+    createFilterBill();
     showArrayBill(DanhSachBill);
     toMau();
 }
@@ -541,11 +542,10 @@ function createFilterBill() {
     <select style="height:40px;width:200px;" name="" id="filter__district--bill">
         <option value="tất cả"> tất cả </option>`;
     html += `</select></div>`;
-    html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
     html+=`<button type="button" onclick="filterStatusTimeDistrict()" id="button__filterBill">TÌM</button>`;
+    html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
     document.querySelector("#filterBill").innerHTML = html;
 }
-createFilterBill();
 
 function createDistricts(){
     let city= document.getElementById("filter__city--bill").value || "";
@@ -1115,11 +1115,11 @@ function loadKhachHang(){
             arrayKhachHang.push(f);
         }
     }
-    let staMH = document.getElementById("sta__sell-option").value;
+    let staMH = document.getElementById("sta__sell-option").value ;
     if (staMH == 2) {
-        arrayKhachHang   = arrayKhachHang .sort((a, b) => b.sum - a.sum); // Sắp xếp giảm dần
+        arrayKhachHang   = arrayKhachHang .sort((a, b) => b[1] - a[1]); // Sắp xếp giảm dần
     } else if(staMH == 3){
-        arrayKhachHang   = arrayKhachHang .sort((a, b) => a.sum - b.sum); // Sắp xếp tăng dần
+        arrayKhachHang   = arrayKhachHang .sort((a, b) => a[1] - b[1]); // Sắp xếp tăng dần
     };
     document.getElementById("sum__Products").innerHTML= `Tổng khách hàng đã mua : `+arrayKhachHang.length+` `; 
     showArrayKhachHang(arrayKhachHang);  
