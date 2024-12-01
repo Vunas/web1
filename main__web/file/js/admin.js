@@ -29,6 +29,7 @@ function createFilterProducts() {
     html+=`<button type="button" onclick="showPageProduct()" id="button__filterBill">Tải lại</button>`;
     document.getElementById("filter__Products").innerHTML = html;
 }
+
 // lọc sản phẩm
 function filterProducts(){
     let s = document.getElementById("searchInp").value.toLowerCase();
@@ -54,6 +55,7 @@ function filterProducts(){
     }
     showArrayProductFil(array);
 }
+
 // show sản phẩm vừa lọc
 function showArrayProductFil(array) {
     let HTML = `<button id="addP" onclick="showInputAddProduct()">Thêm sản phẩm</button>`
@@ -454,6 +456,7 @@ function showBill(bill, soThuTu) {
 }
 
 //Show lại chi tiết đơn hàng mà khách đã đặt
+let statusa=["chưa xử lý","đã xác nhận","giao hàng thành công","đã hủy"];
 function showDonHang(vitri) {
     document.querySelector(".modal__viewDonHang").style.display = "block";
     let html = '';
@@ -464,7 +467,7 @@ function showDonHang(vitri) {
             while (j < DanhSachBill[i].cart.length) {
                 sum += (parseInt(DanhSachBill[i].cart[j][3])) * (parseInt(DanhSachBill[i].cart[j][4])) * 1000;
                 html += `<tr>
-                <td id="info" style="display: flex;align-items: center;"><img style="width:80px;height:80px;" src="`+ DanhSachBill[i].cart[j][0] + `" alt=""> ` + DanhSachBill[i].cart[j][1] + `</td>
+                <td id="info" style="display: flex;align-items: center;"><img style="width:80px;height:80px;" src="`+DanhSachBill[i].cart[j][0]+`" alt=""> `+DanhSachBill[i].cart[j][1] + `</td>
                 <td id="info">`+ DanhSachBill[i].cart[j][2] + `</td>
                 <td id="info">`+ DanhSachBill[i].cart[j][4] + `</td>
                 <td id="info">`+ ((DanhSachBill[i].cart[j][3] * DanhSachBill[i].cart[j][4]) * 1000).toLocaleString() + `</td>
@@ -476,21 +479,34 @@ function showDonHang(vitri) {
                             <td id="savestt" onclick="saveStatus(this)" >LƯU TRẠNG THÁI</td>
                             <td id="sumbill" colspan="2">TỔNG TIỀN : <span>` + sum.toLocaleString() + `</span><sup>VNĐ</sup></td>
                         </tr>`
+                    let currentStatus = DanhSachBill[i].status || "chưa xử lý"; 
+                    let htmlStatus = `<tr><td colspan="4"><select style="border-radius:50px;" name="" id="changeStt" onchange="changeStatus()">`;
+                    for (let k = 0; k < statusa.length; k++) {
+                        htmlStatus += `<option value="`+statusa[k]+`"  ${currentStatus === statusa[k] ? "selected" : ""}> `+statusa[k]+` </option>`;
+                    }
+                    htmlStatus += `</select></td></tr>`;
+                    document.getElementById("tfoot__viewDonHang").innerHTML = htmlStatus;
             }
         }
     }
     document.querySelector("#tbody__viewDonHang").innerHTML = html;
+    checkStatus();
+}
+
+function checkStatus(){
     let changeSTT = document.getElementById("changeStt");
     let saveSTT= document.getElementById("savestt");
     if(document.getElementById("formBill").style.display == "none"){
         changeSTT.style.display= "none";
+        saveSTT.onclick=null;
+        saveSTT.style.background="white";
+        document.getElementById("close").setAttribute("colspan","2");
         saveSTT.innerHTML="";
     }else {
         changeSTT.style.display= "unset";
-        saveSTT.innerHTML="Lưu trạng thái";
+        saveSTT.innerHTML="LƯU TRẠNG THÁI";
     }
 }
-
 
 //Lấy giá trị thay đổi trạng thái
 function changeStatus() {
@@ -544,8 +560,11 @@ function createFilterBill() {
     html += `</select></div>`;
     html+=`<button type="button" onclick="filterStatusTimeDistrict()" id="button__filterBill">TÌM</button>`;
     html+=`<button type="button" onclick="showPageBill()" id="button__filterBill">Tải lại</button>`;
+
     document.querySelector("#filterBill").innerHTML = html;
 }
+
+
 
 function createDistricts(){
     let city= document.getElementById("filter__city--bill").value || "";
@@ -559,7 +578,6 @@ function createDistricts(){
         }
         
     }
-    
     document.getElementById("filter__district--bill").innerHTML = html;
 }
 
@@ -574,10 +592,8 @@ function filterStatusTimeDistrict() {
     let filterDis = document.querySelector("#filter__district--bill").value;
     let startD = document.querySelector("#dStart").value;
     let endD = document.querySelector("#dEnd").value;
-
     let arrayBillOfSTTANDDIS = DanhSachBill.filter(bill => {
         let matchStatus = (filterStt === "tất cả" || bill.status === filterStt);
-
         let matchDay = true;
         if (startD && endD) {
             matchDay = bill.date >= startD && bill.date <= endD;
@@ -586,14 +602,10 @@ function filterStatusTimeDistrict() {
         } else if (endD) {
             matchDay = bill.date <= endD;
         }
-
         let matchCity = (filterCity === "tất cả" || (bill.location && bill.location.city === filterCity));
         let matchDistrict = (filterDis === "tất cả" || (bill.location && bill.location.district === filterDis));
-
         return matchStatus && matchDay && matchCity && matchDistrict;
     });
-
-    // Hiển thị kết quả
     if (arrayBillOfSTTANDDIS.length === 0) {
         document.querySelector("#tableBill").innerHTML = `
         <thead id="theadBill">
@@ -1143,7 +1155,6 @@ function showArrayKhachHang(arr) {
                 <th>Số điện thoại</th>
                 <th>Tổng</th>
                 <th>Xem chi tiet </th></thead><tbody>`
-
         for (let i = 0; i < arr.length; i++) {
             let users= JSON.parse(localStorage.getItem("users"));
             let user;
@@ -1180,8 +1191,6 @@ function showBillKH(name){
     }
     showBillStatistics(array);
 }
-
-
 
 // hàm thông báo
 function noti(s, n) {
