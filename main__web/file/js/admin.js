@@ -897,8 +897,8 @@ function createFilterRevenue() {
     html += `<div id="locThongKe"><span id="sta__sell">Xếp hạng bán
     <select style="height:40px" name="" id="sta__sell-option" >
     <option value="1">Tất Cả</option>
-    <option value="2">Nhiều Nhất</option>
-    <option value="3">Ít nhất</option>  
+    <option value="2">Chạy Nhất</option>
+    <option value="3">Ế nhất</option>  
     </select></span></div>`;
     html+=`<div id=locThongKe>
              <span>Thời gian</span>
@@ -1024,6 +1024,7 @@ function showArrayMatHang(arr){
               </thead><tbody>`;
         let endD= document.getElementById("sta__sell-option").value;
         endD= endD==1? arr.length: 1;
+        if(endD == 1) while(arr[endD] && arr[endD-1][4] == arr[endD][4]) endD ++;
         for(let i=0;i<endD;i++){
             let HTML=showMatHang(arr[i]);
             html=html+HTML;
