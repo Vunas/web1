@@ -990,7 +990,7 @@ function loadMatHang(){
     }
     let staMH = document.getElementById("sta__sell-option").value;
     if (staMH == 2) {
-        arrayMatHang = arrayMatHang.sort((a, b) => b[4] - a[4]); // Sắp xếp giảm dần
+        arrayMatHang = arrayMatHang.sort((a, b) => b[4] - a[4]); 
     } else if(staMH == 3){
         arrayMatHang = arrayMatHang.sort((a, b) => a[4] - b[4]); // Sắp xếp tăng dần
     }
@@ -1000,9 +1000,8 @@ function loadMatHang(){
 
 //show danh sách mặt hàng
 function showArrayMatHang(arr){
-    let DanhSachBill=JSON.parse(localStorage.getItem("ArrayBill")) || [];
     let html;
-    if(DanhSachBill.length==0||localStorage.getItem("ArrayBill")=="[]" || arr.length == 0)
+    if(arr.length == 0)
         html=`<thead>
               <th>Ảnh</th>
               <th>Mặt Hàng</th>
@@ -1022,8 +1021,10 @@ function showArrayMatHang(arr){
               <th>Số Lượng</th>
               <th>Tổng giá</th>
               <th> Chi tiết </th>
-              </thead><tbody>`
-        for(let i=0;i<arr.length;i++){
+              </thead><tbody>`;
+        let endD= document.getElementById("sta__sell-option").value;
+        endD= endD==1? arr.length: 1;
+        for(let i=0;i<endD;i++){
             let HTML=showMatHang(arr[i]);
             html=html+HTML;
          }     
