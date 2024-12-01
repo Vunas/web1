@@ -1086,6 +1086,7 @@ function thanhtoan(i) {
         let cart = JSON.parse(localStorage.getItem("gioHang"));
         let ArrayBill = JSON.parse(localStorage.getItem("ArrayBill")) || [];
         let userLogin=JSON.parse(localStorage.getItem("userLogin"))||[];
+        let users= JSON.parse(localStorage.getItem("users")) || [];
         let street = document.getElementById("pay__street").value;
         let city = document.getElementById("pay__city").value;
         let district = document.getElementById("pay__district").value;
@@ -1124,6 +1125,13 @@ function thanhtoan(i) {
         ArrayBill.push(Bill);
         localStorage.setItem("ArrayBill",JSON.stringify(ArrayBill));
         userLogin.location=location;
+        for (let i = 0; i < users.length; i++) {
+            if(userLogin.username == users[i].username){
+                users[i] = userLogin;
+                break;
+            }
+        }
+        localStorage.setItem("users",JSON.stringify(users));
         localStorage.setItem("userLogin",JSON.stringify(userLogin));
         document.getElementById("modal__showin4").style.display="none";
         document.getElementById("modal__pay").style.display="none";
