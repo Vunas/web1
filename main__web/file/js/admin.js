@@ -740,10 +740,12 @@ function showInputAddCustomer() {
 // Thêm người dùng mới
 function addCustomer() {
     let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    let fullnameCustomer = document.querySelector("#fullnameAdd");
     let nameCustomer = document.querySelector("#usernameAdd");
     let pswCustomer = document.querySelector("#passwordAdd");
     let emailCustomer = document.querySelector("#emailAdd");
     let phoneCustomer = document.querySelector("#phoneAdd");
+    alert(fullnameCustomer)
     for (let i=0;i< DanhSachKhachHang.length; i++) {
         if (nameCustomer.value === DanhSachKhachHang[i].username) {
             customAlert("Tên đã được sử dụng!", "warning");
@@ -754,7 +756,7 @@ function addCustomer() {
         customAlert("Tên không hợp lệ!", "warning");
         return false;
     }
-    if ((pswCustomer.value).length < 8) {
+    if ((pswCustomer.value).length < 5) {
         customAlert("Mật khẩu không đủ điều kiện!", "warning");
         return false;
     }
@@ -767,6 +769,7 @@ function addCustomer() {
         return false;
     }
     let usertemp = {
+        fullname: fullnameCustomer.value,
         username: nameCustomer.value,
         password: pswCustomer.value,
         email: emailCustomer.value,
@@ -828,6 +831,7 @@ function showInputEditCustomer(index) {
 
 function updateCustomer(index) {
     let DanhSachKhachHang = JSON.parse(localStorage.getItem("users"));
+    DanhSachKhachHang[index].fullname = document.querySelector("#fullnameEdit").value;
     DanhSachKhachHang[index].username = document.querySelector("#usernameEdit").value;
     DanhSachKhachHang[index].password = document.querySelector("#passwordEdit").value;
     DanhSachKhachHang[index].email = document.querySelector("#emailEdit").value;
