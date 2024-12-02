@@ -346,8 +346,8 @@ document.getElementById("signup-form").onsubmit = function (e) {
     }
   }
 
-  if (!password) {
-    document.getElementById("psigpas").innerHTML = "Vui lòng nhập mật khẩu!";
+  if (!password || password.length <5) {
+    document.getElementById("psigpas").innerHTML = "Mật khẩu yếu!";
     signupFlag = false;
   } else {
     document.getElementById("psigpas").innerHTML = "";
